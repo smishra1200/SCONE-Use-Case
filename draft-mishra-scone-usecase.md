@@ -103,9 +103,9 @@ mobile infrastructure and the Packet Data Network.  The UPF is responsible for
 functions such as:
 
 - Packet routing, forwarding, and interconnection to the Data Network (DN) 
-- Allocation of User Equipment (UE) IP Address/prefix
+- Allocation of User Equipment (UE) IP Address/prefix along with SMF
 - Quality of Service policy enforcement
-- Handling of traffic filtering and packet inspection
+- Handling of traffic filtering, steering and application detection
 - Traffic usage reporting
 
 Note: This is not an exhaustive list of UPF functions.  For details refer to
