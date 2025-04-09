@@ -205,9 +205,9 @@ inspection and filtering, subscriber policy enforcement, and QoS handling.
 
 ## Significance of UPF from SCONE Perspective
 
-Through the N4 interface, UPF gets access to the subscriber policy and data plans. This enables UPF to send the throughput advice based on the subscriber data plan to the client application end point. The same interface can be used to get RAN related information if required (e.g. congestion information).
+Through the N4 interface, UPF gets access to the subscriber policy and data plans. This enables UPF to send the throughput advice based on the subscriber data plan to the client application end point.
 
-The UPF is on the data path at the mobile packet core network element that routes and forwards application packets between the gNodeB and the DN (e.g. the Internet), it has access to subscriber policy and potentially can get RAN related information if required. 
+The UPF is on the data path at the mobile packet core network element that routes and forwards application packets between the gNodeB and the DN (e.g. the Internet), it has access to subscriber policy. 
 
 Usually mobile networks are deployed with multi-verndor support meaning the RAN base station can belong to differnet vendors and might not implement all the features in all the base stations, however, UPFs sits in an unique positions that all the userplane traffic via different base stations would be routed through it. 
 
@@ -237,7 +237,7 @@ In a nutshell, Userplane traffic that carries Internet traffic routed via UPF, h
 
 # Implementing SCONE In the Mobile Network
 
-As described in sections above, UPF is the 3GPP on-path "network element" that has access to subscriber policy and provides the data pipe connectivity between UE and the Internet over the air interface.  UPF is a network element that is capable of SCONE signaling over the data path.
+As described in sections above, UPF is the 3GPP on-path "network element" that has access to subscriber policy and provides the data pipe connectivity between UE and the Internet over N3 interface + air interface.  UPF is a network element that is capable of SCONE signaling over the data path.
 
 Below is a high-level view of SCONE signal path in a 5G network.  Please see {{Mishra-2025}} for a more complete version of this diagram.
 
@@ -292,7 +292,7 @@ Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-
 
 # SCONE Signal Requirements for the mobile networks
 
-- UPF/5G or PGW/4G MUST be able to distinguish QUIC protocol versions with the explicit flow detection for any given SCONE enabled appication traffic .
+- SCONE protocol(s) MUST be application-client initiated to assist the network element to distinguish QUIC protocol versions with the explicit flow detection for any given SCONE enabled appication traffic.
 
 - UPF/P-GW SHOULD send "throughput advice" and other metadata using on-path SCONE signaling to the client-application-endpoint based on subscriber data-plans.
 
@@ -302,9 +302,9 @@ Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-
 
 - Dynamic update - "throughput advice" MAY change during the ongoing flow and UPF/PGW SHOULD be able to send "throughput advice" to client-application-endpoint as soon as possible.
 
-- Applications MUST self-adapt the video flow max bit-rate to "throughput advice" value.
+- Applications MAY self-adapt the video flow max bit-rate to "throughput advice" value.
 
-- SCONE signal MUST be extensible to networks beyond 4G/5G network.
+- SCONE signal MUST  be extensible to networks beyond 4G/5G network.
 
 # Security Considerations
 
