@@ -1,7 +1,7 @@
 ---
 title: "A Use Case for SCONE Implementation"
 abbrev: "SCONE Use Case"
-docname: draft-mishra-scone-usecase-00
+docname: draft-mishra-scone-usecase-01
 category: info
 
 ipr: trust200902
