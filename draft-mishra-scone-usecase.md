@@ -26,6 +26,11 @@ author:
     organization: Meta
     email: anooptomar@meta.com
   -
+    ins: K. Abbas
+    name: Khurram Abbas
+    organization: Verizon
+    email: khurram.abbas@verizonwireless.com
+  -
     ins: Z. Sarker
     name: Zaheduzzaman Sarker
     organization: Nokia
