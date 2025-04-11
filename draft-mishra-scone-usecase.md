@@ -1,7 +1,7 @@
 ---
 title: "A Use Case for SCONE Implementation"
 abbrev: "SCONE Use Case"
-docname: draft-mishra-scone-usecase-01
+docname: draft-mishra-scone-usecase-02
 category: info
 
 ipr: trust200902
@@ -80,7 +80,7 @@ This document describes utilizing the User Plane Function (UPF) in 5G networks
 and packet data network gateway in 4G networks (PDN-GW or P-GW and also
 referred as a PGW) to transport SCONE signal between the client-application
 endpoint on a User Equipment (UE) and the network element (UPF/PDN-GW) in the
-mobile networks. Specifically, this use case focuses on using UPF and PDN-GW to
+mobile networks. Specifically, this document focuses on using UPF and PDN-GW to
 exchange bi-directional communications with client-application end-point on the
 UE. The
 mechanism described focuses on mobile networks including 4G and 5G
@@ -99,7 +99,7 @@ Function (UPF) and 4G P-GW as network elements can be considered candidates for
 signaling the "throughput advice" to client-application-endpoint.  However, the
 applicability extends to network architectures beyond 4G/5G networks.
 
-The user plane network element in the 5G packet core is the UPF, as shown in
+The user plane network element in the 5G packet core, termed as the UPF, as shown in
 Figure 1. In the 4G packet core, the P-GW (as shown in Figure 2) performs the
 same role as the UPF does in the 5G mobile packet core.
 
@@ -298,8 +298,7 @@ Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-
 
 # SCONE Signal Requirements for the mobile networks
 
-- SCONE protocol(s) MUST be client-application endpoint initiated to assist the network element with flow detection for any SCONE compliant
-- application traffic.
+- SCONE protocol(s) MUST be client-application endpoint initiated to assist the network element with flow detection for any SCONE compliant application traffic.
 
 - Client-application endpoint MAY send acknowledgement receipt of throughput advisory signal from the network element using the SCONE signal.
 
