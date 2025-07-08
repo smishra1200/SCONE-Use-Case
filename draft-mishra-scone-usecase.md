@@ -308,7 +308,7 @@ Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-
 
 - SCONE signal MUST be extensible to networks beyond 4G/5G network.
 
-# ScONE Manageability
+# SCONE Manageability
 TO DO
 # SCONE Operational Considerations
 TO DO
