@@ -1,7 +1,7 @@
 ---
-title: "A Use Case for SCONE Implementation"
-abbrev: "SCONE Use Case"
-docname: draft-mishra-scone-usecase-02
+title: "Applicability & Manageability of SCONE signal for a mobile network"
+abbrev: "SCONE Applicability & Manageability"
+docname: draft-mishra-scone-Applicability-02
 category: info
 
 ipr: trust200902
@@ -299,8 +299,6 @@ Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-
 # SCONE Signal Applicability for the mobile networks
 
 - Client-application endpoint MUST initiate a SCONE HINT to assist network element with flow detection for any SCONE compliant application traffic.
-
-- Client-application endpoint MAY send acknowledgement receipt of throughput advisory signal from the network element using the SCONE signal.
 
 - SCONE signaling MUST NOT require changes to how a CSP determintes its video policy for a given flow.  (No dependency between a CSP's video policy and the SCONE protocol).
 
