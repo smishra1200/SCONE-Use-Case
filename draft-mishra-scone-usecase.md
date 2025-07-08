@@ -296,9 +296,9 @@ Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-
 ~~~~
 {: #4g-scone title="SCONE Integration with Vido Policy in 4G N/W"}
 
-# SCONE Signal Requirements for the mobile networks
+# SCONE Signal Applicability for the mobile networks
 
-- SCONE protocol(s) MUST be client-application endpoint initiated to assist the network element with flow detection for any SCONE compliant application traffic.
+- Client-application endpoint MUST initiate a SCONE HINT to assist network element with flow detection for any SCONE compliant application traffic.
 
 - Client-application endpoint MAY send acknowledgement receipt of throughput advisory signal from the network element using the SCONE signal.
 
@@ -306,9 +306,12 @@ Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-
 
 - Dynamic update - "throughput advice" MAY change during the ongoing flow and UPF/PGW SHOULD be able to send "throughput advice" to client-application-endpoint as soon as possible.
 
-- Applications MAY self-adapt the video flow max bit-rate to "throughput advice" value.
-
 - SCONE signal MUST be extensible to networks beyond 4G/5G network.
+
+# ScONE Manageability
+TO DO
+# SCONE Operational Considerations
+TO DO
 
 # Security Considerations
 
