@@ -1,14 +1,14 @@
 ---
 title: "Applicability & Manageability of SCONE signal for a mobile network"
 abbrev: "SCONE Applicability & Manageability"
-docname: draft-mishra-scone-Applicability-02
+docname: draft-mishra-scone-applicability-manageablity-01
 category: info
 
 ipr: trust200902
 area: Web and Internet Transport
 workgroup: SCONE
 keyword: Throttling
-keyword: Adaptive Bit-Rate Video
+keyword: Adaptive Bit-Rate Video, scone
 
 stand_alone: yes
 smart_quotes: no
@@ -76,22 +76,14 @@ on achievable bitrate termed "throughput advice" to implement SCONE protocol.
 
 # Introduction
 
-This document describes utilizing the User Plane Function (UPF) in 5G networks
-and packet data network gateway in 4G networks (PDN-GW or P-GW and also
-referred as a PGW) to transport SCONE signal between the client-application
-endpoint on a User Equipment (UE) and the network element (UPF/PDN-GW) in the
-mobile networks. Specifically, this document focuses on using UPF and PDN-GW to
-exchange bi-directional communications with client-application end-point on the
-UE. The
-mechanism described focuses on mobile networks including 4G and 5G
-but the mechanism is generic and applicable to other network
-architectures.
+This document describes applicablity and manageablity of SCONE protocol in the networks and applicaiton endpoints. It focuses on cellular networks, however, the could very well applicable for other access networks.
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
-# Overview of User Plane Network Element in Mobile Packet Core
+# Background
+## Overview of User Plane Network Element in Mobile Packet Core
 
 This section describes 5G mobile packet core to explain the role of user-plane
 network element in mobile packet core and reasons why the 5G User Plane
@@ -152,13 +144,13 @@ points (interfaces)  as defined by the 3GPP and as shown in the figure below:
 4. The N9 interface is between instances of UPFs.
 
 
-## N3 Interface
+### N3 Interface
 
 The N3 interfaces transfers user plane traffic, that is, user data packets
 between the gNodeB and the UPF.  It uses GPRS Tunneling Protocol - User Plane
 or GTP-U.  It replaces the S1-U interfaces from the 4G mobile packet core.
 
-## N4 Interface
+### N4 Interface
 
 The N4 interface connects the UPF and the 5G Session Management Function (SMF).
 Through N4, the SMF informs the UPF about the subscriber policy and data plans.
@@ -170,19 +162,19 @@ Note: SMF also interacts with Policy Control Function (PCF) for functions such
 as QoS and Charging policy rules, Unified Data Management (UDM) and Unified
 Data Repository (UDR) for functions such as subscription data and policy plans.
 
-## N6 Interface
+### N6 Interface
 
 The N6 interface connects the UPF to external Data Networks, similar to the SGi
 interface between the P-GW and the external Data Network for access to services
 and applications.  The interface supports various trasnport protocols over IP.
 
-## N9 Interface
+### N9 Interface
 
 This interface interconnects two or more UPFs when used in a data path.  The interface uses GTP-U protocol for user traffic tunneling including roaming.
 
 Note: In the scenario of 2 or more UPFs in the data path, only one UPF that has access to subscriber policy would send "throughput advice" to the client-application-endpoint.
 
-# User Plane Interface Between UPF and UE
+## User Plane Interface Between UPF and UE
 
 This section describes the N3 interface (between the UPF and gNodeB or gNB) and
 the air interface between the gNB and UE.  For purposes of nomenclature, a
@@ -211,7 +203,7 @@ flow to/from a UE to the UPF.
 In summary, the UPF is responsible for packet routing and forwarding, packet
 inspection and filtering, subscriber policy enforcement, inline services (NAT, firewall, DNS etc) and QoS handling.  
 
-## Significance of UPF from SCONE Perspective
+### Significance of UPF from SCONE Perspective
 
 The UPF is a data path mobile packet core network element that routes
 and forwards application packets between the gNodeB and the DN and it
@@ -297,6 +289,8 @@ Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-
 {: #4g-scone title="SCONE Integration with Vido Policy in 4G N/W"}
 
 # SCONE Signal Applicability for the mobile networks
+
+TODO: need to be descripting than simple bullets. also within the authors we need to be clear what we mean by applicablity and manageablity.
 
 - Client-application endpoint MUST initiate a SCONE HINT to assist network element with flow detection for any SCONE compliant application traffic.
 
