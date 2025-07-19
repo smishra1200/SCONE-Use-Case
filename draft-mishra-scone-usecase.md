@@ -331,13 +331,16 @@ Issue 35 [https://github.com/ietf-wg-scone/scone/issues/35]
 
 Presentation given at interim session 6 provides results based on experimentation that recommends a suitable size for time window to be 120 seconds. This value is compatible with existing VOD applications when ~2 mbps is the advised bitrate.
 - [https://datatracker.ietf.org/meeting/interim-2025-scone-06/materials/slides-interim-2025-scone-06-sessa-time-window-duration-for-bitrate-measurement-00.pdf]
-  
+
+## Dynamic updates
+In networks, for example - radio networks, the avaible capacity of the network can dynamically change for a persistance of time that, or there could be sudden increase of network users, these could result in change of throughput advice for a particular scone capable flow. These changes need to be dynamically and immidiately updated in the rate signal to avoid unnecesarry rate shaping or degradated QoE. This means the network elements need to be able to initiate the sending of the rate signal if there is not sufficient fre  quency of scone packets send for that particular flow. 
+
 ## Other open issues
 - SCONE signaling MUST NOT require changes to how a CSP determintes its video policy for a given flow.  (No dependency between a CSP's video policy and the SCONE protocol).
 
-- Dynamic update - "throughput advice" MAY change during the ongoing flow and UPF/PGW SHOULD be able to send "throughput advice" to client-application-endpoint as soon as possible.
-
 - SCONE signal MUST be extensible to networks beyond 4G/5G network.
+
+- discussion on how the applications/receivers can adapt to the rate signals.
 
 
 # Security Considerations
