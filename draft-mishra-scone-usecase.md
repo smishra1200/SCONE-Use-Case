@@ -68,22 +68,22 @@ informative:
  
 --- abstract
 
-This document describes 3GPP network
+This document identifies applicability of SCONE signal in a mobile network and outlines operational considerations, or manageability of SCONE
+signal in the operator network. Importantly, this document also describes 3GPP network
 elements that are capable of rate-limiting a UDP 4-tuple to communicate an upper bound
-on achievable bitrate termed "throughput advice" to implement SCONE protocol.
+on achievable bitrate termed "throughput advice" to implement SCONE protocol. 
 
 --- middle
 
 # Introduction
 
-This document describes applicablity and manageablity of SCONE protocol in the networks and applicaiton endpoints. It focuses on cellular networks, however, the could very well applicable for other access networks.
+This document describes applicablity and manageablity of SCONE protocol in the networks and applicaiton endpoints. It focuses on mobile networks, however, this document is also applicable to other access networks.
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
-# Background
-## Overview of User Plane Network Element in Mobile Packet Core
+# User Plane Network Element in Mobile Packet Core
 
 This section describes 5G mobile packet core to explain the role of user-plane
 network element in mobile packet core and reasons why the 5G User Plane
@@ -144,13 +144,13 @@ points (interfaces)  as defined by the 3GPP and as shown in the figure below:
 4. The N9 interface is between instances of UPFs.
 
 
-### N3 Interface
+## N3 Interface
 
 The N3 interfaces transfers user plane traffic, that is, user data packets
 between the gNodeB and the UPF.  It uses GPRS Tunneling Protocol - User Plane
 or GTP-U.  It replaces the S1-U interfaces from the 4G mobile packet core.
 
-### N4 Interface
+## N4 Interface
 
 The N4 interface connects the UPF and the 5G Session Management Function (SMF).
 Through N4, the SMF informs the UPF about the subscriber policy and data plans.
@@ -162,13 +162,13 @@ Note: SMF also interacts with Policy Control Function (PCF) for functions such
 as QoS and Charging policy rules, Unified Data Management (UDM) and Unified
 Data Repository (UDR) for functions such as subscription data and policy plans.
 
-### N6 Interface
+## N6 Interface
 
 The N6 interface connects the UPF to external Data Networks, similar to the SGi
 interface between the P-GW and the external Data Network for access to services
 and applications.  The interface supports various trasnport protocols over IP.
 
-### N9 Interface
+## N9 Interface
 
 This interface interconnects two or more UPFs when used in a data path.  The interface uses GTP-U protocol for user traffic tunneling including roaming.
 
@@ -203,7 +203,7 @@ flow to/from a UE to the UPF.
 In summary, the UPF is responsible for packet routing and forwarding, packet
 inspection and filtering, subscriber policy enforcement, inline services (NAT, firewall, DNS etc) and QoS handling.  
 
-### Significance of UPF from SCONE Perspective
+# Applicability of SCONE Signal in Mobile Networks
 
 The UPF is a data path mobile packet core network element that routes
 and forwards application packets between the gNodeB and the DN and it
@@ -233,9 +233,11 @@ As a result, UPF is in the best position to send the throughput advice to client
 {: #4g-diagram title="4G Mobile Network Architecture"}
 
 
-# Implementing SCONE In the Mobile Network
+## Implementing SCONE In the Mobile Network
 
-As described in sections above, UPF is the 3GPP on-path "network element" that has access to subscriber policy and provides the data pipe connectivity between UE and the Internet. UPF is a network element that is capable of SCONE signaling over the data path.
+As described in sections above, UPF is the 3GPP on-path "network element" that has access to subscriber policy and provides
+the data pipe connectivity between UE and the Internet. UPF is a network element that is capable of SCONE signaling over the
+data path.
 
 Below is a high-level view of SCONE signal path in a 5G network.  Please see {{Mishra-2025}} for a more complete version of this diagram.
 
@@ -288,22 +290,55 @@ Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-
 ~~~~
 {: #4g-scone title="SCONE Integration with Vido Policy in 4G N/W"}
 
-# SCONE Signal Applicability for the mobile networks
+# SCONE Manageability & Operational considerations
+The sections below describe SCONE signal manageability.
 
-TODO: need to be descripting than simple bullets. also within the authors we need to be clear what we mean by applicablity and manageablity.
+## SCONE signal Hint from Client to the Network
+In 3GPP networks (4G/5G), a User Equipment (UE) connects to the internet by establishing data sessions that traverse
+various network elements. The key process involves allocating an IP address to the UE and routing its data traffic
+through the mobile network's core to the external data networks including the internet.
+As this connection to the Internet is established and once the client App on the UE starts communicating with the 
+application content provider, a hint for SCONE usage will allow UPF to then look for a SCONE packet for this specific
+user connection and avoid PGW/UPF any unnecessary CPU cycles for non-ABR video connections.
+The section below provides a more detailed information on the UE and the mobile network for connecting to the 
+external network.
 
-- Client-application endpoint MUST initiate a SCONE HINT to assist network element with flow detection for any SCONE compliant application traffic.
+### Packet Data Network (PDN) Connection / PDU Session (5G)
+This is the logical connection established between the UE and the Packet Data Network Gateway (P-GW in 4G) 
+or User Plane Function (UPF in 5G). It allows the UE to exchange IP packets with external networks. 
+Each PDN Connection/PDU Session is associated with a specific Access Point Name (APN), which identifies 
+the type of service or external network the UE wants to connect to (e.g., "internet" for general internet access).
 
+### IP address allocation
+During the establishment of a PDN Connection/PDU Session, the UE is allocated an IP address (IPv4, IPv6, or both).
+This IP address is used for communication with the internet.
+
+### Bearer establishment
+Data traffic flows over bearers. A bearer defines the QoS (Quality of Service) characteristics for a specific 
+data flow. For internet access, a default bearer is established first, and dedicated bearers can be set up 
+for specific services requiring different QoS.
+
+### Mobility Management
+The network handles the UE's mobility (e.g., moving between cells or base stations) while maintaining the 
+ongoing data connection.
+
+## Measuring conformance of advised bit-rate
+As the network element capable of advising bit-rate limit, the network element also would need capabilities to measure conformance
+on the advised bit-rate. 
+
+Issue 35 [https://github.com/ietf-wg-scone/scone/issues/35]
+- Need to determine if the conformance is to be measured as an aggregate or on a per flow basis.
+
+Presentation given at interim session 6 provides results based on experimentation that recommends a suitable size for time window to be 120 seconds. This value is compatible with existing VOD applications when ~2 mbps is the advised bitrate.
+- [https://datatracker.ietf.org/meeting/interim-2025-scone-06/materials/slides-interim-2025-scone-06-sessa-time-window-duration-for-bitrate-measurement-00.pdf]
+  
+## Other open issues
 - SCONE signaling MUST NOT require changes to how a CSP determintes its video policy for a given flow.  (No dependency between a CSP's video policy and the SCONE protocol).
 
 - Dynamic update - "throughput advice" MAY change during the ongoing flow and UPF/PGW SHOULD be able to send "throughput advice" to client-application-endpoint as soon as possible.
 
 - SCONE signal MUST be extensible to networks beyond 4G/5G network.
 
-# SCONE Manageability
-TO DO
-# SCONE Operational Considerations
-TO DO
 
 # Security Considerations
 
