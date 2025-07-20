@@ -68,8 +68,8 @@ informative:
  
 --- abstract
 
-This document identifies applicability of SCONE signal in a mobile network and outlines operational considerations, or manageability of SCONE
-signal in the operator network. Importantly, this document also describes 3GPP network
+This document identifies applicability of SCONE signal in a mobile network and outlines operational considerations, 
+or manageability of SCONE signal in the operator network. Importantly, this document also describes 3GPP network
 elements that are capable of rate-limiting a UDP 4-tuple to communicate an upper bound
 on achievable bitrate termed "throughput advice" to implement SCONE protocol. 
 
@@ -77,7 +77,8 @@ on achievable bitrate termed "throughput advice" to implement SCONE protocol.
 
 # Introduction
 
-This document describes applicablity and manageablity of SCONE protocol in the networks and applicaiton endpoints. It focuses on mobile networks, however, this document is also applicable to other access networks.
+This document describes applicablity and manageablity of SCONE protocol in the networks and applicaiton endpoints. 
+It focuses on mobile networks, however, this document is also applicable to other access networks.
 
 # Conventions and Definitions
 
@@ -170,9 +171,11 @@ and applications.  The interface supports various trasnport protocols over IP.
 
 ## N9 Interface
 
-This interface interconnects two or more UPFs when used in a data path.  The interface uses GTP-U protocol for user traffic tunneling including roaming.
+This interface interconnects two or more UPFs when used in a data path.  The interface uses GTP-U protocol for user 
+traffic tunneling including roaming.
 
-Note: In the scenario of 2 or more UPFs in the data path, only one UPF that has access to subscriber policy would send "throughput advice" to the client-application-endpoint.
+Note: In the scenario of 2 or more UPFs in the data path, only one UPF that has access to subscriber policy would send "throughput 
+advice" to the client-application-endpoint.
 
 ## User Plane Interface Between UPF and UE
 
@@ -193,7 +196,8 @@ flow to/from a UE to the UPF.
          1. The gNB then encapsulates this user-plane data using GTP-U.
          2. It then forwards the encapsulated packets over the N3 interface to the UPF in the 5G mobile packet core.
     - UPF Routes Data to External Networks.
-         1. Within the UPF, UPF then removes the GTP-U header, processes the packet, and routes it over the N6 interface toward the destination (Internet, enterprise network, cloud services, etc.).
+         1. Within the UPF, UPF then removes the GTP-U header, processes the packet, and routes it over the N6 interface
+            toward the destination (Internet, enterprise network, cloud services, etc.).
 
 2. Downlink Data Flow
     - UPF receives incoming data in downlink direction at N6 interface (e.g. from the Internet).
@@ -239,7 +243,8 @@ As described in sections above, UPF is the 3GPP on-path "network element" that h
 the data pipe connectivity between UE and the Internet. UPF is a network element that is capable of SCONE signaling over the
 data path.
 
-Below is a high-level view of SCONE signal path in a 5G network.  Please see {{Mishra-2025}} for a more complete version of this diagram.
+Below is a high-level view of SCONE signal path in a 5G network.  Please see {{Mishra-2025}} for a more complete version 
+of this diagram.
 
 ~~~~
                           +---------+
@@ -267,7 +272,8 @@ Below is a high-level view of SCONE signal path in a 5G network.  Please see {{M
 ~~~~
 {: #5g-scone title="SCONE Integration with Video Policy in 5G SA N/W"}
 
-Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-2025}} for a more complete version of this diagram.
+Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-2025}} for a more complete 
+version of this diagram.
 
 ~~~~
                           +---------+
@@ -333,10 +339,14 @@ Presentation given at interim session 6 provides results based on experimentatio
 - [https://datatracker.ietf.org/meeting/interim-2025-scone-06/materials/slides-interim-2025-scone-06-sessa-time-window-duration-for-bitrate-measurement-00.pdf]
 
 ## Dynamic updates
-In networks, for example - radio networks, the avaible capacity of the network can dynamically change for a persistance of time that, or there could be sudden increase of network users, these could result in change of throughput advice for a particular scone capable flow. These changes need to be dynamically and immidiately updated in the rate signal to avoid unnecesarry rate shaping or degradated QoE. This means the network elements need to be able to initiate the sending of the rate signal if there is not sufficient fre  quency of scone packets send for that particular flow. 
+In networks, for example - radio networks, the avaible capacity of the network can dynamically change for a persistance of time that, 
+or there could be sudden increase of network users, these could result in change of throughput advice for a particular scone 
+capable flow. These changes need to be dynamically and immidiately updated in the rate signal to avoid unnecesarry rate shaping 
+or degradated QoE. This means the network elements need to be able to initiate the sending of the rate signal if there is not 
+sufficient frequency of scone packets send for that particular flow. 
 
 ## Other open issues
-- SCONE signaling MUST NOT require changes to how a CSP determintes its video policy for a given flow.  (No dependency between a CSP's video policy and the SCONE protocol).
+- SCONE signaling MUST NOT require changes to how a CSP determines its video policy for a given flow. That is there is MUST not be any dependency between a CSP's video policy and the SCONE protocol.
 
 - SCONE signal MUST be extensible to networks beyond 4G/5G network.
 
