@@ -1,7 +1,7 @@
 ---
 title: "Applicability & Manageability of SCONE signal for a mobile network"
 abbrev: "SCONE Applicability & Manageability"
-docname: draft-mishra-scone-applicability-manageablity-01
+docname: draft-mishra-scone-applicability-manageablity-00
 category: info
 
 ipr: trust200902
