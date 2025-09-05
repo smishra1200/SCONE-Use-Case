@@ -86,160 +86,25 @@ It focuses on mobile networks, however, this document is also applicable to othe
 
 # User Plane Network Element in Mobile Packet Core
 
-This section describes 5G mobile packet core to explain the role of user-plane
-network element in mobile packet core and reasons why the 5G User Plane
-Function (UPF) and 4G P-GW as network elements can be considered candidates for
-signaling the "throughput advice" to client-application-endpoint.  However, the
-applicability extends to network architectures beyond 4G/5G networks.
+The User Plan Function or the UPF, is a network function in 5G core or a Packet Data Network Gateway
+(PDN-GW, or simply P-GW) in a 4G networks provide the internet connectivity to the mobile devices. 
+Additionally,  UPF and the P-GW perform many other critical functions such as packet inspection
+packet routing and forwarding in both uplink and downlink direction including bit-rate and QoS enforcement. 
 
-The user plane network element in the 5G packet core, termed as the UPF, as shown in
-Figure 1. In the 4G packet core, the P-GW (as shown in Figure 2) performs the
-same role as the UPF does in the 5G mobile packet core.
-
-The UPF is a fundamental component of the 3GPP's 5G packet core network
-architecture. UPF is the data path between the end-user and the Internet, has
-access to subscriber policy via standard 3GPP interface and is responsible for
-routing and forwarding user data packets. UPF is the anchor point between the
-mobile infrastructure and the Packet Data Network.  The UPF is responsible for
-functions such as:
-
-- Packet routing, forwarding, and interconnection to the Data Network (Internet) 
-- Allocation of User Equipment (UE) IP Address/prefix, in conjunction with Session Management Function (SMF)
-- Quality of Service policy enforcement
-- Handling of traffic filtering, steering and application detection
-- Traffic usage reporting
-
-Note: This is not an exhaustive list of UPF functions.  For details refer to
-{{5G-Arch}}.
-
-To accomplish above mentioned functions, the UPF has four distinct reference
-points (interfaces)  as defined by the 3GPP and as shown in the figure below:
-
-~~~~
-               +-----+  Nudm/Nudr  +---------+
-               | PCF +-------------+ UDM/UDR |
-               +--+--+             +----+----+
-                   |                    |
-              Npcf |      +-----+       |Nudm
-                   +------+ SMF +-------+
-                          +--+--+      ___  __
-                             | N4     (   )(  )
-   +----+   +--------+    +--+--+    (         )    +------------------+
-   | UE |---| gNodeB |----| UPF |----( Internet )---| Content Provider |
-   +----+   +--------+ N3 +- -+-+ N6  (        )    +------------------+
-                              | N9     (__(___)
-                            +-+---+
-                            | UPF |
-                            +-----+
-~~~~
-{: #5g-diagram title="5G Mobile Network Architecture"}
-
-
-
-1. The N3 interface is between the UPF and the 5G Base station.
-
-2. The N4 interface is a connection between the UPF and the Session Management Function (SMF).
-
-3. The N6 interface is between the UPF and the public data network or the Internet.
-
-4. The N9 interface is between instances of UPFs.
-
-
-## N3 Interface
-
-The N3 interfaces transfers user plane traffic, that is, user data packets
-between the gNodeB and the UPF.  It uses GPRS Tunneling Protocol - User Plane
-or GTP-U.  It replaces the S1-U interfaces from the 4G mobile packet core.
-
-## N4 Interface
-
-The N4 interface connects the UPF and the 5G Session Management Function (SMF).
-Through N4, the SMF informs the UPF about the subscriber policy and data plans.
-Additionally, this interface is used to manage session setup, modification,
-deletion, and for configuring forwarding rules for user data.  The N4 interface
-among others uses Packet Forwarding Control Protocol (PFCP).
-
-Note: SMF also interacts with Policy Control Function (PCF) for functions such
-as QoS and Charging policy rules, Unified Data Management (UDM) and Unified
-Data Repository (UDR) for functions such as subscription data and policy plans.
-
-## N6 Interface
-
-The N6 interface connects the UPF to external Data Networks, similar to the SGi
-interface between the P-GW and the external Data Network for access to services
-and applications.  The interface supports various trasnport protocols over IP.
-
-## N9 Interface
-
-This interface interconnects two or more UPFs when used in a data path.  The interface uses GTP-U protocol for user 
-traffic tunneling including roaming.
-
-Note: In the scenario of 2 or more UPFs in the data path, only one UPF that has access to subscriber policy would send "throughput 
-advice" to the client-application-endpoint.
-
-## User Plane Interface Between UPF and UE
-
-This section describes the N3 interface (between the UPF and gNodeB or gNB) and
-the air interface between the gNB and UE.  For purposes of nomenclature, a
-Protocol Data Unit (PDU) session is a logical path between a UE and UPF to
-carry packets belonging to one or more IP flows between UE and DN.  A PDU
-session within a 5G mobile network consists of an air-interface between UE and
-gNB and GTP-U tunnel between gNB and UPF (N3 interface).  IP flows (aka service
-data flows or SDFs) may belong to one or more services.  All the service data
-flows with the same QoS maps onto one PDU session.  Below is an example of data
-flow to/from a UE to the UPF.
-
-1. Uplink Data Flow
-    - Apps that are hosted on UE that generate application packets for communication (e.g. web brownsing, video streaming).
-    - These packets are transmitted to the gNB over the air interface.
-    - N3 Encapsulation and Forwarding
-         1. The gNB then encapsulates this user-plane data using GTP-U.
-         2. It then forwards the encapsulated packets over the N3 interface to the UPF in the 5G mobile packet core.
-    - UPF Routes Data to External Networks.
-         1. Within the UPF, UPF then removes the GTP-U header, processes the packet, and routes it over the N6 interface
-            toward the destination (Internet, enterprise network, cloud services, etc.).
-
-2. Downlink Data Flow
-    - UPF receives incoming data in downlink direction at N6 interface (e.g. from the Internet).
-    - The UPF encapsulates incoming data using GTP-U and sends it back over the N3 interface to the gNB.
-    - The gNB forwards the packets to the UE over the air-interface.  UE-side modem stack then transparently passes the application packets to the app hosted on the UE.
-
-In summary, the UPF is responsible for packet routing and forwarding, packet
-inspection and filtering, subscriber policy enforcement, inline services (NAT, firewall, DNS etc) and QoS handling.  
+A detailed description of their roles in mobile networks is at the end of the document.
 
 # Applicability of SCONE Signal in Mobile Networks
 
 The UPF is a data path mobile packet core network element that routes
-and forwards application packets between the gNodeB and the DN and it
+and forwards application packets between the gNodeB and the Data Network (DN) and 
 has access to subscriber policy via standard 3GPP N3 interface. 
 
-As a result, UPF is in the best position to send the throughput advice to client application over the data-path.
+This document proposes using UPF and the PDN-GW to send the throughput advice to client application 
+over the existing data-path as per the 3GPP standards.
 
-## 4G Mobile Network Architecture
+## Implementing SCONE in Mobile Networks
 
-~~~~
-                    +-----+
-                    | HSS |
-                    +-----+
-                       |
-                    +-----+          +------+
-                    | MME |          | PCRF |
-                   /+-----+\         +------+
-                  /         \            |
-                 /           \           |         ___  __
-                /             \          |        /   )(  \
-   +----+   +-----+        +------+  +------+    (         )    +----------+
-   | UE |---| eNB |--------| S-GW |--| P-GW |----( Internet )---| Content  |
-   +----+   +-----+   S1u  +------+  +------+ SGi (        _)   | Provider |
-                                                   (__(___)     +----------+
- 
-~~~~
-{: #4g-diagram title="4G Mobile Network Architecture"}
-
-
-## Implementing SCONE In the Mobile Network
-
-As described in sections above, UPF is the 3GPP on-path "network element" that has access to subscriber policy and provides
+UPF is the 3GPP on-path "network element" that has access to subscriber policy and provides
 the data pipe connectivity between UE and the Internet. UPF is a network element that is capable of SCONE signaling over the
 data path.
 
@@ -352,6 +217,147 @@ sufficient frequency of scone packets send for that particular flow.
 
 - discussion on how the applications/receivers can adapt to the rate signals.
 
+# Detailed view of the User Plane Network Element in Mobile Packet Core
+
+This section describes 5G mobile packet core to explain the role of user-plane
+network element in mobile packet core and reasons why the 5G User Plane
+Function (UPF) and 4G P-GW as network elements can be considered candidates for
+signaling the "throughput advice" to client-application-endpoint.  However, the
+applicability extends to network architectures beyond 4G/5G networks.
+
+The user plane network element in the 5G packet core, termed as the UPF, as shown in
+Figure 1. 
+
+~~~~
+               +-----+  Nudm/Nudr  +---------+
+               | PCF +-------------+ UDM/UDR |
+               +--+--+             +----+----+
+                   |                    |
+              Npcf |      +-----+       |Nudm
+                   +------+ SMF +-------+
+                          +--+--+      ___  __
+                             | N4     (   )(  )
+   +----+   +--------+    +--+--+    (         )    +------------------+
+   | UE |---| gNodeB |----| UPF |----( Internet )---| Content Provider |
+   +----+   +--------+ N3 +- -+-+ N6  (        )    +------------------+
+                              | N9     (__(___)
+                            +-+---+
+                            | UPF |
+                            +-----+
+~~~~
+{: #5g-diagram title="5G Mobile Network Architecture"}
+
+In the 4G packet core, the P-GW (as shown in Figure 2) performs the
+same role as the UPF does in the 5G mobile packet core.
+
+~~~~
+                    +-----+
+                    | HSS |
+                    +-----+
+                       |
+                    +-----+          +------+
+                    | MME |          | PCRF |
+                   /+-----+\         +------+
+                  /         \            |
+                 /           \           |         ___  __
+                /             \          |        /   )(  \
+   +----+   +-----+        +------+  +------+    (         )    +----------+
+   | UE |---| eNB |--------| S-GW |--| P-GW |----( Internet )---| Content  |
+   +----+   +-----+   S1u  +------+  +------+ SGi (        _)   | Provider |
+                                                   (__(___)     +----------+
+ 
+~~~~
+{: #4g-diagram title="4G Mobile Network Architecture"}
+
+## 5G Mobile Network Architecture
+The UPF is a fundamental component of the 3GPP's 5G packet core network
+architecture. UPF is the data path between the end-user and the Internet, has
+access to subscriber policy via standard 3GPP interface and is responsible for
+routing and forwarding user data packets. UPF is the anchor point between the
+mobile infrastructure and the Packet Data Network.  The UPF is responsible for
+functions such as:
+
+- Packet routing, forwarding, and interconnection to the Data Network (Internet) 
+- Allocation of User Equipment (UE) IP Address/prefix, in conjunction with Session Management Function (SMF)
+- Quality of Service policy enforcement
+- Handling of traffic filtering, steering and application detection
+- Traffic usage reporting
+
+Note: This is not an exhaustive list of UPF functions.  For details refer to
+{{5G-Arch}}.
+
+To accomplish above mentioned functions, the UPF has four distinct reference
+points (interfaces)  as defined by the 3GPP and as shown in the figure 1 above:
+
+1. The N3 interface is between the UPF and the 5G Base station.
+
+2. The N4 interface is a connection between the UPF and the Session Management Function (SMF).
+
+3. The N6 interface is between the UPF and the public data network or the Internet.
+
+4. The N9 interface is between instances of UPFs.
+
+## N3 Interface
+
+The N3 interfaces transfers user plane traffic, that is, user data packets
+between the gNodeB and the UPF.  It uses GPRS Tunneling Protocol - User Plane
+or GTP-U.  It replaces the S1-U interfaces from the 4G mobile packet core.
+
+## N4 Interface
+
+The N4 interface connects the UPF and the 5G Session Management Function (SMF).
+Through N4, the SMF informs the UPF about the subscriber policy and data plans.
+Additionally, this interface is used to manage session setup, modification,
+deletion, and for configuring forwarding rules for user data.  The N4 interface
+among others uses Packet Forwarding Control Protocol (PFCP).
+
+Note: SMF also interacts with Policy Control Function (PCF) for functions such
+as QoS and Charging policy rules, Unified Data Management (UDM) and Unified
+Data Repository (UDR) for functions such as subscription data and policy plans.
+
+## N6 Interface
+
+The N6 interface connects the UPF to external Data Networks, similar to the SGi
+interface between the P-GW and the external Data Network for access to services
+and applications.  The interface supports various trasnport protocols over IP.
+
+## N9 Interface
+
+This interface interconnects two or more UPFs when used in a data path.  The interface uses GTP-U protocol for user 
+traffic tunneling including roaming.
+
+Note: In the scenario of 2 or more UPFs in the data path, only one UPF that has access to subscriber policy would send "throughput 
+advice" to the client-application-endpoint.
+
+## User Plane Interface Between UPF and UE
+
+This section describes the N3 interface (between the UPF and gNodeB or gNB) and
+the air interface between the gNB and UE.  For purposes of nomenclature, a
+Protocol Data Unit (PDU) session is a logical path between a UE and UPF to
+carry packets belonging to one or more IP flows between UE and DN.  A PDU
+session within a 5G mobile network consists of an air-interface between UE and
+gNB and GTP-U tunnel between gNB and UPF (N3 interface).  IP flows (aka service
+data flows or SDFs) may belong to one or more services.  All the service data
+flows with the same QoS maps onto one PDU session.  Below is an example of data
+flow to/from a UE to the UPF.
+
+1. Uplink Data Flow
+    - Apps that are hosted on UE that generate application packets for communication (e.g. web brownsing, video streaming).
+    - These packets are transmitted to the gNB over the air interface.
+    - N3 Encapsulation and Forwarding
+         1. The gNB then encapsulates this user-plane data using GTP-U.
+         2. It then forwards the encapsulated packets over the N3 interface to the UPF in the 5G mobile packet core.
+    - UPF Routes Data to External Networks.
+         1. Within the UPF, UPF then removes the GTP-U header, processes the packet, and routes it over the N6 interface
+            toward the destination (Internet, enterprise network, cloud services, etc.).
+
+2. Downlink Data Flow
+    - UPF receives incoming data in downlink direction at N6 interface (e.g. from the Internet).
+    - The UPF encapsulates incoming data using GTP-U and sends it back over the N3 interface to the gNB.
+    - The gNB forwards the packets to the UE over the air-interface.  UE-side modem stack then transparently passes the application packets to the app hosted on the UE.
+
+In summary, the UPF is responsible for packet routing and forwarding, packet
+inspection and filtering, subscriber policy enforcement, inline services (NAT, firewall, DNS etc) and QoS handling.
 
 # Security Considerations
 
