@@ -68,48 +68,49 @@ informative:
  
 --- abstract
 
-This document identifies applicability of SCONE signal in a mobile network and outlines operational considerations, 
-or manageability of SCONE signal in the operator network. Importantly, this document also describes 3GPP network
-elements that are capable of rate-limiting a UDP 4-tuple to communicate an upper bound
-on achievable bitrate termed "throughput advice" to implement SCONE protocol. 
+This document discusses the applicability of the SCONE signal in mobile networks and the operational considerations for managing it in operator deployments. 
+It describes how 3GPP user-plane network elements, including the User Plane Function (UPF) and Packet Data Network Gateway (P-GW), can generate “throughput
+advice” by rate-limiting a UDP 4-tuple to indicate an upper bound on achievable bitrate for application flows. This advice enables implementation of the SCONE
+protocol in support of adaptive applications such as video streaming. While the focus is on mobile networks, the considerations are also relevant to other access networks.
 
 --- middle
 
 # Introduction
 
-This document describes applicablity and manageablity of SCONE protocol in the networks and applicaiton endpoints. 
-It focuses on mobile networks, however, this document is also applicable to other access networks.
+This document describes the applicability and manageability of the SCONE protocol in both operator networks and application endpoints. 
+The primary focus is on mobile networks, where user-plane functions such as the UPF (5G) or P-GW (4G) are capable of generating throughput 
+advice to guide adaptive applications. However, the same concepts may also apply to other access networks where similar advisory mechanisms are useful.
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
-# User Plane Network Element in Mobile Packet Core
+# Problem Statement
+Existing transport feedback mechanisms, such as TCP congestion control or Explicit Congestion Notification (ECN), typically react only 
+after congestion occurs and may not provide timely or accurate guidance in mobile environments. They also offer limited visibility into 
+operator-managed resources. SCONE addresses this gap by enabling network elements to communicate advisory information directly to endpoints, 
+allowing applications to adjust proactively to the achievable throughput.
 
-The User Plan Function or the UPF, is a network function in 5G core or a Packet Data Network Gateway
-(PDN-GW, or simply P-GW) in a 4G networks provide the internet connectivity to the mobile devices. 
-Additionally,  UPF and the P-GW perform many other critical functions such as packet inspection
-packet routing and forwarding in both uplink and downlink direction including bit-rate and QoS enforcement. 
-
-A detailed description of their roles in mobile networks is at the end of the document.
+This document is intended to outline SCONE applicability and mangeability in the operator network and is not a protocol specification.
 
 # Applicability of SCONE Signal in Mobile Networks
 
-The UPF is a data path mobile packet core network element that routes
-and forwards application packets between the gNodeB and the Data Network (DN) and 
-has access to subscriber policy via standard 3GPP N3 interface. 
-
-This document proposes using UPF and the PDN-GW to send the throughput advice to client application 
-over the existing data-path as per the 3GPP standards.
+Mobile and access networks frequently encounter variable conditions due to congestion, radio interference, or dynamic resource allocation. 
+Applications with fixed sending rates may experience degraded performance or inefficiencies under such conditions. The SCONE protocol enables 
+network elements to provide throughput advice directly to applications, allowing them to adjust sending rates proactively, improving end-user 
+Quality of Experience (QoE) while helping operators manage network resources efficiently. This document proposes leveraging 3GPP user-plane 
+network elements, including the UPF in 5G and the PDN-GW in 4G, to deliver throughput advice over the existing data path in accordance with 
+3GPP standards.
 
 ## Implementing SCONE in Mobile Networks
 
-UPF is the 3GPP on-path "network element" that has access to subscriber policy and provides
-the data pipe connectivity between UE and the Internet. UPF is a network element that is capable of SCONE signaling over the
-data path.
+In 5G, the User Plane Function (UPF), and in 4G, the Packet Data Network Gateway (P-GW), are on-path network elements with access to 
+subscriber policy and data-plane connectivity between the UE and the Internet. These elements can generate SCONE throughput advice per 
+application flow, enabling endpoints to adjust sending rates proactively in response to network conditions. SCONE signaling occurs over 
+the existing data path in accordance with 3GPP standards.
 
-Below is a high-level view of SCONE signal path in a 5G network.  Please see {{Mishra-2025}} for a more complete version 
-of this diagram.
+The following diagrams illustrate how throughput advice is conveyed within the 5G and 4G packet core, highlighting the role of user-plane 
+network elements in signaling rate guidance to applications.
 
 ~~~~
                           +---------+
@@ -137,8 +138,7 @@ of this diagram.
 ~~~~
 {: #5g-scone title="SCONE Integration with Video Policy in 5G SA N/W"}
 
-Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-2025}} for a more complete 
-version of this diagram.
+Similarly, the SCONE signal for 4G network is shown below.  
 
 ~~~~
                           +---------+
@@ -164,6 +164,20 @@ version of this diagram.
 # SCONE Manageability & Operational considerations
 This sections describes how SCONE protocol can be supported on a 3GPP network including supporting SCONE packets
 over a given PDU session as defined within the 3GPP specifications.
+This section describes how the SCONE protocol can be deployed and managed within 3GPP networks, including support for SCONE packets 
+over established PDU sessions. Building on the applicability of SCONE signaling in mobile networks, network elements such as the UPF (5G) 
+and P-GW (4G) can provide throughput advice while ensuring that signaling occurs per flow without requiring changes to existing data paths.
+
+Operational considerations include:
+- PDU Session Awareness: SCONE signaling occurs over established PDU sessions, allowing network elements to identify the UE and application flows for which
+throughput advice is relevant.
+- Per-Flow Signaling: Throughput advice is applied on a per-application or per-4-tuple basis, enabling precise rate guidance without impacting unrelated traffic.
+- Dynamic Updates: Network conditions such as congestion, radio resource availability, or sudden changes in user load may require frequent updates to throughput advice. The network element must be capable of generating updated SCONE signals dynamically to maintain Quality of Experience (QoE) for applications.
+- Conformance Monitoring: Network elements providing SCONE advice should have mechanisms to measure compliance with the advised throughput, either per flow or in aggregate, to ensure that rate guidance is effective.
+- Standards Compliance: All SCONE signaling occurs over the existing data path in accordance with 3GPP specifications, ensuring compatibility with established mobile core procedures and avoiding protocol changes.
+
+By addressing these operational considerations, SCONE can be managed effectively in mobile networks, enabling adaptive applications to optimize 
+their performance while allowing operators to utilize network resources efficiently.
 
 ## 3GPP defined PDU Session establishment procedures
 The sections below provide an overview of high-level functions within the 3GPP specifications to support 
