@@ -162,17 +162,12 @@ version of this diagram.
 {: #4g-scone title="SCONE Integration with Vido Policy in 4G N/W"}
 
 # SCONE Manageability & Operational considerations
-The sections below describe SCONE signal manageability.
+This sections describes how SCONE protocol can be supported on a 3GPP network including supporting SCONE packets
+over a given PDU session as defined within the 3GPP specifications.
 
-## SCONE signal Hint from Client to the Network
-In 3GPP networks (4G/5G), a User Equipment (UE) connects to the internet by establishing data sessions that traverse
-various network elements. The key process involves allocating an IP address to the UE and routing its data traffic
-through the mobile network's core to the external data networks including the internet.
-As this connection to the Internet is established and once the client App on the UE starts communicating with the 
-application content provider, a hint for SCONE usage will allow UPF to then look for a SCONE packet for this specific
-user connection and avoid PGW/UPF any unnecessary CPU cycles for non-ABR video connections.
-The section below provides a more detailed information on the UE and the mobile network for connecting to the 
-external network.
+## 3GPP defined PDU Session establishment procedures
+The sections below provide an overview of high-level functions within the 3GPP specifications to support 
+the PDU session establishment after which the SCONE packets will run over the established PDU session.  
 
 ### Packet Data Network (PDN) Connection / PDU Session (5G)
 This is the logical connection established between the UE and the Packet Data Network Gateway (P-GW in 4G) 
@@ -193,9 +188,26 @@ for specific services requiring different QoS.
 The network handles the UE's mobility (e.g., moving between cells or base stations) while maintaining the 
 ongoing data connection.
 
+## Applicability & Mangeability of the SCONE Protocol in the 3GPP network
+The sections below describes support for SCONE protocol within the 3GPP networks.
+
+## SCONE signal Hint from Client to the Network
+In 3GPP networks (4G/5G), a User Equipment (UE) connects to the internet by establishing data sessions that
+traverse various network elements. The key process involves allocating an IP address to the UE and routing its
+data traffic through the mobile network's core to the external data networks including the internet. As this
+connection to the Internet is established and once the client App on the UE starts communicating with the 
+application content provider, a hint for SCONE usage will allow UPF to then look for a SCONE packet for this
+specific user connection and avoid PGW/UPF any unnecessary CPU cycles for non-ABR video connections.
+The section below provides a more detailed information on the UE and the mobile network for connecting to the 
+external network.
+
+## Retransmission of advised bit-rate 
+Editor's note: 
+- address potential packet loss and no support for ACK from the end-user client
+- what support the netwwork element needs from SCONE client and sender (server) to enable retx
+
 ## Measuring conformance of advised bit-rate
-As the network element capable of advising bit-rate limit, the network element also would need capabilities to measure conformance
-on the advised bit-rate. 
+As the network element capable of advising bit-rate limit, the network element also would need capabilities to measure conformance on the advised bit-rate. 
 
 Issue 35 [https://github.com/ietf-wg-scone/scone/issues/35]
 - Need to determine if the conformance is to be measured as an aggregate or on a per flow basis.
@@ -204,11 +216,17 @@ Presentation given at interim session 6 provides results based on experimentatio
 - [https://datatracker.ietf.org/meeting/interim-2025-scone-06/materials/slides-interim-2025-scone-06-sessa-time-window-duration-for-bitrate-measurement-00.pdf]
 
 ## Dynamic updates
-In networks, for example - radio networks, the avaible capacity of the network can dynamically change for a persistance of time that, 
-or there could be sudden increase of network users, these could result in change of throughput advice for a particular scone 
-capable flow. These changes need to be dynamically and immidiately updated in the rate signal to avoid unnecesarry rate shaping 
-or degradated QoE. This means the network elements need to be able to initiate the sending of the rate signal if there is not 
-sufficient frequency of scone packets send for that particular flow. 
+In networks, for example - radio networks, the avaible capacity of the network can dynamically change for a period of time or there could be sudden increase of network users, these could result in change of throughput advice for a particular scone capable flow. These changes need to be dynamically and immidiately updated in the rate signal to avoid unnecesarry rate shaping or degradated QoE. This means the network elements need to be able to initiate the sending of the rate signal if there is not sufficient frequency of scone packets send for that particular flow. 
+Editor's note:
+- Discuss Use-cases that would require the network element to update the advised bit-rate for a flow.
+- How soon the netwrok element is expected to send the updated advised bit-rate to the client?
+- What support it needs from the scone sender (server) to enable this? For e.g., what is the Max periodicity at
+which server is supposed to send Scone packets.
+
+## Frequency of updates to SCONE packets by the Network Element
+Editor's note:
+- Consider impacts on CPU utilization of network element (UPF/PGW)
+- Acceptable periodicity at which network element (UPF/PGW) can update the SCONE packet from a CPU load stand point.
 
 ## Other open issues
 - SCONE signaling MUST NOT require changes to how a CSP determines its video policy for a given flow. That is there is MUST not be any dependency between a CSP's video policy and the SCONE protocol.
@@ -216,6 +234,10 @@ sufficient frequency of scone packets send for that particular flow.
 - SCONE signal MUST be extensible to networks beyond 4G/5G network.
 
 - discussion on how the applications/receivers can adapt to the rate signals.
+- A question was raised RE one or more network elements in a path may send advised bit-rate. Towards that point.
+A typical mobile network deployment, there is only one UPF (PGW) which would send an advised bit-rate.
+If additional UPF/PGW are deployed, they may have specific function but will not be configured to communicate
+maximum bit-rate. 
 
 # Detailed view of the User Plane Network Element in Mobile Packet Core
 
