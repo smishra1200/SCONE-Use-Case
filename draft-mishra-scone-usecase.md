@@ -91,7 +91,7 @@ after congestion occurs and may not provide timely or accurate guidance in mobil
 operator-managed resources. SCONE addresses this gap by enabling network elements to communicate advisory information directly to endpoints, 
 allowing applications to adjust proactively to the achievable throughput.
 
-This document is intended to outline SCONE applicability and mangeability in the operator network and is not a protocol specification.
+This document is intended to outline SCONE applicability and manageability in the operator network and is not a protocol specification.
 
 # Applicability of SCONE Signal in Mobile Networks
 
@@ -159,7 +159,7 @@ Similarly, the SCONE signal for 4G network is shown below.
      +---------+ eNB +-------+ S-GW |
                +-----+       +------+
 ~~~~
-{: #4g-scone title="SCONE Integration with Vido Policy in 4G N/W"}
+{: #4g-scone title="SCONE Integration with Video Policy in 4G N/W"}
 
 # SCONE Manageability & Operational considerations
 This section describes how the SCONE protocol can be deployed and managed within 3GPP networks, including support for SCONE packets 
@@ -339,7 +339,7 @@ Data Repository (UDR) for functions such as subscription data and policy plans.
 
 The N6 interface connects the UPF to external Data Networks, similar to the SGi
 interface between the P-GW and the external Data Network for access to services
-and applications.  The interface supports various trasnport protocols over IP.
+and applications.  The interface supports various transport protocols over IP.
 
 ## N9 Interface
 
@@ -362,7 +362,7 @@ flows with the same QoS maps onto one PDU session.  Below is an example of data
 flow to/from a UE to the UPF.
 
 1. Uplink Data Flow
-    - Apps that are hosted on UE that generate application packets for communication (e.g. web brownsing, video streaming).
+    - Apps that are hosted on UE that generate application packets for communication (e.g. web browsing, video streaming).
     - These packets are transmitted to the gNB over the air interface.
     - N3 Encapsulation and Forwarding
          1. The gNB then encapsulates this user-plane data using GTP-U.
