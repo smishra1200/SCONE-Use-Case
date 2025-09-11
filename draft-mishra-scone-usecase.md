@@ -121,7 +121,7 @@ network elements in signaling rate guidance to applications.
                           +---------+
                           |   SMF   |
                           +----+----+
-                               | Subscriber
+                               | Flow
                                v Policy Rules
 +--------+               + +---------+-+
 | Client |/--------------\ |  SCONE  | |       __
@@ -144,7 +144,7 @@ Similarly, the SCONE signal for 4G network is shown below.
                           +---------+
                           |  PCRF   |
                           +----+----+
-                               | Subscriber
+                               | Flow
                                v Policy Rules
 +--------+               + +---------+-+
 | Client |/--------------\ |  SCONE  | |       __
@@ -358,8 +358,9 @@ carry packets belonging to one or more IP flows between UE and DN.  A PDU
 session within a 5G mobile network consists of an air-interface between UE and
 gNB and GTP-U tunnel between gNB and UPF (N3 interface).  IP flows (aka service
 data flows or SDFs) may belong to one or more services.  All the service data
-flows with the same QoS maps onto one PDU session.  Below is an example of data
-flow to/from a UE to the UPF.
+flows with the same QoS maps onto same QoS flow beloning one PDU session,
+but QoS flows cannot be shared between different PDU session.  Below is an 
+example of data flow to/from a UE to the UPF.
 
 1. Uplink Data Flow
     - Apps that are hosted on UE that generate application packets for communication (e.g. web brownsing, video streaming).
