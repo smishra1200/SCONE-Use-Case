@@ -210,7 +210,7 @@ Packet loss or non-delivery of SCONE advice may reduce the effectiveness of rate
 
 ## Dynamic Updates
 
-Network conditions in mobile environments can change rapidly due to congestion, radio resource allocation, or sudden variations in user load. SCONE-capable network elements must be able to generate updated throughput advice dynamically, ensuring that adaptive applications can respond promptly to maintain QoE. The frequency and granularity of updates should balance responsiveness with CPU and network overhead.
+Network conditions in mobile environments can change rapidly due to congestion, radio resource allocation, or sudden variations in user load. Moreover mobile networks also have the concept of Guranteed Bit Rate (GBR) and Maximum Bit Rate (MBR), flows can be set to any of these rate limits and change status during the session which would impact the bitrate allocation to the flow. If the client is on mobile network that has MBR per service then the client need to adapt to the any changes on the MBR value to avoid QOE artifacts, hence, timely SCONE signals will be need. SCONE-capable network elements must be able to generate updated throughput advice dynamically, ensuring that adaptive applications can respond promptly to maintain QoE. The frequency and granularity of updates should balance responsiveness with CPU and network overhead.
 
 ## Frequency of Updates
 
