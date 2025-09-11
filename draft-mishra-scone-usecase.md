@@ -1,7 +1,7 @@
 ---
 title: "Applicability & Manageability of SCONE signal for a mobile network"
 abbrev: "SCONE Applicability & Manageability"
-docname: draft-mishra-scone-applicability-manageablity-00
+docname: draft-mishra-scone-applicability-manageablity-01
 category: info
 
 ipr: trust200902
@@ -68,7 +68,7 @@ informative:
  
 --- abstract
 
-This document discusses the applicability of the SCONE signal in mobile networks and the operational considerations for managing it in operator deployments. 
+This document addresses the applicability of the SCONE signal in mobile networks and the operational considerations for managing it in operator deployments. 
 It describes how 3GPP user-plane network elements, including the User Plane Function (UPF) and Packet Data Network Gateway (P-GW), can generate “throughput
 advice” by rate-limiting a UDP 4-tuple to indicate an upper bound on achievable bitrate for application flows. This advice enables implementation of the SCONE
 protocol in support of adaptive applications such as video streaming. While the focus is on mobile networks, the considerations are also relevant to other access networks.
@@ -79,7 +79,7 @@ protocol in support of adaptive applications such as video streaming. While the 
 
 This document describes the applicability and manageability of the SCONE protocol in both operator networks and application endpoints. 
 The primary focus is on mobile networks, where user-plane functions such as the UPF (5G) or P-GW (4G) are capable of generating throughput 
-advice to guide adaptive applications. However, the same concepts may also apply to other access networks where similar advisory mechanisms are useful.
+advice to guide adaptive bit-rate applications. However, the same concepts may also apply to other access networks where similar advisory mechanisms are useful.
 
 # Conventions and Definitions
 
@@ -96,7 +96,7 @@ This document is intended to outline SCONE applicability and mangeability in the
 # Applicability of SCONE Signal in Mobile Networks
 
 Mobile and access networks frequently encounter variable conditions due to congestion, radio interference, or dynamic resource allocation. 
-Applications with fixed sending rates may experience degraded performance or inefficiencies under such conditions. The SCONE protocol enables 
+Even applications that use adaptive bit-rate may experience degraded performance or inefficiencies under such conditions. The SCONE protocol enables 
 network elements to provide throughput advice directly to applications, allowing them to adjust sending rates proactively, improving end-user 
 Quality of Experience (QoE) while helping operators manage network resources efficiently. This document proposes leveraging 3GPP user-plane 
 network elements, including the UPF in 5G and the PDN-GW in 4G, to deliver throughput advice over the existing data path in accordance with 
@@ -178,6 +178,8 @@ throughput advice is relevant.
 
 By addressing these operational considerations, SCONE can be managed effectively in mobile networks, enabling adaptive applications to optimize 
 their performance while allowing operators to utilize network resources efficiently.
+
+
 
 ## 3GPP defined PDU Session establishment procedures
 The sections below provide an overview of high-level functions within the 3GPP specifications to support 
