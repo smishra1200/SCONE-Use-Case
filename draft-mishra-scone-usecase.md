@@ -377,7 +377,7 @@ flow to/from a UE to the UPF.
     - The gNB forwards the packets to the UE over the air-interface.  UE-side modem stack then transparently passes the application packets to the app hosted on the UE.
 
 In summary, the UPF is responsible for packet routing and forwarding, packet
-inspection and filtering, subscriber policy enforcement, inline services (NAT, firewall, DNS etc) and QoS handling.
+inspection and filtering, participating in subscriber and flow policy enforcement, inline services (NAT, firewall, DNS etc) and QoS handling.
 
 # Security Considerations
 
