@@ -245,11 +245,11 @@ Network Operators MAY integrate SCONE signaling into their existing network mana
 
 Metrics of interest include:
 
-    Rate of SCONE advisory messages issued per session
+  - Rate of SCONE advisory messages issued per session
 
-    Correlation between SCONE advisories and user-plane throughput changes
+  - Correlation between SCONE advisories and user-plane throughput changes
 
-    Error conditions where SCONE signaling fails to reach the UE
+  - Error conditions where SCONE signaling fails to reach the UE
 
 Integration with existing telemetry frameworks (e.g., 3GPP NWDAF for analytics) MAY be used to assess the effectiveness of SCONE advisories and their impact on service quality.
 
