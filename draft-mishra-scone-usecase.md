@@ -75,10 +75,10 @@ This document addresses the applicability and mangeability of the SCONE signal i
 # Introduction
 
 SCONE is a signaling mechanism operating at the network/user-plane boundary where it is intended to allow for the network to
-communicate to application endpoints, a maximum allowable bit-rate for a given UDP 4-tuple. The SCONE signal is meant to carry throughput advise 
+communicate to application endpoints, a maximum allowable bit-rate for a given UDP 4-tuple. The SCONE signal is meant to carry throughput advice 
 for adaptive bit-rate applications. Purpose of this document is to address applicability and manageability of the SCONE protocol in both the operator 
 networks and application endpoints. The primary focus is on mobile networks, where user-plane functions such as the UPF (5G network) or Packet Data Network Gateway 
-or (P-GW) for a (4G network) that are capable of generating throughput advice to guide adaptive bit-rate applications. However, the same concepts
+or (PGW) for a (4G network) that are capable of generating throughput advice to guide adaptive bit-rate applications. However, the same concepts
 may also apply to other access networks where similar advisory mechanisms are useful.
 
 This document is not a protocol specifications and its purpose is to focus on SCONE's applicability and manageability in the operator network.
@@ -137,7 +137,7 @@ network elements in signaling throughgput advice to applications.
      +---------+ gNB +----------+     
                +-----+       
 ~~~~
-{: #5g-scone title="SCONE Integration within the 5G SA N/W"}
+{: #5g-scone title="SCONE Integration within the 5G SA Network"}
 
 Similarly, the SCONE signal for 4G network is shown below.  
 
@@ -160,7 +160,7 @@ Similarly, the SCONE signal for 4G network is shown below.
      +---------+ eNB +-------+ S-GW |
                +-----+       +------+
 ~~~~
-{: #4g-scone title="SCONE Integration within the 4G N/W"}
+{: #4g-scone title="SCONE Integration within the 4G Network"}
 
 # SCONE Manageability & Operational considerations
 SCONE is designed to operate indepdent of transport-layer congestion control algorithms. It simply provides a signaling path at the network/user plane
@@ -244,12 +244,11 @@ All SCONE signaling occurs over the existing data path in accordance with 3GPP s
 Network Operators MAY integrate SCONE signaling into their existing network management systems (NMS/OSS) to enable monitoring, troubleshooting, and fault isolation.
 
 Metrics of interest include:
+    Rate of SCONE advisory messages issued per session
 
-      Rate of SCONE advisory messages issued per session,
+    Correlation between SCONE advisories and user-plane throughput changes
 
-      Correlation between SCONE advisories and user-plane throughput changes,
-
-      Error conditions where SCONE signaling fails to reach the UE.
+    Error conditions where SCONE signaling fails to reach the UE
 
 Integration with existing telemetry frameworks (e.g., 3GPP NWDAF for analytics) MAY be used to assess the effectiveness of SCONE advisories and their impact on service quality.
 
