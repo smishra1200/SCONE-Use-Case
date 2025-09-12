@@ -244,6 +244,7 @@ All SCONE signaling occurs over the existing data path in accordance with 3GPP s
 Network Operators MAY integrate SCONE signaling into their existing network management systems (NMS/OSS) to enable monitoring, troubleshooting, and fault isolation.
 
 Metrics of interest include:
+
     Rate of SCONE advisory messages issued per session
 
     Correlation between SCONE advisories and user-plane throughput changes
