@@ -196,8 +196,7 @@ Throughput advice is applied on a per-4-tuple basis. This enables applications t
 
 ## QoS and Bearer Considerations
 
-SCONE signaling may be carried over either the default bearer or a dedicated bearer, depending on operator policy. Operators may configure a distinct QoS Flow Identifier (QFI) for SCONE packets to ensure predictable handling, or alternatively allow SCONE packets to traverse the same bearer as user-plane traffic when no differentiated treatment is required.
-
+In 5G, the granularity of Quality of Serivce (QoS) (default bearer in 4G) is the QoS Flow, identified by a QoS Flow Identifier (QFI). A single PDU session can have multiple QoS Flow.   Mobile Operators may configure a distinct QoS Flow Identifier (QFI) for SCONE packets to ensure predictable handling, or alternatively allow SCONE packets to traverse the same bearer as user-plane traffic when no differentiated treatment is required.
 The PCF (Policy Control Function) and SMF (Session Management Function) MUST be capable of assigning appropriate QoS attributes to SCONE flows to prevent congestion-control signaling from being degraded under high-load conditions.
 
 ## Mobility Handling Considerations
@@ -209,16 +208,25 @@ Where stateful advisory logic is deployed at the UPF, operators SHOULD provide a
 ## SCONE Hint to the Network
 
 A hint from the SCONE aware application is important for the network element as it can only rely on the hint to set throughput advise on the SCONE packet
-for a given 4-tuple. This also helps network avoid any additional CPU cycles to determine if a given PDU session is a SCONE aware application.
+for a given 4-tuple. The hint enables network element to not initiate any default rate limiting for the flow and instead generate maximum allowable bit-rate. Additionally, this also helps network avoid any additional CPU cycles to determine if a given PDU session is a SCONE aware application.
    
 ## Retransmission of Advised Bit-Rate
 
-Packet loss or non-delivery of SCONE advice may reduce the effectiveness of thoughput advice. Network elements and applications should support retransmission or periodic re-sending of SCONE packets to ensure that throughput advice is received reliably. Conformance to the advised bit-rate depends on both network and endpoint behavior.
+Packet loss or non-delivery of SCONE advice may reduce the effectiveness of thoughput advice. Network elements and applications should support retransmission or periodic re-sending of SCONE packets to ensure that throughput advice is received reliably. Conformance to the advised bit-rate depends on both network and endpoint behavior. Also see Frequency of updates section below.
 
 ## Dynamic Updates
 
-Mobile networks may apply rate limits (see the concepts of SDF or QoS Flow Maximum Bitrate-MBR, Guaranteed Flow Bit Rate (GFBR) and Maximum Flow Bit Rate (MFBR) of a GBR QoS flow etc.) that can change over the lifetime of a session. If an application endpoint client is on mobile network that has MBR per service then the client needs to adapt to any changes on the MBR value to avoid QoE artifacts. Hence, timely SCONE signaling is needed. As the updates for the rate limits are triggered and enforced by the network, SCONE-capable network elements needs to be be able to generate updated throughput advice dynamically, and in-turn, adaptive applications can respond promptly to maintain QoE. If not, the frequency and granularity of SCONE updates can be increased to ensure responsiveness, this though would lead to an increased CPU and network overhead . Moreover, network conditions in mobile environments can change rapidly due to congestion, radio resource allocation, or sudden variations in user load, so a fine balance on frequency of 
-network-based updates MUST be considered. 
+Mobile networks may apply rate limits that can change over the lifetime of a session for a 
+number of reasons such as change in the Radio Access Type attachment, exceeding data usage 
+threshold (if applicable) etc. As the updates for the rate limits are triggered and enforced by the network, SCONE-capable network elements needs to be be able to generate updated throughput advice dynamically, and in-turn, adaptive applications can respond promptly to maintain QoE. Following are examples that can be considered for:
+
+  - Changes in RAT Type
+    - This may require nework element to update throughput advice
+  - Changes in subscriber policy
+      - Example if subscriber has consumed data exceeding the allowable consumption threshold
+  - Frequency of updates to maximum allow throughput
+      - What is the optimum periodicity value (timer) at which the network element SHOULD generate maximum allowbale bit rate.
+      - What is the maximum periodicity at whicih the server is generating SCONE packets
 
 ## Frequency of Updates
 
@@ -226,7 +234,7 @@ The rate at which a network element issues SCONE updates depends on flow charact
 
 ## Conformance Monitoring
 
-Network elements providing SCONE throughput advice should have mechanisms to measure compliance with the advised throughput, either per application flow or in aggregate. This allows operators to validate that throughput advice is effective and to adjust signaling or network policies if necessary. SCONE protocol defines a monitoring period for the conformance monitoring.
+Network elements providing SCONE throughput advice should have mechanisms to measure compliance with the advised throughput, either per application flow or in aggregate. This allows operators to validate that throughput advice is effective and to adjust signaling or network policies if necessary. SCONE protocol defines a minimum monitoring period for the conformance monitoring.
 
 ## Standards Compliance
 
@@ -256,7 +264,7 @@ SCONE throughput advisory operate independently of transport-layer mechanisms su
   - SCONE signal MUST be extensible to networks beyond 4G/5G network.
 
   - discussion on how the applications/receivers can adapt to the rate signals.
-  - A question was raised RE one or more network elements in a path may send advised bit-rate. Towards that point.
+ 
   - A typical mobile network deployment may have multiple UPF deployed, however, for one PDU session there typically is only one UPF (PGW) which would send an advised bit-rate. If additional UPF/PGW are deployed, they may have specific function but will not be configured to communicate maximum bit-rate for the PDU session.
 
 By addressing these above operational considerations, SCONE can be managed effectively in mobile networks to enable adaptive bit-rate applications optimize 
