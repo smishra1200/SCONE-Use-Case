@@ -74,14 +74,11 @@ This document addresses the applicability and mangeability of the SCONE signal i
 
 # Introduction
 
-SCONE is a signaling mechanism operating at the network/user-plane boundary where it is intended to allow for the network to
+SCONE protocol is a signaling mechanism operating at the network/user-plane boundary where it is intended to allow for the network to
 communicate to application endpoints, a maximum allowable bit-rate for a given UDP 4-tuple. The SCONE signal is meant to carry throughput advice 
-for adaptive bit-rate applications. Purpose of this document is to address applicability and manageability of the SCONE protocol in both the operator 
-networks and application endpoints. The primary focus is on mobile networks, where user-plane functions such as the UPF (5G network) or Packet Data Network Gateway 
-or (PGW) for a (4G network) that are capable of generating throughput advice to guide adaptive bit-rate applications. However, the same concepts
-may also apply to other access networks where similar advisory mechanisms are useful.
+for adaptive bit-rate applications. Purpose of this document is to address applicability and manageability of the SCONE protocol in both the operator networks and application endpoints. The primary focus of this document is on mobile networks, where user-plane functions such as the UPF (5G network) or Packet Data Network Gateway or (PGW) for a (4G network) that are capable of generating throughput advice to guide adaptive bit-rate applications. However, the same concepts may also apply to other access networks where similar advisory mechanisms are useful.
 
-This document is not a protocol specifications and its purpose is to focus on SCONE's applicability and manageability in the operator network.
+This document is not a protocol specifications and its purpose is to focus on SCONE protcol's applicability and manageability in the operator network.
 
 # Conventions and Definitions
 
@@ -98,7 +95,7 @@ existing data path in accordance with 3GPP standards.
 
 ## Scope of Deployment
 
-SCONE is intended for deployment within operator-controlled networks, such as 3GPP mobile systems, fixed broadband access networks, or
+SCONE protocol is intended for deployment within operator-controlled networks, such as 3GPP mobile systems, fixed broadband access networks, or
 enterprise-managed domains. In these environments, network functions (e.g., UPF, P-GW, or equivalent user-plane entities) are capable 
 of originating throughput advisory in response to locally observed policy and network conditions. SCONE is not designed for open,
 unmanaged Internet environments where no single administrative entity has end-to-end control.
@@ -106,9 +103,7 @@ unmanaged Internet environments where no single administrative entity has end-to
 ## Implementing SCONE in Mobile Networks
 
 In 5G, the User Plane Function (UPF), and in 4G, the Packet Data Network Gateway (P-GW), are on-path network elements with access to 
-subscriber policy and data-plane, aka User Plane, connectivity between the UE and the Internet. These elements are capable to generate SCONE throughput advice per 
-application flow, enabling endpoints to adjust sending rates proactively in response to network conditions. SCONE signaling occurs over 
-the existing data path in accordance with 3GPP standards.
+subscriber policy and data-plane, aka User Plane, connectivity between the UE and the Internet. These elements are capable to generate SCONE throughput advice per application flow, enabling endpoints to adjust sending rates proactively in response to network conditions. SCONE signaling occurs over the existing data path in accordance with 3GPP standards.
 
 The following diagrams illustrate how throughput advice is conveyed within the 5G and 4G packet core, highlighting the role of user-plane 
 network elements in signaling throughgput advice to applications.
@@ -163,9 +158,7 @@ Similarly, the SCONE signal for 4G network is shown below.
 {: #4g-scone title="SCONE Integration within the 4G Network"}
 
 # SCONE Manageability & Operational considerations
-SCONE is designed to operate indepdent of transport-layer congestion control algorithms. It simply provides a signaling path at the network/user plane
-boundary rather than per-flow congestion feedback and is explicitly designed to work in 3GPP / operator-controlled domains, where 
-the UPF or another network function can generate the throughput advisory. Towards that goal, this section describes how the SCONE protocol
+SCONE protocol is designed to operate indepdent of transport-layer congestion control algorithms. It simply provides a signaling path at the network/user plane boundary rather than per-flow congestion feedback and is explicitly designed to work in 3GPP / operator-controlled domains, where the UPF or another network function can generate the throughput advisory. Towards that goal, this section describes how the SCONE protocol
 can be deployed and managed within 3GPP networks, including support for SCONE packets over established PDU sessions. 
 
 ## 3GPP defined PDU Session establishment procedures
