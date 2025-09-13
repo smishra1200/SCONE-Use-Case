@@ -95,15 +95,13 @@ existing data path in accordance with 3GPP standards.
 
 ## Scope of Deployment
 
-SCONE protocol is intended for deployment within operator-controlled networks, such as 3GPP mobile systems, fixed broadband access networks, or
-enterprise-managed domains. In these environments, network functions (e.g., UPF, P-GW, or equivalent user-plane entities) are capable 
-of originating throughput advisory in response to locally observed policy and network conditions. SCONE is not designed for open,
-unmanaged Internet environments where no single administrative entity has end-to-end control.
+The SCONE protocol is intended for deployment within operator-controlled networks, such as 3GPP mobile systems, fixed broadband access networks, or enterprise-managed domains. In these environments, network functions (e.g., UPF, P-GW, or equivalent user-plane entities) are capable of originating throughput advisory messages in response to locally observed policy and network conditions.
+
+SCONE is not designed for open, unmanaged Internet environments where no single administrative entity has end-to-end control.
 
 ## Implementing SCONE in Mobile Networks
 
-In 5G, the User Plane Function (UPF), and in 4G, the Packet Data Network Gateway (P-GW), are on-path network elements with access to 
-subscriber policy and data-plane, aka User Plane, connectivity between the UE and the Internet. These elements are capable to generate SCONE throughput advice per application flow, enabling endpoints to adjust sending rates proactively in response to network conditions. SCONE signaling occurs over the existing data path in accordance with 3GPP standards.
+In 5G, the UPF, and in 4G, the P-GW, are on-path network elements with access to subscriber policy and user-plane connectivity between the UE and the Internet. These elements are capable of generating SCONE throughput advice per application flow, enabling endpoints to adjust sending rates proactively in response to network conditions. SCONE signaling occurs over the existing data path in accordance with 3GPP standards.
 
 The following diagrams illustrate how throughput advice is conveyed within the 5G and 4G packet core, highlighting the role of user-plane 
 network elements in signaling throughgput advice to applications.
@@ -157,94 +155,83 @@ Similarly, the SCONE signal for 4G network is shown below.
 ~~~~
 {: #4g-scone title="SCONE Integration within the 4G Network"}
 
-# SCONE Manageability & Operational considerations
-SCONE protocol is designed to operate indepdent of transport-layer congestion control algorithms. It simply provides a signaling path at the network/user plane boundary rather than per-flow congestion feedback and is explicitly designed to work in 3GPP / operator-controlled domains, where the UPF or another network function can generate the throughput advisory. Towards that goal, this section describes how the SCONE protocol
-can be deployed and managed within 3GPP networks, including support for SCONE packets over established PDU sessions. 
+# SCONE Manageability & Operational Considerations
 
-## 3GPP defined PDU Session establishment procedures
-The sections below provide an overview of high-level functions within the 3GPP specifications that are relevant to SCONE manageability 
-to support the PDU session establishment after which the SCONE packets will run over the established PDU session.  
+The SCONE protocol is designed to operate independently of transport-layer congestion control algorithms. It provides a signaling path at the network/user-plane boundary, rather than per-flow congestion feedback, and is explicitly designed to work in 3GPP or other operator-controlled domains where the UPF or another network function can generate throughput advice.
+
+This section describes how the SCONE protocol can be deployed and managed within 3GPP networks, including support for SCONE packets over established PDU sessions.
+
+## 3GPP Defined PDU Session Establishment Procedures
+ 
+The following high-level functions, defined within 3GPP specifications, are relevant to SCONE manageability, as SCONE packets traverse established PDU sessions:
 
 1. Packet Data Network (PDN) Connection / PDU Session (5G)
-    This is the logical connection established between the UE and the Packet Data Network Gateway (P-GW in 4G) 
-or User Plane Function (UPF in 5G). It allows the UE to exchange IP packets with external networks. 
-Each PDN Connection/PDU Session is associated with a specific Access Point Name (APN), which identifies 
-the type of service or external network the UE wants to connect to (e.g., "internet" for general internet access).
+    A logical connection between the UE and the P-GW (in 4G) or UPF (in 5G), allowing the UE to exchange IP packets with external networks. Each PDN Connection/PDU Session is associated with an APN (4G) or DNN (5G).
 
-2. IP address allocation
-    During the establishment of a PDN Connection/PDU Session, the UE is allocated an IP address (IPv4, IPv6, or both).
-This IP address is used for communication with the internet.
+3. IP address Allocation
 
-3. Bearer establishment
-    Data traffic flows over bearers. A bearer defines the QoS (Quality of Service) characteristics for a specific 
-data flow. For internet access, a default bearer is established first, and dedicated bearers can be set up 
-for specific services requiring different QoS.
+    During PDN Connection/PDU Session establishment, the UE is allocated an IP address (IPv4, IPv6, or both) used for communication with external networks.
 
-4. Mobility Management
-    The network handles the UE's mobility (e.g., moving between cells or base stations) while maintaining the 
-ongoing data connection.
+4. Bearer Establishment
+    Data traffic flows over bearers, each defining QoS characteristics for a specific flow. In 4G, a default bearer is created for Internet access, while dedicated bearers may be set up for specialized services. In 5G, the equivalent construct is the QoS Flow.
 
-Given above context, the following section describes key manageability and operations considerations:
+5. Mobility Management
+    The network ensures seamless UE mobility across cells and base stations while maintaining the ongoing session.
 
 ## PDU Session Awareness
 
-SCONE signaling occurs over established PDU sessions, allowing network elements to identify the UE and application flows for which throughput advice is   relevant. Each session is associated with a Data Network Name (DNN in 5G netowrks) or an Access Point Name (APN in 4G networks) and IP address allocation (IPv4, IPv6, or both), enabling precise routing of SCONE packets without affecting other traffic.
+SCONE signaling operates only over established PDU sessions. This enables network elements to unambiguously associate throughput advice with specific UEs and application flows. Each session is bound to a DNN (5G) or APN (4G) and to an allocated IP address, ensuring SCONE packets are routed precisely without affecting unrelated traffic.
 
 ## Per-Flow Signaling
 
-Throughput advice is applied on a per-4-tuple basis. This enables applications to receive targeted thourhgput advice while preventing unintended impact on unrelated flows. Network elements must maintain flow-specific context for SCONE signaling to ensure correctness.
+Throughput advice is applied on a per-4-tuple basis. Network elements MUST maintain flow-specific context to ensure signaling correctness. This enables applications to receive targeted throughput advice while preventing unintended impact on unrelated flows.
 
 ## QoS and Bearer Considerations
 
-In 5G, the granularity of Quality of Serivce (QoS) (default bearer in 4G) is the QoS Flow, identified by a QoS Flow Identifier (QFI). A single PDU session can have multiple QoS Flow.   Mobile Operators may configure a distinct QoS Flow Identifier (QFI) for SCONE packets to ensure predictable handling, or alternatively allow SCONE packets to traverse the same bearer as user-plane traffic when no differentiated treatment is required.
-The PCF (Policy Control Function) and SMF (Session Management Function) MUST be capable of assigning appropriate QoS attributes to SCONE flows to prevent congestion-control signaling from being degraded under high-load conditions.
+In 5G, QoS is enforced at the granularity of QoS Flows, identified by a QoS Flow Identifier (QFI). A single PDU session can contain multiple QoS Flows. Operators MAY configure a distinct QFI for SCONE packets to ensure predictable handling, or allow SCONE packets to traverse the same bearer as user-plane traffic when no differentiated treatment is required.
 
-## Mobility Handling Considerations
+The PCF and SMF MUST be capable of assigning appropriate QoS attributes to SCONE flows to ensure that congestion-control signaling is not degraded under high-load conditions.
 
-When mobility events (e.g., handover or UPF relocation) occur, SCONE state may need to persist across control-plane and user-plane transitions. The SMF and UPF MUST ensure that SCONE packets continue to be delivered consistently after mobility procedures are complete.
+## Mobility Handling
 
-Where stateful advisory logic is deployed at the UPF, operators SHOULD provide a synchronization mechanism to prevent advisory discontinuities during mobility.
+During mobility events (e.g., handover or UPF relocation), SCONE state MUST persist across control-plane and user-plane transitions. The SMF and UPF MUST ensure consistent delivery of SCONE packets following mobility procedures.
+
+Where advisory logic is stateful at the UPF, operators SHOULD provide a synchronization mechanism to prevent discontinuities during mobility.
 
 ## SCONE Hint to the Network
 
-A hint from the SCONE aware application is important for the network element as it can only rely on the hint to set throughput advise on the SCONE packet
-for a given 4-tuple. The hint enables network element to not initiate any default rate limiting for the flow and instead generate maximum allowable bit-rate. Additionally, this also helps network avoid any additional CPU cycles to determine if a given PDU session is a SCONE aware application.
+SCONE-aware applications MUST provide hints to the network element, enabling it to generate appropriate throughput advice for a given 4-tuple. Such hints prevent unnecessary default rate-limiting and allow the network to generate the maximum allowable bit rate. Hints also reduce CPU overhead by eliminating flow classification for SCONE awareness.
    
 ## Retransmission of Advised Bit-Rate
 
-Packet loss or non-delivery of SCONE advice may reduce the effectiveness of thoughput advice. Network elements and applications should support retransmission or periodic re-sending of SCONE packets to ensure that throughput advice is received reliably. Conformance to the advised bit-rate depends on both network and endpoint behavior. Also see Frequency of updates section below.
+Packet loss or non-delivery of SCONE advice reduces effectiveness. Both network elements and applications SHOULD support retransmission or periodic re-sending of SCONE packets to ensure reliable delivery. Conformance depends on both network and endpoint behavior.
 
 ## Dynamic Updates
 
-Mobile networks may apply rate limits that can change over the lifetime of a session for a 
-number of reasons such as change in the Radio Access Type attachment, exceeding data usage 
-threshold (if applicable) etc. As the updates for the rate limits are triggered and enforced by the network, SCONE-capable network elements needs to be be able to generate updated throughput advice dynamically, and in-turn, adaptive applications can respond promptly to maintain QoE. Following are examples that can be considered for:
+Mobile networks may enforce dynamic rate limits during a sessions due to:
 
-  - Changes in RAT Type
-    - This may require nework element to update throughput advice
-  - Changes in subscriber policy
-      - Example if subscriber has consumed data exceeding the allowable consumption threshold
+  - Changes in RAT Type (requiring updated throughput advice).
+  
+  - Changes in subscriber policy (exceeding usage thresholds).
   - Frequency of updates to maximum allow throughput
-      - What is the optimum periodicity value (timer) at which the network element SHOULD generate maximum allowbale bit rate.
-      - What is the maximum periodicity at whicih the server is generating SCONE packets
+  - Periodic refreshes of maximim allowable throughput (Define timers for optimal and/or maximum update periodicity).
 
 ## Frequency of Updates
 
-The rate at which a network element issues SCONE updates depends on flow characteristics and available computational resources. Excessively frequent updates may increase CPU load on UPF/P-GW elements, while infrequent updates could reduce the effectiveness of throughput advice. Operators should define acceptable update periodicity based on application requirements, network capacity, and operational constraints.
+The rate at which SCONE updates are issued depends on flow characteristics and available computational resources. Excessively frequent updates may increase CPU load, while infrequent updates may reduce advisory effectiveness. Operators SHOULD define acceptable update periodicity based on application requirements, network capacity, and operational constraints.
 
 ## Conformance Monitoring
 
-Network elements providing SCONE throughput advice should have mechanisms to measure compliance with the advised throughput, either per application flow or in aggregate. This allows operators to validate that throughput advice is effective and to adjust signaling or network policies if necessary. SCONE protocol defines a minimum monitoring period for the conformance monitoring.
+Network elements providing SCONE throughput advice MUST implement mechanisms to measure compliance, either per application flow or in aggregate. This allows operators to validate advisory effectiveness and adjust policies. SCONE protocol defines a minimum monitoring period for the conformance monitoring.
+
 
 ## Standards Compliance
 
-All SCONE signaling occurs over the existing data path in accordance with 3GPP specifications, ensuring compatibility with established mobile core procedures and avoiding protocol changes. SCONE operates without interfering with standard QoS enforcement or subscriber policies.
+All SCONE signaling occurs over the existing data path in accordance with 3GPP specifications, ensuring compatibility with established mobile-core procedures and avoiding protocol modifications. SCONE operates without interfering with QoS enforcement or subscriber policies.
 
 ## Operations Monitoring and Logging
 
-Network Operators MAY integrate SCONE signaling into their existing network management systems (NMS/OSS) to enable monitoring, troubleshooting, and fault isolation.
-
-Metrics of interest include:
+Operators MAY integrate SCONE signaling into existing OSS/NMS frameworks to enable monitoring, troubleshooting, and fault isolation. Metrics of interest include:
 
   - Rate of SCONE advisory messages issued per session
 
@@ -252,24 +239,23 @@ Metrics of interest include:
 
   - Error conditions where SCONE signaling fails to reach the UE
 
-Integration with existing telemetry frameworks (e.g., 3GPP NWDAF for analytics) MAY be used to assess the effectiveness of SCONE advisories and their impact on service quality.
+Integration with analytics frameworks (e.g., NWDAF in 5G) MAY be used to assess effectiveness.
 
 ## Interworking with Other Congestion Management Mechanisms
 
-SCONE throughput advisory operate independently of transport-layer mechanisms such as ECN or L4S. Operators MAY want to ensure that when multiple congestion signaling methods are deployed concurrently, they are either harmonized by policy or scoped to avoid conflicting feedback.
+SCONE operates independently of transport-layer mechanisms such as ECN or L4S. Operators MAY harmonize multiple congestion signaling methods by policy, or scope deployments to avoid conflicting feedback.
 
-## Other open issues
-  - SCONE signaling MUST NOT require changes to how a CSP determines its video policy for a given flow. That is there MUST not be any dependency between a CSP's video policy and the SCONE protocol.
+## Other Miscellaneous topics
+  - SCONE signaling MUST NOT require changes to how a CSP determines video policy for a flow.
+  
+  - The SCONE signal MUST be extensible beyond 4G/5G.
 
-  - SCONE signal MUST be extensible to networks beyond 4G/5G network.
-
-  - discussion on how the applications/receivers can adapt to the rate signals.
- 
-  - A typical mobile network deployment may have multiple UPF deployed, however, for one PDU session there typically is only one UPF (PGW) which would send an advised bit-rate. If additional UPF/PGW are deployed, they may have specific function but will not be configured to communicate maximum bit-rate for the PDU session.
+  - Receiver adaptation behavior requires further specification.
+  
+  - In multi-UPF deployments, only the UPF associated with a given PDU session will send throughput advice. Other UPFs may serve specialized roles but MUST NOT duplicate advisory functions.
 
 By addressing these above operational considerations, SCONE can be managed effectively in mobile networks to enable adaptive bit-rate applications optimize 
 their performance while allowing network operators to utilize network resources efficiently.
-
 
 # Detailed view of the User Plane Network Element in Mobile Packet Core
 
