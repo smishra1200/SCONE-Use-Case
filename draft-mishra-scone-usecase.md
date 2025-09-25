@@ -21,6 +21,11 @@ author:
     organization: Verizon
     email: sanjay.mishra@verizon.com
   -
+    ins: Z. Sarker
+    name: Zaheduzzaman Sarker
+    organization: Nokia
+    email: zaheduzzaman.sarker@nokia.com 
+  -
     ins: A. Tomar
     name: Anoop Tomar
     organization: Meta
@@ -30,11 +35,7 @@ author:
     name: Khurram Abbas
     organization: Verizon
     email: khurram.abbas@verizonwireless.com
-  -
-    ins: Z. Sarker
-    name: Zaheduzzaman Sarker
-    organization: Nokia
-    email: zaheduzzaman.sarker@nokia.com
+
 
 
 normative:
