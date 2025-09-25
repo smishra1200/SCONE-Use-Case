@@ -225,10 +225,11 @@ For broadband deployments, SCONE can integrate with the Broadband Network Gatewa
 typically based on PPP, DHCP, or IPoE subscriber sessions. Below is a high-level view of SCONE within the wireline network
 
 ~~~~
-            +----------------+        +-----------------+       +------------------+
-            |  Subscriber    |        |     BNG         |       |   Content /      |
-            |  Session / UE  |--------| (SCONE advisor) |------>| Endpoint /       |
-            +----------------+        +-----------------+       +------------------+
+
++----------------+        +-----------------+        +------------------+
+|  Subscriber    |<------>|     BNG         |<------>|   Content /      |
+|  Session / UE  |        | (SCONE advisor) |        | Endpoint /       |
++----------------+        +-----------------+        +------------------+
 
 ~~~~
 {: #Wireline-scone title="SCONE Integration within the Wireline Network"}
