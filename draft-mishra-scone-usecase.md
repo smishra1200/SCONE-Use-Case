@@ -59,7 +59,7 @@ informative:
     date: 2025-01-07
 
   Mishra-2025:
-    target: https://datatracker.ietf.org/meeting/interim-2025-scone-01/materials/slides-interim-2025-scone-01-sessa-leveraging-the-user-plane-function-for-network-side-advisory-signal-00
+    target: https://datatracker.ietf.org/meeting/interim-2025-scone-01/materials/slides-interim-2025-scone-01-sessa-leveraging-the-user-plane-function-for-network-side-advisory-signal-01
     title: Leveraging the user plane function for network-side advisory signal
     author:
     -
@@ -67,93 +67,184 @@ informative:
     date: 2025-02-06
  
 --- abstract
-
-This document addresses the applicability and mangeability of the SCONE signal in mobile networks and the operational considerations for managing it in operator deployments including an ability to provide throughput advice to the application endpoints. 
+This document addresses the applicability and manageability and operationals considerations in providing throughput advice to application 
+end-points in the telecommunications service providers networks that support Standard Communication with Network Elements (SCONE) protocol. 
 
 --- middle
 
 # Introduction
 
-SCONE protocol is a signaling mechanism operating at the network/user-plane boundary where it is intended to allow for the network to
-communicate to application endpoints, a maximum allowable bit-rate for a given UDP 4-tuple. The SCONE signal is meant to carry throughput advice 
-for adaptive bit-rate applications. Purpose of this document is to address applicability and manageability of the SCONE protocol in both the operator networks and application endpoints. The primary focus of this document is on mobile networks, where user-plane functions such as the UPF (5G network) or Packet Data Network Gateway or (PGW) for a (4G network) that are capable of generating throughput advice to guide adaptive bit-rate applications. However, the same concepts may also apply to other access networks where similar advisory mechanisms are useful.
+SCONE protocol is a signaling mechanism operating at the network/user-plane boundary where it is intended to allow for the telecommunications provider 
+networks to communicate to application endpoints, a maximum allowable bit-rate for adaptive bit-rate applications. Purpose of this document is to address 
+applicability and manageability of the SCONE protocol in the telecommunication provider netwworks and application endpoints. 
 
-This document is not a protocol specifications and its purpose is to focus on SCONE protcol's applicability and manageability in the operator network.
+This document is not a protocol specification and its purpose is to focus on SCONE protocol's applicability and manageability in the operator network.
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
-# Applicability of SCONE Signal in Mobile Networks
+# Scope of Deployment
 
-Mobile and access networks frequently encounter variable conditions due to congestion, radio interference, or dynamic resource allocation. 
-Even applications that use adaptive bit-rate may experience degraded performance or inefficiencies under such conditions. The SCONE
-protocol enables network elements to provide throughput advice directly to applications, allowing them to adjust sending rates
-proactively, improving end-user Quality of Experience (QoE) while helping operators manage network resources efficiently. This document
-proposes leveraging 3GPP user-plane network elements, including the UPF in 5G and the P-GW in 4G, to deliver throughput advice over the
-existing data path in accordance with 3GPP standards.
+Deployment of the SCONE protocol in the telecommunications service provider networks is intended to enables network elements in the access network 
+provide throughput advice directly to application endpoints to allow them to adjust sending rates proactively and help improve end-user Quality of Experience 
+(QoE) while helping operators manage network resources efficiently. This document discusses deployment in operator networks such as wireline and wireless networks.
+The following section outlines example deployments, manageability and operations consideraitons.
 
-## Scope of Deployment
+## SCONE in 5G Networks
+5G systems are built on a cloud-native Service-Based Architecture (SBA), which provides flexibility for introducing new functions such as SCONE. 
+The User Plane Function (UPF) serves as the natural anchor point for SCONE signaling because it handles packet forwarding, QoS enforcement, and interaction 
+with the Session Management Function (SMF) and Policy Control Function (PCF).
 
-The SCONE protocol is intended for deployment within operator-controlled networks, such as 3GPP mobile systems, fixed broadband access networks, or enterprise-managed domains. In these environments, network functions (e.g., UPF, P-GW, or equivalent user-plane entities) are capable of originating throughput advisory messages in response to locally observed policy and network conditions.
+### Applicability of SCONE in 5G Networks
 
-SCONE is not designed for open, unmanaged Internet environments where no single administrative entity has end-to-end control.
+In 5G, the UPF is the on-path network element with access to subscriber policy and user-plane connectivity between the User Equipment 
+(UE or the client App end-point) and the Internet. The UPF is capable of generating SCONE throughput advice per application flow, enabling 
+endpoints to adjust sending rates proactively. SCONE signaling occurs over the existing data path.
 
-## Implementing SCONE in Mobile Networks
+The following diagrams illustrate how throughput advice is conveyed within the 5G, highlighting the role of user-plane. network elements in 
+signaling throughgput advice to applications.
 
-In 5G, the UPF, and in 4G, the P-GW, are on-path network elements with access to subscriber policy and user-plane connectivity between the UE and the Internet. These elements are capable of generating SCONE throughput advice per application flow, enabling endpoints to adjust sending rates proactively in response to network conditions. SCONE signaling occurs over the existing data path in accordance with 3GPP standards.
-
-The following diagrams illustrate how throughput advice is conveyed within the 5G and 4G packet core, highlighting the role of user-plane 
-network elements in signaling throughgput advice to applications.
+NOTE: 
+SCONE Advisor shown in the diagram is a logical representation and is illustrative of a function within the UPF that is responsible for determining the 
+Throughput advise value.The implementation of SCONE signal is up to the network equipment vendor.
 
 ~~~~
                           +---------+
                           |   PCF   |
                           +---------+
-                               | Subscriber
-                               V Policy Rules
+                               |
+                               v Policy Rules
                           +---------+
                           |   SMF   |
                           +----+----+
-                               | Flow
+                               |
                                v Policy Rules
-+--------+               + +---------+-+
-| Client |/--------------\ |  SCONE  | |       __
-|   App  |\--------------/ | Advisor | |    __(  )__
-+--------+     SCONE     | +---------+ |   (        )   +----------+
-|   OS   |  (advised bit |             +--( Internet )--+ Content  |
-+--------+   rate and    |     UPF     |   (         )  | Provider |
-|  Modem |   other IEs)  |             |    (__)(___)   +----------+
-+----+---+               +------+------+      
-     |                          |
-     |         +-----+          |    
-     +---------+ gNB +----------+     
-               +-----+       
++--------+               +---------+
+| Client |/-------------\|  SCONE  |
+|   App  |\-------------/| Advisor |
++--------+     SCONE     +---------+
+|   OS   |   advised bit      |
++--------+   rate             v
+|  Modem |                 +------+
++----+---+                 | UPF  |
+     |                     +---+--+
+     |                         |
+     |             +-----+     |
+     +-------------+ gNB +-----+
+                   +-----+
+                        |
+                        v
+                 +--------------+
+                 |  Internet    |
+                 +--------------+
+                        |
+                        v
+                 +--------------+
+                 | Content Prov |
+                 +--------------+
 ~~~~
 {: #5g-scone title="SCONE Integration within the 5G SA Network"}
 
-Similarly, the SCONE signal for 4G network is shown below.  
+### Manageability of SCONE in 5G
+- SCONE state can be managed using 5G SBA interfaces (e.g., SMF and PCF).
+- Orchestration and telemetry platforms can provide visibility into SCONE state, message exchanges, and statistics.
+- Lifecycle handling of SCONE includes creation during session establishment, updates during mobility events, and removal when sessions terminate.
+
+### Deployability of SCONE in 5G
+Below are some deployability consideration for deploying SCONE in 5G networks:
+- In cloud-native 5GC deployments, SCONE functionality can be implemented as a microservice or integrated into the UPF.
+- Deployments benefit from interoperability across UPFs, SMFs, and PCFs, which may be sourced from multiple vendors.
+- Both inline and sidecar deployment models are possible: SCONE logic can be embedded directly into the UPF or run as an external service that interacts with it.
+
+### Operations consideration of SCONE in 5G
+Below are some of the operational considerations:
+- SCONE state must be updated or re-established during mobility and handover events.
+- In slice-aware deployments, SCONE signaling can reflect slice-specific operational policies.
+- Troubleshooting and monitoring may typically require correlating SCONE messages with PDU session identifiers and QoS flow identifiers.
+- Coexistence with LTE/EPC fallback requires interworking where SCONE signaling continues across heterogeneous domains.
+
+## SCONE in 4G/LTE Access Networks
+In LTE/EPC systems, SCONE can integrate at the PDN Gateway (P-GW) or Serving Gateway (SGW). Unlike 5G, traffic granularity is bearer-based 
+rather than per-flow.
+
+Below is an example diagram of SCONE within the P-GW. 
 
 ~~~~
+
                           +---------+
                           |  PCRF   |
                           +----+----+
                                | Flow
                                v Policy Rules
-+--------+               + +---------+-+
-| Client |/--------------\ |  SCONE  | |       __
-|   App  |\--------------/ | Advisor | |    __(  )__
-+--------+     SCONE     | +---------+ |   (        )   +----------+
-|   OS   |  (advised bit |             +--( Internet )--+ Content  |
-+--------+   rate and    |     P-GW    |   (         )  | Provider |
-|  Modem |   other IEs)  |             |    (__)(___)   +----------+
-+----+---+               +------+------+      
++--------+              +---------------+
+| Client |<============>|  P-GW (with   |
+|  App   |   SCONE      |  SCONE Advisor|
++--------+   advised    +-------+-------+
+|   OS   | bit rate             |
++--------+                      |
+|  Modem |                      |
++----+---+                      |
      |                          |
-     |         +-----+       +--+---+
-     +---------+ eNB +-------+ S-GW |
-               +-----+       +------+
+     v                          v
+  +--+---+                  +---+---+
+  |  eNB  |-----------------|  S-GW |
+  +--+---+                  +---+---+
+                                |
+                                v
+                         +-------------+
+                         |  Internet   |
+                         +-------------+
+                                |
+                                v
+                         +-------------+
+                         | Content Prov|
+                         +-------------+
+
 ~~~~
 {: #4g-scone title="SCONE Integration within the 4G Network"}
+
+### Applicability of SCONE in 4G/LGE Networks
+- SCONE signaling can map to EPS bearers, providing secure communication between endpoints and EPC gateways.
+
+### Manageabilitiy of SCONE 4G/LTE Networks
+- SCONE state in EPC environments is typically managed through existing O&M systems.
+- There may be limited programmability and automation in 4G than in 5G, but SCONE signaling can still be enabled.
+
+### Deployability
+- EPC deployments are generally more static, with fewer opportunities for microservice-based scaling.
+- SCONE can be integrated into legacy gateways with minimal disruption to bearer signaling.
+
+### Operations
+- SCONE signaling is scoped to bearer-level granularity.
+
+
+## SCONE in Wireline Access Networks
+For broadband deployments, SCONE can integrate with the Broadband Network Gateway (BNG) or equivalent access node. Session granularity is 
+typically based on PPP, DHCP, or IPoE subscriber sessions. Below is a high-level view of SCONE within the wireline network
+
+~~~~
+            +----------------+        +-----------------+       +------------------+
+            |  Subscriber    |        |     BNG         |       |   Content /      |
+            |  Session / UE  |--------| (SCONE advisor) |------>| Endpoint /       |
+            +----------------+        +-----------------+       +------------------+
+
+~~~~
+{: #Wireline-scone title="SCONE Integration within the Wireline Network"}
+
+
+### Applicability
+- SCONE applies to subscriber sessions, providing secure signaling between endpoints and BNGs.
+
+### Manageability
+- Session-level monitoring and assurance can be achieved by aligning SCONE signaling with subscriber sessions.
+
+
+### Deployability
+
+
+### Operations
+- SCONE can help assure signaling integrity across mixed-traffic environments, including residential and enterprise broadband.
 
 # SCONE Manageability & Operational Considerations
 
