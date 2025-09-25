@@ -87,11 +87,18 @@ The primary focus is mobile networks, where user-plane functions such as the Use
 
 - **5G (Fifth Generation Mobile Networks):** The fifth generation of cellular mobile network technology defined by 3GPP.
 - **Adaptive Bit-Rate (ABR) Video:** Video streaming technology that adjusts video quality dynamically based on network conditions.
+- **BNG (Broadband Network Gateway):** A network element that serves as the access point for subscribers in wireline broadband networks. It establishes and manages subscriber sessions, aggregates traffic from multiple subscriber access nodes, and routes this traffic to the service provider's core network. BNG functions include subscriber authentication, IP address assignment, policy enforcement, and quality of service management. It typically supports subscriber session protocols such as DHCP, PPPoE, or IPoE, and interacts with AAA and DHCP servers to enable secure and managed access to broadband services.
 - **Client App:** The user-facing application running on an operating system, which receives network throughput advice.
 - **Content Provider:** Entity or service that delivers media and data content accessed by end-users.
+- **DHCP (Dynamic Host Configuration Protocol):** A network management protocol used to dynamically assign IP addresses and other configuration parameters to devices on a network, enabling automatic and centralized network configuration.
+- **EPS Bearer (Evolved Packet System Bearer):** In 4G LTE networks, an EPS bearer is a virtual transmission path with specific Quality of Service (QoS) parameters that carries user data between the User Equipment (UE) and the Packet Data Network Gateway (P-GW). The EPS bearer ensures end-to-end delivery of IP packets with particular handling characteristics, such as priority, latency, and guaranteed bit rate. There are two main types: the Default EPS Bearer which provides always-on best-effort connectivity, and Dedicated EPS Bearers configured for services with specialized QoS requirements, such as voice or video.
+- **EPS Gateway:** In 4G LTE networks, the EPS Gateway primarily refers to the combination of the Serving Gateway (S-GW) and the Packet Data Network Gateway (P-GW). The Serving Gateway routes and forwards user data packets between the E-UTRAN access network and the Packet Data Network, acting as a mobility anchor during handovers. The Packet Data Network Gateway provides connectivity from the user equipment (UE) to external packet data networks, performing functions such as policy enforcement, charging, and lawful interception. Together, these gateways form the core user-plane interface of the Evolved Packet System (EPS).
 - **gNB (Next Generation Node B):** 5G radio access network node connecting user equipment to the 5G core network.
+- **IPoE (IP over Ethernet):** A protocol that delivers IP packets directly over Ethernet without requiring a login or session establishment, commonly used in broadband networks in conjunction with DHCP for IP address assignment.
 - **LTE (Long-Term Evolution):** 4G wireless broadband technology and related network architecture.
 - **P-GW (PDN Gateway):** LTE/EPC network gateway managing data plane and policy enforcement.
+- **PDU (Protocol Data Unit):** In 3GPP terminology, a PDU is a unit of information at a given protocol layer, such as an IP packet at the network layer. Specifically in 5G, a PDU Session represents a logical connection that carries one or more PDUs between the User Equipment (UE) and a Data Network (DN) through the User Plane Function (UPF). PDU Sessions support multiple types of PDUs, including IPv4, IPv6, Ethernet frames, and unstructured data, and are associated with one or more QoS Flows that define handling and quality requirements. The PDU framework is essential for managing application data transport and quality of service within the 3GPP system architecture.
+- **PPP (Point-to-Point Protocol):** A data link layer communication protocol used to establish a direct connection between two nodes, commonly used for dial-up and broadband internet connections to provide authentication, encryption, and compression.
 - **SCONE (Standard Communication with Network Elements):** Protocol allowing throughput or rate advice signaling from the network to application endpoints.
 - **SCONE Advisor:** Logical function within network elements (e.g., UPF, P-GW) responsible for computing and sending throughput advice.
 - **SMF (Session Management Function):** 5G network function that manages sessions and enforces policies.
@@ -178,8 +185,7 @@ Below are some of the operational considerations:
 - Coexistence with LTE/EPC fallback requires interworking where SCONE signaling continues across heterogeneous domains.
 
 ## SCONE Usage in a 4G/LTE Network
-In LTE/EPC systems, SCONE can integrate at the PDN Gateway (P-GW) or Serving Gateway (SGW). Unlike 5G, traffic granularity is bearer-based 
-rather than per-flow.
+In LTE/EPC systems, SCONE can integrate at the PDN Gateway (P-GW) or Serving Gateway (SGW). Unlike 5G, traffic granularity is bearer-based rather than per-flow.
 
 Below is an example diagram of SCONE within the P-GW. 
 
@@ -233,8 +239,14 @@ Below is an example diagram of SCONE within the P-GW.
 
 
 ## SCONE usage in a Wireline Network
-For broadband deployments, SCONE can integrate with the Broadband Network Gateway (BNG) or equivalent access node. Session granularity is 
-typically based on PPP, DHCP, or IPoE subscriber sessions. Below is a high-level view of SCONE within the wireline network
+SCONE can be deployed in wireline broadband networks at key access aggregation points such as 
+Broadband Network Gateways (BNGs) or equivalent subscriber access nodes. These network elements 
+serve as the originators of throughput advice, signaling maximum sustainable data rates to 
+application endpoints for each subscriber session, typically identified by DHCP, PPP, or IPoE 
+session contexts.
+
+Session granularity is typically based on subscriber sessions using PPP, DHCP, or IPoE protocols. 
+Below is a high-level view of SCONE within the wireline network:
 
 ~~~~
 +----------------+        +-----------------+        +------------------+
@@ -252,43 +264,43 @@ typically based on PPP, DHCP, or IPoE subscriber sessions. Below is a high-level
 - SCONE applies to subscriber sessions, providing secure signaling between endpoints and BNGs.
 
 ### Manageability SCONE in a Wireline Network
-- Session-level monitoring and assurance can be achieved by aligning SCONE signaling with subscriber sessions.
-
+- Session-level monitoring and assurance can be achieved by aligning SCONE signaling
+with subscriber sessions.
+- Integration with existing operational and management systems may allow seamless provisioning
+and monitoring of SCONE-related signals alongside traditional subscriber session management.
 
 ### Deployability of SCONE in a Wireline Network
-
+- Deployments in wireline networks benefit from relatively stable and predictable traffic patterns
+compared to wireless networks, which may result in less frequent throughput advice updates.
+- Legacy access nodes might require firmware or software upgrades to support SCONE signaling.
+- Multi-tenant or shared access infrastructure necessitates careful session-level correlation to maintain accuracy and security of throughput advice.
 
 ### Operational Consideration of SCONE in a Wireline Network
-- SCONE can help assure signaling integrity across mixed-traffic environments, including residential and enterprise broadband.
+- Ensuring signaling integrity across mixed-traffic environments, such as residential and enterprise broadband networks, requires careful consideration.
 
-## Operational Considerations Common Across Networks
-The following sub-section outlines operational considerations applicable to networks that deploy SCONE. 
+## Network-Indepdent Operational Considerations
+The following subsection outlines operational considerations applicable to any network deploying SCONE. 
 
 ### Frequency of Updates
 
-The rate at which SCONE updates are issued depends on flow characteristics and available computational resources. Excessively frequent updates may 
-increase CPU load for network elements responsible for generating throughput advise, while infrequent updates may reduce advisory effectiveness. 
-Telecommunications Service Providers may consider defining acceptable update periodicity based on application requirements, network capacity, and operational constraints.
+The rate at which SCONE updates are issued depends on flow characteristics and available computational resources. Excessively frequent updates may increase CPU load on network elements responsible for generating throughput advice, while infrequent updates may reduce advisory effectiveness. Telecommunications Service Providers may consider defining an adjustable update intervals based on application requirements, network capacity, and operational constraints.
 
 ### Monitoring and Logging
 
 SCONE signaling maybe integrated into existing OSS/NMS frameworks to enable monitoring, troubleshooting, and fault isolation. For example, metrics of interest can include:
 
   - Rate of SCONE advisory messages issued per session
-
   - Correlation between SCONE advisories and user-plane throughput changes
-
-  - Error conditions where SCONE signaling fails to reach the SCONE endpoints.
+  - Error conditions where SCONE signaling fails to reach the intended endpoints.
 
 ### Conformance Monitoring
 
-Network Elements providing SCONE throughput advice may consider implementing mechanisms to measure compliance, either per application flow or in aggregate. 
-This allows network operators to validate advisory effectiveness and adjust policies. 
+Network Elements providing SCONE throughput advice may consider implementing mechanisms to measure compliance, either per application flow or in aggregate. This allows network operators to validate advisory 
+effectiveness and adjust policies. 
 
 ### Standards Compliance
 
-SCONE signaling is expected to traverse over the existing data path.  For example, supporting SCONE in a 3GPP compliant network, this document envisages SCONE 
-packets traversing over the existing Protocol Data Unit (PDU) session set up between the UE and the Internet endpoint.  
+SCONE signaling is expected to traverse the existing data path. For example, in 3GPP-compliant networks, SCONE packets traverse over the Protocol Data Unit (PDU) sessions established between the User Equipment (UE) and Internet endpoints.
 
 # SCONE Manageability & Operational Considerations
 
