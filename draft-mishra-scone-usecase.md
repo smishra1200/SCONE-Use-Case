@@ -337,14 +337,14 @@ The following high-level functions, defined within 3GPP specifications, are rele
 1. Packet Data Network (PDN) Connection / PDU Session (5G)
     A logical connection between the UE and the P-GW (in 4G) or UPF (in 5G), allowing the UE to exchange IP packets with external networks. Each PDN Connection/PDU Session is associated with an APN (4G) or DNN (5G).
 
-3. IP address Allocation
+2. IP address Allocation
 
     During PDN Connection/PDU Session establishment, the UE is allocated an IP address (IPv4, IPv6, or both) used for communication with external networks.
 
-4. Bearer Establishment
+3. Bearer Establishment
     Data traffic flows over bearers, each defining QoS characteristics for a specific flow. In 4G, a default bearer is created for Internet access, while dedicated bearers may be set up for specialized services. In 5G, the equivalent construct is the QoS Flow.
 
-5. Mobility Management
+4. Mobility Management
     The network ensures seamless UE mobility across cells and base stations while maintaining the ongoing session.
 
 ## PDU Session Awareness
@@ -383,7 +383,6 @@ The rate at which SCONE updates are issued depends on flow characteristics and a
 
 ## Conformance Monitoring
 Network elements providing SCONE throughput advice MUST implement mechanisms to measure compliance, either per application flow or in aggregate. This allows operators to validate advisory effectiveness and adjust policies. SCONE protocol defines a minimum monitoring period for the conformance monitoring.
-
 
 ## Standards Compliance
 All SCONE signaling occurs over the existing data path in accordance with 3GPP specifications, ensuring compatibility with established mobile-core procedures and avoiding protocol modifications. SCONE operates without interfering with QoS enforcement or subscriber policies.
