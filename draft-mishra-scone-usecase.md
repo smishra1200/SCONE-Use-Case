@@ -159,35 +159,33 @@ In 5G, the UPF is the on-path network element with access to subscriber policy a
 NOTE: SCONE Advisor shown in the diagram is a logical representation and is illustrative of a function within the UPF that is responsible for determining the Throughput advise value. The implementation of SCONE signal is up to the network equipment vendor.
 
 ~~~~
-
-                             +---------+
-                             |   PCF   |
-                             +---------+
-                                  |
-                                  v Policy Rules
-                             +---------+
-                             |   SMF   |
-                             +----+----+
-                                  | Policy Rules 
-                                  v
-  +--------+                  +----------------------------+
-  | Client |<================>|                            |
-  |   App  |      SCONE       |                            |
-  +--------+      Advice      |            UPF             |
-  |   OS   |                  |   +--------------------+   |
-  +--------+                  |   |     SCONE Advisor  |   |
-  |  Modem |                  |   +--------------------+   |
-  +----+---+                  +----------------------------+
-       |                              |      |
-       |    +-----+                   |      |
-       +----+ gNB +-------------------+      |
-            +-----+                          |
-                 |                           v
-                 v                    +--------------+
-       +-----------------+            |  Internet    |
-       | Content Provder |            +--------------+
-       +-----------------+   
-
++---------+
+|   PCF   |
++---------+
+     |
+     v Policy Rules
++---------+
+|   SMF   |
++----+----+
+     | Policy Rules 
+     v
++--------+                 +----------------------------+
+| Client |<===============>|                            |
+|   App  |     SCONE       |                            |
++--------+     Advice      |            UPF             |
+|   OS   |                 |   +--------------------+   |
++--------+                 |   |     SCONE Advisor  |   |
+|  Modem |                 |   +--------------------+   |
++----+---+                 +----------------------------+
+     |                             |      |
+     |   +-----+                   |      |
+     +---+ gNB +-------------------+      |
+         +-----+                          |
+              |                           v
+              v                    +--------------+
+     +-----------------+          |  Internet    |
+     | Content Provider|          +--------------+
+     +-----------------+
 
 ~~~~
 {: #5g-scone title="SCONE Integration within the 5G SA Network"}
@@ -215,35 +213,34 @@ In LTE/Evolved Packet Core (EPC) systems, SCONE can be integrated at the PDN Gat
 
 Below is an example diagram illustrating SCONE integration within the P-GW:
 ~~~~
-
-                          +---------+
-                          |  PCRF   |
-                          +----+----+
-                               | Flow
-                               v Policy Rules
-+--------+              +-----------------+
-| Client |<============>|  P-GW           |
-|  App   |   SCONE      |  (SCONE Advisor)|
-+--------+   advice     +-------+---------+
-|   OS   |                      |
-+--------+                      |
-|  Modem |                      |
-+----+---+                      |
-     |                          |
-     v                          v
-  +--+---+                  +---+---+
-  |  eNB  |-----------------|  S-GW |
-  +--+---+                  +---+---+
-                                |
-                                v
-                         +-------------+
-                         |  Internet   |
-                         +-------------+
-                                |
-                                v
-                         +-----------------+
-                         | Content Provider|
-                         +-----------------+
++---------+
+|  PCRF   |
++----+----+
+     | Flow
+     v Policy Rules
++--------+          +-----------------+
+| Client |<========>|  P-GW           |
+|  App   |   SCONE  |  (SCONE Advisor)|
++--------+   advice +-------+---------+
+|   OS   |                  |
++--------+                  |
+|  Modem |                  |
++----+---+                  |
+     |                      |
+     v                      v
+  +--+---+              +---+---+
+  |  eNB  |--------------|  S-GW |
+  +--+---+              +---+---+
+                           |
+                           v
+                    +-------------+
+                    |  Internet   |
+                    +-------------+
+                           |
+                           v
+                    +-----------------+
+                    | Content Provider|
+                    +-----------------+
 
 ~~~~
 {: #4g-scone title="SCONE Integration within the 4G Network"}
@@ -273,13 +270,14 @@ Session granularity is typically based on subscriber sessions using PPP, DHCP, o
 Below is a high-level view of SCONE within the wireline network:
 
 ~~~~
-+----------------+        +-----------------+        +------------------+
-|  Subscriber    |<------>|       BNG       |<------>|   Content /      |
-|  Session / UE  | SCONE  |  +-----------+  |        |   Endpoint /     |
-+----------------+ Advice |  |  SCONE    |  |        +------------------+
-                          |  |  Advisor  |  |        
-                          |  +-----------+  |        
-                          +-----------------+        
++----------------+<----->+-----------------+<----->+------------------+
+|  Subscriber    | SCONE |       BNG       | Advice|   Content /      |
+|  Session / UE  |       |  +-----------+  |       |   Endpoint /     |
++----------------+       |  |  SCONE    |  |       +------------------+
+                         |  |  Advisor  |  |
+                         |  +-----------+  |
+                         +-----------------+
+
 ~~~~
 {: #Wireline-scone title="SCONE Integration within the Wireline Network"}
 
