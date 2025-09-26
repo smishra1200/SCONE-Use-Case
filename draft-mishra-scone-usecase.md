@@ -57,13 +57,6 @@ informative:
       name: 3GPP
     date: 2025-01-07
 
-  Mishra-2025:
-    target: https://datatracker.ietf.org/meeting/interim-2025-scone-01/materials/slides-interim-2025-scone-01-sessa-leveraging-the-user-plane-function-for-network-side-advisory-signal-02
-    title: Leveraging the user plane function for network-side advisory signal
-    author:
-    -
-      name: Sanjay Mishra
-    date: 2025-02-06
  
 --- abstract
 This document addresses the applicability, manageability, and operational considerations involved in providing throughput advice to application endpoints in telecommunications service provider networks supporting the Standard Communication with Network Elements (SCONE) protocol.
@@ -308,13 +301,13 @@ Below is a high-level view of SCONE within the wireline network:
 
 ~~~~
 
-+-----------------------+  <=====>  +-------------------------+  <=====>  +-------------------+
-|  Subscriber/UE        |  SCONE   |           BNG            |          |  Content Provider/  |
-|       Endpoint        |  Advice  |  +--------------------+  |          |       Endpoint      |
-+-----------------------+          |  |    SCONE Advisor    | |          +---------------------+
-                                   |  +--------------------+  |
-                                  +---------------------------+
-
++----------------+        +-----------------+        +------------------+
+|  Subscriber    |<------>|       BNG       |<------>|  Content /       |
+|  Session / UE  |  SCONE |  +-----------+  |  SCONE |  Endpoint /      |
++----------------+  Advice|  |  SCONE    |  |  Advice|                  |
+                          |  |  Advisor  |  |        |                  |
+                          |  +-----------+  |        +------------------+
+                          +-----------------+
 ~~~~
 {: #Wireline-scone title="SCONE Integration within the Wireline Network"}
 
