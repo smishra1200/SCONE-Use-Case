@@ -72,11 +72,13 @@ This document addresses the applicability, manageability, and operational consid
 
 # Introduction
 
-The SCONE protocol is a signaling mechanism operating at the network/user-plane boundary. It enables telecommunications provider networks to communicate a maximum allowable bit-rate to application endpoints, specifically targeting adaptive bit-rate applications.
-
-This document is not a protocol specification for SCONE; rather, it focuses on the applicability, manageability, and operational considerations of deploying the SCONE protocol within telecommunications provider networks and at application endpoints.
-
-The primary focus is mobile networks, where user-plane functions such as the User Plane Function (UPF) in 5G and the Packet Data Network Gateway (P-GW) in 4G generate throughput advice to guide adaptive applications. However, the applicability is broader and includes wireline and other access networks where throughput advisory signaling can enhance network resource utilization and user experience.
+The SCONE protocol is a signaling mechanism operating at the network/user-plane boundary. It enables telecommunications provider networks 
+to communicate a maximum allowable bit-rate to application endpoints, specifically targeting adaptive bit-rate applications. This document is 
+not a protocol specification for SCONE; rather, it focuses on the applicability, manageability, and operational considerations 
+of deploying the SCONE protocol within telecommunications provider networks and at application endpoints. The primary focus is mobile networks, 
+where user-plane functions such as the User Plane Function (UPF) in 5G and the Packet Data Network Gateway (P-GW) in 4G generate throughput 
+advice to guide adaptive applications. However, the applicability is broader and includes wireline and other access networks where throughput 
+advisory signaling can enhance network resource utilization and user experience.
 
 # Conventions and Definitions
 
@@ -91,7 +93,11 @@ The fifth generation of cellular mobile network technology defined by 3GPP.
 Video streaming technology that adjusts video quality dynamically based on network conditions.
 
 ## BNG (Broadband Network Gateway)
-A network element that serves as the access point for subscribers in wireline broadband networks. It establishes and manages subscriber sessions, aggregates traffic from multiple subscriber access nodes, and routes this traffic to the service provider's core network. BNG functions include subscriber authentication, IP address assignment, policy enforcement, and quality of service management. It typically supports subscriber session protocols such as DHCP, PPPoE, or IPoE, and interacts with AAA and DHCP servers to enable secure and managed access to broadband services.
+A network element that serves as the access point for subscribers in wireline broadband networks. It establishes and manages subscriber 
+sessions, aggregates traffic from multiple subscriber access nodes, and routes this traffic to the service provider's core network. 
+BNG functions include subscriber authentication, IP address assignment, policy enforcement, and quality of service management. It 
+typically supports subscriber session protocols such as DHCP, PPPoE, or IPoE, and interacts with AAA and DHCP servers to enable secure 
+and managed access to broadband services.
 
 ## Client App
 The user-facing application running on an operating system, which receives network throughput advice.
@@ -100,19 +106,29 @@ The user-facing application running on an operating system, which receives netwo
 Entity or service that delivers media and data content accessed by end-users.
 
 ## DHCP - Dynamic Host Configuration Protocol
-A network management protocol used to dynamically assign IP addresses and other configuration parameters to devices on a network, enabling automatic and centralized network configuration.
+A network management protocol used to dynamically assign IP addresses and other configuration parameters to devices on a network, 
+enabling automatic and centralized network configuration.
 
 ## EPS Bearer - Evolved Packet System Bearer
-In 4G LTE networks, an EPS bearer is a virtual transmission path with specific Quality of Service (QoS) parameters that carries user data between the User Equipment (UE) and the Packet Data Network Gateway (P-GW). The EPS bearer ensures end-to-end delivery of IP packets with particular handling characteristics, such as priority, latency, and guaranteed bit rate. There are two main types: the Default EPS Bearer which provides always-on best-effort connectivity, and Dedicated EPS Bearers configured for services with specialized QoS requirements, such as voice or video.
+In 4G LTE networks, an EPS bearer is a virtual transmission path with specific Quality of Service (QoS) parameters that carries user 
+data between the User Equipment (UE) and the Packet Data Network Gateway (P-GW). The EPS bearer ensures end-to-end delivery of IP packets 
+with particular handling characteristics, such as priority, latency, and guaranteed bit rate. There are two main types: the Default EPS 
+Bearer which provides always-on best-effort connectivity, and Dedicated EPS Bearers configured for services with specialized QoS requirements, 
+such as voice or video.
 
 ## EPS Gateway
-In 4G LTE networks, the EPS Gateway primarily refers to the combination of the Serving Gateway (S-GW) and the Packet Data Network Gateway (P-GW). The Serving Gateway routes and forwards user data packets between the E-UTRAN access network and the Packet Data Network, acting as a mobility anchor during handovers. The Packet Data Network Gateway provides connectivity from the user equipment (UE) to external packet data networks, performing functions such as policy enforcement, charging, and lawful interception. Together, these gateways form the core user-plane interface of the Evolved Packet System (EPS).
+In 4G LTE networks, the EPS Gateway primarily refers to the combination of the Serving Gateway (S-GW) and the Packet Data Network Gateway 
+(P-GW). The Serving Gateway routes and forwards user data packets between the E-UTRAN access network and the Packet Data Network, acting 
+as a mobility anchor during handovers. The Packet Data Network Gateway provides connectivity from the user equipment (UE) to external packet 
+data networks, performing functions such as policy enforcement, charging, and lawful interception. Together, these gateways form the core 
+user-plane interface of the Evolved Packet System (EPS).
 
 ## gNB - Next Generation Node B
 5G radio access network node connecting user equipment to the 5G core network.
 
 ## IPoE IP over Ethernet
-A protocol that delivers IP packets directly over Ethernet without requiring a login or session establishment, commonly used in broadband networks in conjunction with DHCP for IP address assignment.
+A protocol that delivers IP packets directly over Ethernet without requiring a login or session establishment, commonly used in 
+broadband networks in conjunction with DHCP for IP address assignment.
 
 ## LTE - Long-Term Evolution
 4G wireless broadband technology and related network architecture.
@@ -121,10 +137,15 @@ A protocol that delivers IP packets directly over Ethernet without requiring a l
 LTE/EPC network gateway managing data plane and policy enforcement.
 
 ## PDU - Protocol Data Unit
-In 3GPP terminology, a PDU is a unit of information at a given protocol layer, such as an IP packet at the network layer. Specifically in 5G, a PDU Session represents a logical connection that carries one or more PDUs between the User Equipment (UE) and a Data Network (DN) through the User Plane Function (UPF). PDU Sessions support multiple types of PDUs, including IPv4, IPv6, Ethernet frames, and unstructured data, and are associated with one or more QoS Flows that define handling and quality requirements. The PDU framework is essential for managing application data transport and quality of service within the 3GPP system architecture.
+In 3GPP terminology, a PDU is a unit of information at a given protocol layer, such as an IP packet at the network layer. Specifically 
+in 5G, a PDU Session represents a logical connection that carries one or more PDUs between the User Equipment (UE) and a Data Network 
+(DN) through the User Plane Function (UPF). PDU Sessions support multiple types of PDUs, including IPv4, IPv6, Ethernet frames, and 
+unstructured data, and are associated with one or more QoS Flows that define handling and quality requirements. The PDU framework is 
+essential for managing application data transport and quality of service within the 3GPP system architecture.
 
 ## PPP - Point-to-Point Protocol
-A data link layer communication protocol used to establish a direct connection between two nodes, commonly used for dial-up and broadband internet connections to provide authentication, encryption, and compression.
+A data link layer communication protocol used to establish a direct connection between two nodes, commonly used for dial-up and 
+broadband internet connections to provide authentication, encryption, and compression.
 
 ## SCONE - Standard Communication with Network Elements
 Protocol allowing throughput or rate advice signaling from the network to application endpoints.
@@ -146,17 +167,26 @@ Broadband network based on fixed infrastructure (e.g., DSL, cable, fiber).
 
 # Scope of SCONE Deployment
 
-Deployment of the SCONE protocol in the telecommunications service provider networks is intended to enable network elements provide throughput advice directly to application endpoints to allow them to adjust sending rates proactively and help improve end-user Quality of Experience (QoE) while helping operators manage network resources efficiently. This document discusses deployment in operator networks such as wireline and wireless networks. The following section outlines with example deployments and discusses manageability and operations consideraitons in 5G networks, 4G/LTE networks, and wireline networks.
+Deployment of the SCONE protocol in the telecommunications service provider networks is intended to enable network elements provide 
+throughput advice directly to application endpoints to allow them to adjust sending rates proactively and help improve end-user Quality 
+of Experience (QoE) while helping operators manage network resources efficiently. This document discusses deployment in operator networks 
+such as wireline and wireless networks. The following section outlines with example deployments and discusses manageability and operations 
+consideraitons in 5G networks, 4G/LTE networks, and wireline networks.
 
 ## SCONE Usage in a 5G Network
-5G systems are built on a cloud-native Service-Based Architecture (SBA), which provides flexibility for introducing new functions such as SCONE. The User Plane Function (UPF) serves as the natural anchor point for SCONE signaling because it handles packet forwarding, QoS enforcement, and interaction with the Session 
-Management Function (SMF) and Policy Control Function (PCF).
+5G systems are built on a cloud-native Service-Based Architecture (SBA), which provides flexibility for introducing new functions such as SCONE. 
+The User Plane Function (UPF) serves as the natural anchor point for SCONE signaling because it handles packet forwarding, QoS enforcement, and 
+interaction with the Session Management Function (SMF) and Policy Control Function (PCF).
 
 ### Applicability of SCONE in a 5G Network
 
-In 5G, the UPF is the on-path network element with access to subscriber policy and user-plane connectivity between the User Equipment (UE or the client App end-point) and the Internet. The UPF is capable of generating SCONE throughput advice per application flow, enabling endpoints to adjust sending rates proactively. SCONE signaling occurs over the existing data path. The following diagrams illustrate how throughput advice is conveyed within the 5G, highlighting the role of user-plane. network elements in signaling throughgput advice to applications.
+In 5G, the UPF is the on-path network element with access to subscriber policy and user-plane connectivity between the User Equipment 
+(UE or the client App end-point) and the Internet. The UPF is capable of generating SCONE throughput advice per application flow, enabling 
+endpoints to adjust sending rates proactively. SCONE signaling occurs over the existing data path. The following diagrams illustrate how 
+throughput advice is conveyed within the 5G, highlighting the role of user-plane. network elements in signaling throughgput advice to applications.
 
-NOTE: SCONE Advisor shown in the diagram is a logical representation and is illustrative of a function within the UPF that is responsible for determining the Throughput advise value. The implementation of SCONE signal is up to the network equipment vendor.
+NOTE: SCONE Advisor shown in the diagram is a logical representation and is illustrative of a function within the UPF that is responsible 
+for determining the Throughput advise value. The implementation of SCONE signal is up to the network equipment vendor.
 
 ~~~~
 +---------+
@@ -199,7 +229,8 @@ NOTE: SCONE Advisor shown in the diagram is a logical representation and is illu
 Below are some deployability consideration for deploying SCONE in 5G networks:
 - In cloud-native 5GC deployments, SCONE functionality can be implemented as a microservice or integrated into the UPF.
 - Deployments benefit from interoperability across UPFs, SMFs, and PCFs, which may be sourced from multiple vendors.
-- Both inline and sidecar deployment models are possible: SCONE logic can be embedded directly into the UPF or run as an external service that interacts with it.
+- Both inline and sidecar deployment models are possible: SCONE logic can be embedded directly into the UPF or run as an external
+  service that interacts with it.
 
 ### Operational Consideration of SCONE in a 5G Network
 Below are some of the operational considerations:
@@ -209,7 +240,8 @@ Below are some of the operational considerations:
 - Coexistence with LTE/EPC fallback requires interworking where SCONE signaling continues across heterogeneous domains.
 
 ## SCONE Usage in a 4G/LTE Network
-In LTE/Evolved Packet Core (EPC) systems, SCONE can be integrated at the PDN Gateway (P-GW) or the Serving Gateway (S-GW). Unlike 5G, traffic granularity is bearer-based rather than per-flow.
+In LTE/Evolved Packet Core (EPC) systems, SCONE can be integrated at the PDN Gateway (P-GW) or the Serving Gateway (S-GW). Unlike 5G, 
+traffic granularity is bearer-based rather than per-flow.
 
 Below is an example diagram illustrating SCONE integration within the P-GW:
 
