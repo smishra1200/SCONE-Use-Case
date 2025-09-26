@@ -212,6 +212,7 @@ Below are some of the operational considerations:
 In LTE/Evolved Packet Core (EPC) systems, SCONE can be integrated at the PDN Gateway (P-GW) or the Serving Gateway (S-GW). Unlike 5G, traffic granularity is bearer-based rather than per-flow.
 
 Below is an example diagram illustrating SCONE integration within the P-GW:
+
 ~~~~
 +---------+
 |  PCRF   |
@@ -274,13 +275,13 @@ Session granularity is typically based on subscriber sessions using PPP, DHCP, o
 Below is a high-level view of SCONE within the wireline network:
 
 ~~~~
-+----------------+<----->+-----------------+<----->+------------------+
-|  Subscriber    | SCONE |       BNG       | Advice|   Content /      |
-|  Session / UE  |       |  +-----------+  |       |   Endpoint /     |
-+----------------+       |  |  SCONE    |  |       +------------------+
-                         |  |  Advisor  |  |
-                         |  +-----------+  |
-                         +-----------------+
+
++-----------------------+  <=====>  +-------------------------+  <=====>  +-------------------+
+|  Subscriber/UE        |  SCONE   |           BNG            |          |  Content Provider/  |
+|       Endpoint        |  Advice  |  +--------------------+  |          |       Endpoint      |
++-----------------------+          |  |    SCONE Advisor    | |          +---------------------+
+                                   |  +--------------------+  |
+                                  +---------------------------+
 
 ~~~~
 {: #Wireline-scone title="SCONE Integration within the Wireline Network"}
