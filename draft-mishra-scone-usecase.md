@@ -249,18 +249,15 @@ Below is an example diagram illustrating SCONE integration within the P-GW:
 ~~~~
 {: #4g-scone title="SCONE Integration within the 4G Network"}
 
-### Applicability of SCONE in a 4G/LGE Network
+### Applicability of SCONE in a 4G/LTE Network
 - SCONE signaling maps to EPS bearers, enabling secure and targeted throughput advice between endpoints and EPC gateways.
-
+  
 ### Manageabilitiy of SCONE in a 4G/LTE Network
 - SCONE state is typically managed via existing Operations and Maintenance (O&M) systems within EPC environments.
-- While programmability and automation may be more limited in 4G compared to 5G, SCONE signaling can still be effectively enabled.
-  - 4G architecture is more monolithic and hardware-centric, that is, 4G networks typically use more centralized, purpose-built hardware appliances where network functions are tightly integrated, reducing opportunities for dynamic programmability or rapid automation.
+- While programmability and automation may be more limited in 4G compared to 5G, SCONE signaling can still be effectively enabled. For example, 4G architecture is more monolithic and hardware-centric, that is, 4G networks typically use more centralized, purpose-built hardware appliances where network functions are tightly integrated, reducing opportunities for dynamic programmability or rapid automation.
 
 ### Deployability of SCONE in a 4G/LTE Network
-- EPC deployments are generally more static, with less opportunity for microservice-based scaling.
-  - As also explained above, given purpose-built hardware appliances or tightly integrated software platforms
-  in the 4G architecture, appliances have fixed capacities and scaling often requires adding or replacing hardware rather than dynamically adjusting software resources.
+- EPC deployments are generally more static, with less opportunity for microservice-based scaling. As stated above, purpose-built hardware appliances or tightly integrated software platforms in the 4G architecture, appliances have fixed capacities and scaling often requires adding or replacing hardware rather than dynamically adjusting software resources.
 - SCONE integration can be performed in legacy gateways with minimal disruption to existing bearer signaling.
 
 ### Operational Consideration of SCONE in a 4G/LTE Network
