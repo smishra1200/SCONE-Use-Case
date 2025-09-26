@@ -117,7 +117,7 @@ A protocol that delivers IP packets directly over Ethernet without requiring a l
 ## LTE - Long-Term Evolution
 4G wireless broadband technology and related network architecture.
 
-## P-GW - Pblic Data Network Gateway
+## P-GW - Public Data Network Gateway
 LTE/EPC network gateway managing data plane and policy enforcement.
 
 ## PDU - Protocol Data Unit
