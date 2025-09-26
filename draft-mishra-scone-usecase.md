@@ -65,7 +65,7 @@ This document addresses the applicability, manageability, and operational consid
 
 # Introduction
 
-The SCONE protocol is a signaling mechanism that enables access network providers to communicate a maximum allowable bit-rate to application endpoints, specifically targeting adaptive bit-rate applications. This document describes on the applicability, manageability, and operational considerations of deploying the SCONE protocol within telecommunications provider networks and at application endpoints. Test comment
+The SCONE protocol is a signaling mechanism that enables access network providers to communicate a maximum allowable bit-rate to application endpoints, specifically targeting adaptive bit-rate applications. This document describes on the applicability, manageability, and operational considerations of deploying the SCONE protocol within telecommunications provider networks and at application endpoints. 
 
 The SCONE protocol operates on the UDP 4-tuple, where network elements capable of rate limiting on a UDP 4-tuple. A network element can provide send notificatio about rate limiting for both upstream and downstream traffic that it observes. It is capable of dropping or delaying packets on the path of the respective UDP 4-tuple flows. This means the scone protocol has some assumption on the charateristic of a network element. A network element, sitting in the access networkis, is capable of detecting and maintaining a UDP 4-tuple flow, have rate limiting policies, and can detect flows that include SCONE packets, then put a rate limiting advice in the those SCONE packets.   
 
