@@ -402,6 +402,12 @@ Below is a high-level view of SCONE within the wireline network:
 
 TBD
 
+# SCONE usage in a Wifi Networks
+
+TBD
+
+Editor's note : Home, enterprise and campus network have wifi access network. The SCONE client can be in the wifi network for the whole time of the session or there can be handover/offloading case where SCONE client can be moved from cellular network to wifi network or vice versa. The rate limit in such cases usually applied per user/device or SSIDs. This need to be covered in the considerations.
+
 ## Other Miscellaneous topics
   - SCONE signaling MUST NOT require changes to how a CSP determines video policy for a flow.
   
