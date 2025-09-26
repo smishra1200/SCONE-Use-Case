@@ -424,15 +424,6 @@ This document has no IANA actions.
 
 --- back
 
-# Acknowledgments
-{:numbered="false"}
-
-This document represents collaboration, comments, and inputs from others,
-including:
-
-- Wesley Eddy
-- Renjie Tang
-- All the reviewers who provided invalueable input in their reviews
 
 # Appendix
 
@@ -575,4 +566,12 @@ Below is an example of data flow to/from a UE to the UPF.
 In summary, the UPF is responsible for packet routing and forwarding, packet
 inspection and filtering, participating in subscriber and flow policy enforcement, inline services (NAT, firewall, DNS etc) and QoS handling.
 
+# Acknowledgments
+{:numbered="false"}
 
+This document represents collaboration, comments, and inputs from others,
+including:
+
+- Wesley Eddy
+- Renjie Tang
+- Reviewers who provided invalueable input
