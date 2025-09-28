@@ -428,6 +428,14 @@ there are no additional security considerations.
 # IANA Considerations
 This document has no IANA actions.
 
+# References
+
+## Informative References
+
+{{4G-Arch}}
+
+{{5G-Arch}}
+
 --- back
 
 # Acknowledgments
