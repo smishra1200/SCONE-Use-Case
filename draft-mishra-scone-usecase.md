@@ -434,7 +434,7 @@ This document has no IANA actions.
 --- back
 
 
-# Appendix
+# Appendix A. Additional Background details on role of UPF in 5G Mobile Packet Core
 
 ## Detailed view of the User Plane Network Element in Mobile Packet Core
 This section describes 5G mobile packet core to explain the role of user-plane
@@ -574,6 +574,24 @@ Below is an example of data flow to/from a UE to the UPF.
 
 In summary, the UPF is responsible for packet routing and forwarding, packet
 inspection and filtering, participating in subscriber and flow policy enforcement, inline services (NAT, firewall, DNS etc) and QoS handling.
+
+# Appendix B. Non-ASCII Characters
+
+This document uses the following kramdown-rfc character escapes for common
+non-ASCII symbols:
+
+- `U+00A0` NO-BREAK SPACE → `{nbsp}`
+- `U+00AD` SOFT HYPHEN → `{shy}`
+- `U+2011` NON-BREAKING HYPHEN → `{nbhy}`
+- `U+200B` ZERO WIDTH SPACE → `{zwsp}`
+- `U+2060` WORD JOINER → `{wj}`
+- `U+2013` EN DASH → `{ndash}`
+- `U+2014` EM DASH → `{mdash}`
+- `U+201C` LEFT DOUBLE QUOTATION MARK → `{ldquo}`
+- `U+201D` RIGHT DOUBLE QUOTATION MARK → `{rdquo}`
+- `U+2018` LEFT SINGLE QUOTATION MARK → `{lsquo}`
+- `U+2019` RIGHT SINGLE QUOTATION MARK → `{rsquo}`
+- `U+20AC` EURO SIGN → `{euro}`
 
 # Acknowledgments
 {:numbered="false"}
