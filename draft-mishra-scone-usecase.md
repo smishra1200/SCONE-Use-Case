@@ -39,7 +39,6 @@ author:
 normative:
 
 informative:
-  I-D.joras-scone-video-optimization-requirements:
 
   SCONE-Charter:
     target: https://datatracker.ietf.org/wg/scone/about/
@@ -57,6 +56,12 @@ informative:
       name: 3GPP
     date: 2025-01-07
 
+4G-Arch:
+    target: https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=24300
+    title: System architecture for the Evolved Packet Core (EPC)
+    author:
+    - name: 3GPP
+    date: 2020-06-01
  
 --- abstract
 
@@ -80,8 +85,10 @@ Hence, the applicability and manageability considerations need to cover wide ran
 
 # Terminology
 
+- 4G - Fourth Generation mobile network technology, also known as Long-Term Evolution (LTE), defined by the 3rd Generation Partnership Project (3GPP).
+
 - 5G - Fifth Generation Mobile Networks
-The fifth generation of cellular mobile network technology defined by 3GPP.
+The fifth generation of mobile network technology defined by 3GPP.
 
 - Adaptive Bit-Rate (ABR) Video
 Video streaming technology that adjusts video quality dynamically based on network conditions.
@@ -102,6 +109,9 @@ Entity or service that delivers media and data content accessed by end-users.
 - DHCP - Dynamic Host Configuration Protocol
 A network management protocol used to dynamically assign IP addresses and other configuration parameters to devices on a network, 
 enabling automatic and centralized network configuration.
+
+- EPC - The Evolved Packet Core is the all-IP core architecture for 4G/LTE, responsible for managing user sessions, mobility, and the
+integration of data and voice traffic over packet-switched networks.
 
 - EPS Bearer - Evolved Packet System Bearer
 In 4G LTE networks, an EPS bearer is a virtual transmission path with specific Quality of Service (QoS) parameters that carries user 
@@ -137,9 +147,21 @@ in 5G, a PDU Session represents a logical connection that carries one or more PD
 unstructured data, and are associated with one or more QoS Flows that define handling and quality requirements. The PDU framework is 
 essential for managing application data transport and quality of service within the 3GPP system architecture.
 
+- Policy and Charging Control (PCC) Framework
+A set of functional components and procedures in LTE and 5G networks used to enforce service policies and charging rules for user sessions.
+The PCC framework manages Quality of Service (QoS), gating, bandwidth allocation, and charging (both online and offline) on a per-user and
+per-flow basis. Key entities include the Policy and Charging Rules Function (PCRF), which makes policy decisions, and the Policy and Charging
+Enforcement Function (PCEF), which acts on those decisions in the packet gateway. PCC enables operators to dynamically apply policies based
+on subscriber profiles, service requirements, and real-time network conditions, ensuring consistent application performance and revenue management.
+
 - PPP - Point-to-Point Protocol
 A data link layer communication protocol used to establish a direct connection between two nodes, commonly used for dial-up and 
 broadband internet connections to provide authentication, encryption, and compression.
+
+- Radio Access Technology
+The underlying physical and logical technology used for wireless communication between mobile devices and the cellular network.
+LTE, UMTS (3G), GSM (2G), and NR (5G New Radio) are examples of RATs. Networks may support multiple RATs, enabling seamless service
+transitions, handovers, and interoperability between diverse wireless standards within single or interworking networks.
 
 - SCONE - Standard Communication with Network Elements
 Protocol allowing throughput or rate advice signaling from the network to application endpoints.
@@ -327,8 +349,9 @@ Metrics of interest include:
 Integration with analytics frameworks (e.g., NWDAF in 5G) MAY be used to assess effectiveness.
 
 # SCONE Usage in a 4G/LTE Network
-In LTE/Evolved Packet Core (EPC) systems, SCONE can be integrated at the PDN Gateway (P-GW) or the Serving Gateway (S-GW). Unlike 5G, 
-traffic granularity is bearer-based rather than per-flow.
+In 4G/LTE networks, the Evolved Packet Core (EPC) enables SCONE integration at the PDN Gateway (P-GW) or Serving Gateway (S-GW), 
+where these gateways implement the advisory function in accordance with the architecture defined in {{4G-Arch}}. In this model, 
+the P-GW and S-GW provide the user-plane and control-plane functions specified by the 3GPP EPC architecture. 
 
 Below is an example diagram illustrating SCONE integration within the P-GW:
 
@@ -366,12 +389,86 @@ Below is an example diagram illustrating SCONE integration within the P-GW:
 {: #4g-scone title="SCONE Integration within the 4G Network"}
 
 ## Applicability of SCONE in a 4G/LTE Network
-- SCONE signaling maps to EPS bearers, enabling secure and targeted throughput advice between endpoints and EPC gateways.
+In the 4G/LTE networks SCONE signaling will be mapped to EPS bearers, providing secure and targeted throughput advice between 
+endpoints and EPC gateways. EPS bearers are logical tunnels established between the UE and the P-GW, each with specific QoS parameters 
+tailored to the requirements of the associated traffic flows.
 
-## 4G specific considerations 
+- **Integration with Policy and Charging Control (PCC) Framework:** SCONE advice can be coordinated with LTE's PCC procedures. As EPS bearers
+are defined and managed according to the user's policy and charging profile, SCONE signaling leverages these established mechanisms to
+ensure throughput advice aligns with operator policies.
 
- TBD
+- **Support for Multiple Concurrent Bearers:** In 4G/LTE networks, the UE can maintain multiple EP bearers at the same time, with each bearer associated with a specific Quality of Service (QoS) level. This allows different applications and services (e.g., video, voice, or background data) to be carried over distinct
+logical connections. SCONE can provide per-bearer throughput advice, enabling differentiated management of flows based on their service requirements.
+  
+- **Dynamic Bearer Management and SCONE Relevance:**  As applications initiate, modify, or terminate flows, the LTE network dynamically establishes or modifies bearers. For SCONE it is expected that CONE signaling can adjust its recommendations in real time, maintaining optimal throughput even as network conditions or user requirements change.
+  
+  - **Handover and Mobility Considerations:** During inter-eNodeB or inter-system handovers, the EPC maintains EPS bearer continuity for ongoing sessions. SCONE signaling is expected to persists across handovers to ensure ongoing throughput control and advice integrity as the UE moves.
 
+## Manageability of SCONE in a 4G/LTE Network 
+The integration of SCONE within 4G/LTE networks leverages the established architecture of the Evolved Packet Core (EPC), allowing dynamic 
+and targeted throughput advisory signaling. This manageability framework ensures that throughput advice can be securely delivered between 
+user equipment and EPC gateways, adapting to network conditions, mobility events, and policy changes while maintaining service quality for 
+end-user applications such as video streaming. The following lists some of the manageability considerations:  
+
+- **Integration with Bearer-Based Architecture:** In 4G/LTE networks, SCONE signaling shall map to EPS bearers. Each bearer supports a set of packet flows,
+requiring gateways like the P-GW or S-GW to associate SCONE advice with bearer context for correct delivery.
+
+- **Bearer Establishment and Modification**: For video streaming, one of the key SCONE use case, a dedicated bearer, rather than just
+the default bearer is expected to be used to ensure guaranteed bandwidth and QoS. While the default bearer is always established with a non-GBR
+(best-effort) class, a dedicated bearer is set up for video traffic with a QCI supporting guaranteed bit rate. It is to be expected that
+SCONE packets to be mapped to the dedicated bearer allocated for that video flow, with network policy dynamically establishing, maintaining,
+and modifying the bearer as needed to maintain the required service quality.
+
+- **State Management during Mobility:** During handovers or session transfers (e.g., when the UE moves between eNodeBs or from LTE to
+legacy networks), the EPC must maintain the continuity of SCONE state. This ensures that throughput advice is delivered even as bearer mapping
+or tunnel endpoints change, requiring coordination primarily between the S-GW and P-GW.
+
+- **Routing and Addressing Constraints**: In 4G/LTE networks, IP address allocation is tightly linked to bearer establishment. As a result,
+SCONE signaling must handle situations where an IP address is re-assigned or a bearer is re-established, such as during mobility events,
+session timeouts, or network failover. To maintain continuity of throughput advice, the EPC needs to preserve SCONE state even as bearer
+mappings or tunnel endpoints change. This typically requires coordination between the Serving Gateway (S-GW) and the PDN Gateway (P-GW).
+
+- **OSS/BSS Integration**: Network operators may incorporate SCONE monitoring and message logging into existing Operations Support Systems
+(OSS) frameworks. Metrics such as the frequency of SCONE advisories, correlations with user throughput, and error tracking for undelivered
+signals facilitate operational monitoring and compliance checking.
+
+## Deployability of SCONE in a 4G/LTE Network
+Deploying SCONE within a 4G/LTE network leverages the existing Evolved Packet Core (EPC) infrastructure without requiring major changes to 
+network protocols or architecture. SCONE signaling is carried over established GTP-U tunnels between User Equipment and EPC gateways, 
+enabling incremental rollout. The modular and all-IP design of LTE EPC facilitates straightforward integration of SCONE advisory functions 
+into core network nodes like the PDN Gateway (P-GW) or Serving Gateway (S-GW). This approach supports coexistence with legacy systems and 
+allows operators to enhance throughput advisory capabilities while maintaining seamless user experience. The following lists some of the 
+deployability considerations:
+
+- **Minimal Protocol Extensions**: SCONE advice is delivered within the existing user-plane data path (typically over GTP-U), so no protocol
+modification in core LTE/EPC or on the radio interface is necessary. This enables straightforward incremental rollout.
+
+- **Compatibility and Compliance**: SCONE shall utilize 3GPP standards for session and bearer management ensuring interoperability across
+multi-vendor networks and seamless service continuity.
+
+## Operational Consideration of SCONE in a 4G/LTE Network
+Operational deployment of SCONE in 4G/LTE networks requires careful attention to dynamic network conditions and policy enforcement. 
+SCONE signaling must adapt to mobility events such as handovers, ensuring throughput advice persists seamlessly as user equipment moves 
+across cells or between RATs. Network elements like the P-GW and S-GW need to coordinate state management and update throughput recommendations 
+in real time based on subscriber policy and varying radio conditions. Additionally, operators should implement monitoring and logging mechanisms 
+to track SCONE signaling effectiveness, adherence to advised rates, and any signaling failures. Applications benefiting from SCONE are expected 
+to self-adapt their transmission rates according to received advice, optimizing network resource utilization and end-user experience without 
+introducing dependencies on content provider policies. The following lists some of the operational considerations:
+
+- **Dynamic Policy Enforcement**: SCONE throughput advice may need to respond dynamically to changes in subscriber policy
+(e.g., throttling after quota usage), RAT changes. EPC elements must rapidly reference and update relevant policy rules for the user context.
+
+- **Performance Monitoring and Compliance**: Network elements delivering SCONE advice should support performance monitoring per bearer,
+documenting whether endpoints adhere to advised limits. Operators can use this data to tune policies, detect anomalous app behavior, or
+optimize resource allocation.
+
+- **Adaptation to Bearer Granularity**: As bearer granularity in 4G/LTE networks is less fine than in 5G, operators must assess when to establish
+dedicated bearers (e.g., for video) versus using the default bearer. SCONE packets for video should be mapped to the dedicated bearer to
+ensure guaranteed bandwidth and QoS, while less critical flows may use the default bearer.
+
+- **Failure Handling and Robustness**: SCONE design in 4G/LTE networks should anticipate both control-plane and user-plane failures
+(e.g., S-GW or P-GW restarts, tunnel re-establishment) for operational reliability.
+ 
 # SCONE usage in a Wireline Network
 SCONE can be deployed in wireline broadband networks at key access aggregation points such as 
 Broadband Network Gateways (BNGs) or equivalent subscriber access nodes. These network elements 
