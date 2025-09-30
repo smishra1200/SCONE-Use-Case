@@ -161,18 +161,40 @@ Broadband network based on fixed infrastructure (e.g., DSL, cable, fiber).
 # Generic Applicability and Manageability considerations
 
 ## Flow session awareness
+SCONE signaling operates only over established sessions. The network elements MUST have means to unambiguously associate throughput advice with application flows i.e. need to be aware of established sessions.  Each session is bound to an IP address and port, ensuring SCONE packets are routed precisely without affecting unrelated traffic.
+
 ## Per-Flow Signaling
+Throughput advice is applied on a per-4-tuple basis.  Network elements MUST to maintain flow-specific context to ensure signaling correctness.  This enables applications to receive targeted throughput advice while preventing unintended impact on unrelated flows.
+
 ## QoS awareness
+Networks can enforce Quality of Service (QoS) by enabling different techniques and protocols. Network operators may want to enforce separate QoS for SCONE enabled flows. In such cases, the network element can remain unaware of such QoS as if it just provides the thoughput advice in the SCONE packet. However, the network operator SHOULD be able to identify the SCONE enabled flow and have mechanism to provide differentiated treatment in the network. 
+
 ## SCONE Hint to the Network
+SCONE-aware applications MUST provide hints to the network element, enabling it to generate appropriate throughput advice for a given 4-tuple.  Such hints prevent unnecessary default rate-limiting and allow the network to generate the maximum allowable bit rate.  Hints also reduce CPU overhead by eliminating flow classification for SCONE awareness.
+
 ## Retransmission of Advised Bit-Rate
+Packet loss or non-delivery of SCONE advice reduces effectiveness. Both network elements and applications SHOULD support retransmission or periodic re-sending of SCONE packets to ensure reliable delivery. Conformance depends on both network and endpoint behavior.
+
 ## Frequency of Updates
-The rate at which SCONE updates are issued depends on flow characteristics and available computational resources. Excessively frequent 
-updates may increase CPU load on network elements responsible for generating throughput advice, while infrequent updates may reduce 
-advisory effectiveness. Telecommunications Service Providers may consider defining an adjustable update intervals based on application 
-requirements, network capacity, and operational constraints.
+The rate at which SCONE updates are issued depends on flow characteristics and available computational resources. Excessively frequent updates may increase CPU load on network elements responsible for generating throughput advice, while infrequent updates may reduce advisory effectiveness. Network Providers MAY consider defining an adjustable update intervals based on application requirements, network capacity, and operational constraints. SCONE protocol defines a minimum of 67s interval for producing SCONE packets [Editor's note: put the reference here].
+
+## Dynamic Updates
+
+ Networks may enforce dynamic rate limits during a sessions due to:
+
+   *  Changes in access network Type (requiring updated throughput advice).
+
+   *  Changes in subscriber policy (exceeding usage thresholds).
+
+   *  Frequency of updates to maximum allow throughput
+
+   *  Periodic refreshes of maximim allowable throughput (Define timers
+      for optimal and/or maximum update periodicity).
+
+In such cases, the network element SHOULD to be able to initiate SCONE Packets to provide the required throughput updates or the SCONE packets need to be produced by the applications in sufficient frequency. 
 
 ## Monitoring and Logging
-SCONE signaling maybe integrated into existing OSS/NMS frameworks to enable monitoring, troubleshooting, and fault isolation. 
+SCONE signaling maybe integrated into existing network operations/management frameworks to enable monitoring, troubleshooting, and fault isolation. 
 For example, metrics of interest can include:
 
   - Rate of SCONE advisory messages issued per session
@@ -180,7 +202,7 @@ For example, metrics of interest can include:
   - Error conditions where SCONE signaling fails to reach the intended endpoints.
 
 ## Conformance Monitoring
-Network Elements providing SCONE throughput advice may consider implementing mechanisms to measure compliance, either per 
+Network Elements providing SCONE throughput advice MAY consider implementing mechanisms to measure compliance, either per 
 application flow or in aggregate. This allows network operators to validate advisory effectiveness and adjust policies. 
 
 ## Standards Compliance
@@ -272,12 +294,9 @@ Throughput advice is applied on a per-4-tuple basis. Network elements MUST maint
 This enables applications to receive targeted throughput advice while preventing unintended impact on unrelated flows.
 
 ### QoS and Bearer Considerations
-In 5G, QoS is enforced at the granularity of QoS Flows, identified by a QoS Flow Identifier (QFI). A single PDU session can contain multiple 
-QoS Flows. Operators MAY configure a distinct QFI for SCONE packets to ensure predictable handling, or allow SCONE packets to traverse the 
-same bearer as user-plane traffic when no differentiated treatment is required.
+In 5G, QoS is enforced at the granularity of QoS Flows, identified by a QoS Flow Identifier (QFI). A single PDU session can contain multiple QoS Flows. Operators MAY configure a distinct QFI for SCONE packets to ensure predictable handling, or allow SCONE packets to traverse the same bearer as user-plane traffic when no differentiated treatment is required.
 
-The PCF and SMF MUST be capable of assigning appropriate QoS attributes to SCONE flows to ensure that congestion-control signaling is not 
-degraded under high-load conditions.
+The PCF and SMF MUST be capable of assigning appropriate QoS attributes to SCONE flows to ensure that congestion-control signaling is not degraded under high-load conditions.
 
 ### Mobility Handling
 During mobility events (e.g., handover or UPF relocation), SCONE state MUST persist across control-plane and user-plane transitions. 
@@ -286,40 +305,16 @@ The SMF and UPF MUST ensure consistent delivery of SCONE packets following mobil
 Where advisory logic is stateful at the UPF, operators SHOULD provide a synchronization mechanism to prevent discontinuities during mobility.
 
 ### SCONE Hint to the Network
-SCONE-aware applications MUST provide hints to the network element, enabling it to generate appropriate throughput advice for a given 4-tuple. 
-Such hints prevent unnecessary default rate-limiting and allow the network to generate the maximum allowable bit rate. Hints also reduce CPU 
-overhead by eliminating flow classification for SCONE awareness.
+SCONE-aware applications MUST provide hints to the UPF for a given 4-tuple. Such hints prevent unnecessary default rate-limiting and allow the network to generate the maximum allowable bit rate. 
    
 ### Retransmission of Advised Bit-Rate
-Packet loss or non-delivery of SCONE advice reduces effectiveness. Both network elements and applications SHOULD support retransmission or 
-periodic re-sending of SCONE packets to ensure reliable delivery. Conformance depends on both network and endpoint behavior.
+Both UPF and applications need to support retransmission or periodic re-sending of SCONE packets to ensure reliable delivery. 
 
 ### Dynamic Updates
-Mobile networks may enforce dynamic rate limits during a sessions due to:
-
-  - Changes in RAT Type (requiring updated throughput advice).
-  
-  - Changes in subscriber policy (exceeding usage thresholds).
-  - Frequency of updates to maximum allow throughput
-  - Periodic refreshes of maximim allowable throughput (Define timers for optimal and/or maximum update periodicity).
-
-### Frequency of Updates
-The rate at which SCONE updates are issued depends on flow characteristics and available computational resources. Excessively frequent 
-updates may increase CPU load, while infrequent updates may reduce advisory effectiveness. Operators SHOULD define acceptable update 
-periodicity based on application requirements, network capacity, and operational constraints.
-
-### Conformance Monitoring
-Network elements providing SCONE throughput advice MUST implement mechanisms to measure compliance, either per application flow or 
-in aggregate. This allows operators to validate advisory effectiveness and adjust policies. SCONE protocol defines a minimum monitoring 
-period for the conformance monitoring.
-
-### Standards Compliance
-All SCONE signaling occurs over the existing data path in accordance with 3GPP specifications, ensuring compatibility with 
-established mobile-core procedures and avoiding protocol modifications. SCONE operates without interfering with QoS enforcement 
-or subscriber policies.
+Mobile networks has capablities to enforce dynamic rate limits during a sessions for a particular QoS bearer. 
 
 ### Operations Monitoring and Logging
-Operators MAY integrate SCONE signaling into existing OSS/NMS frameworks to enable monitoring, troubleshooting, and fault isolation. 
+Mobile operators may integrate SCONE signaling into existing OSS/NMS frameworks to enable monitoring, troubleshooting, and fault isolation. 
 Metrics of interest include:
 
   - Rate of SCONE advisory messages issued per session
