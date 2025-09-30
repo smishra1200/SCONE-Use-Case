@@ -417,8 +417,7 @@ By addressing these above operational considerations, SCONE can be managed effec
 applications optimize their performance while allowing network operators to utilize network resources efficiently.
 
 # Security Considerations
-Security considerations are included separately in the SCONE protocol documents.  Specific to the use case description in this document, 
-there are no additional security considerations.
+Security considerations are included separately in the SCONE protocol documents.  
 
 # IANA Considerations
 This document has no IANA actions.
