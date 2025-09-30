@@ -312,7 +312,7 @@ Similarly, the SCONE signal for 4G network is shown below.  Please see {{Mishra-
 
 # Security Considerations
 
-Security considerations are included separately in the SCONE protocol documents.  Specific to the use case description in this document, there are no additional security considerations.
+Security considerations are included separately in the SCONE protocol documents.  
 
 # IANA Considerations
 
