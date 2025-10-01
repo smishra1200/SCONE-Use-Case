@@ -686,4 +686,8 @@ including:
 
 - Wesley Eddy
 - Renjie Tang
-- Reviewers who provided invalueable input
+- Kevin Smith
+- Tina Tsou
+- Tianji Jiang
+- Lucas Pardue
+- Martin Thomson
