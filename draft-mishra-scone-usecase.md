@@ -53,15 +53,7 @@ normative:
     date: 2017-05
 
 informative:
-  SCONE-Charter:
-    target: https://datatracker.ietf.org/wg/scone/about/
-    title: SCONE Working Group Charter
-    author:
-    -
-      name: IETF
-    date: 2024-10-31
-
-  4G-Arch:
+    4G-Arch:
     target: https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=24300
     title: System architecture for the Evolved Packet Core (EPC)
     author:
@@ -79,7 +71,8 @@ informative:
  
 --- abstract
 
-This document addresses the applicability and manageability considerations involved in providing throughput advice to application endpoints in telecommunications service provider networks supporting the Standard Communication with Network Elements (SCONE) protocol.
+This document addresses the applicability and manageability considerations involved in providing throughput advice to application 
+endpoints in telecommunications service provider networks supporting the Standard Communication with Network Elements (SCONE) protocol.
 
 --- middle
 
@@ -172,8 +165,8 @@ broadband networks in conjunction with DHCP for IP address assignment.
 4G wireless broadband technology and related network architecture.
 
 - P-GW - Public Data Network Gateway
-Is the network function within the Evolved Packet Core (EPC) that provides connectivity between the user equipment and external packet data networks,
-such as the Internet.
+Is the network function within the Evolved Packet Core (EPC) that provides connectivity between the user equipment and external
+packet data networks, such as the Internet.
 
 - PDU - Protocol Data Unit
 In 3GPP terminology, a PDU is a unit of information at a given protocol layer, such as an IP packet at the network layer. Specifically 
