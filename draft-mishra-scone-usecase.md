@@ -51,6 +51,8 @@ normative:
     author:
       - name: S. Bradner
     date: 2017-05
+    
+  I-D.ietf-scone-protocol:
 
 informative:
     4G-Arch:
@@ -71,31 +73,22 @@ informative:
  
 --- abstract
 
-This document addresses the applicability and manageability considerations involved in providing throughput advice to application 
-endpoints in telecommunications service provider networks supporting the Standard Communication with Network Elements (SCONE) protocol.
+This document describes the applicability and manageability considerations involved in providing throughput advice to application 
+endpoints in telecommunications service provider networks supporting the Standard Communication with SCONE network elements (SCONE) protocol.
 
 --- middle
 
 # Introduction
 
-The SCONE protocol is a signaling mechanism that enables on-path network elements to communicate the maximum allowable 
+The SCONE protocol {{I-D.ietf-scone-protocol}} is a signaling mechanism that enables on-path SCONE capable network elements to communicate the maximum allowable 
 bit rate to application endpoints, with particular relevance to adaptive bit-rate applications. This document addresses 
 the applicability and manageability considerations of deploying the SCONE protocol within telecommunications provider networks.
 
 The SCONE protocol operates on the basis of a UDP 4-tuple. Network elements capable of rate limiting at this granularity can 
 send notifications of the maximum allowable bit rate in each direction of the observed traffic. Such network elements may also 
-drop or delay packets within the corresponding UDP 4-tuple flows. This implies an assumption that on-path network elements have 
-certain capabilities: specifically, the ability to detect and maintain UDP 4-tuple flows, apply rate-limiting policies, and 
-identify flows that include SCONE packets in order to insert throughput advice.
+drop or delay packets within the corresponding UDP 4-tuple flows. This implies an assumption that on-path SCONE capable network elements (refered as SCONE Network Element in the rest of the sections) have certain capabilities: specifically, the ability to detect and maintain UDP 4-tuple flows, aware of centain rate-limiting policies or configurable with certain rate limitation, and identify flows that include SCONE packets and insert throughput advice in those SCONE packets.
 
-In this document, on-path network elements are generally considered within the *access* part of the telecommunications provider’s 
-network. However, their behavior may differ across *access* technologies. For example, a wireless access network element may operate 
-differently from one in a fixed broadband network. Wi-Fi access networks represent another case, where enforcement is often per user 
-or per Service Set Identifier (SSID), but visibility into UDP 4-tuples may be limited. Among the different access networks considered, 
-mobile networks offer the most fine-grained visibility into traffic flows and can act at the individual flow level. In mobile networks, 
-the User Plane Function (UPF) in 5G and the Packet Data Network Gateway (P-GW) in 4G can generate throughput advice to guide adaptive 
-applications on a per-flow basis. In wireline broadband networks, by contrast, rate limiting is typically applied at a centralized 
-Broadband Network Gateway (BNG) or at aggregation points where multiple Customer Premises Equipment (CPE) devices connect.
+In this document, on-path SCONE network elements are generally considered within the *access* part of the telecommunications provider’s network. However, there could be multiple of SCONE network elements on the path. Their behavior may also differ across *access* technologies. For example, a wireless access network element may operate differently from one in a fixed broadband network. Wi-Fi access networks represent another case, where enforcement is often per user or per Service Set Identifier (SSID), but visibility into UDP 4-tuples may be limited. Among the different access networks considered, mobile networks offer the most fine-grained visibility into traffic flows and can act at the individual flow level. In mobile networks, the User Plane Function (UPF) in 5G and the Packet Data Network Gateway (P-GW) in 4G can generate throughput advice to guide adaptive applications on a per-flow basis. In wireline broadband networks, by contrast, rate limiting is typically applied at a centralized Broadband Network Gateway (BNG) or at aggregation points where multiple Customer Premises Equipment (CPE) devices connect.
 
 Accordingly, applicability and manageability considerations must span a wide range of access-network scenarios, each of which 
 handles per-flow rate limiting differently. This document first describes generic considerations for the SCONE protocol and then 
@@ -197,28 +190,28 @@ Broadband network based on fixed infrastructure (e.g., DSL, cable, fiber).
 # Generic Applicability and Manageability considerations
 
 ## Flow session awareness
-SCONE signaling operates only over established sessions. Network elements
-MUST be able to unambiguously associate throughput advice with
+SCONE signaling operates only over established sessions. SCONE network elements
+ought to be able to unambiguously associate throughput advice with
 application flows. Each session is bound to an IP address and port,
 ensuring SCONE packets are routed precisely without affecting unrelated
 traffic.
 
 ## Per-Flow Signaling
-Throughput advice is applied on a per–4-tuple basis. Network elements
-MUST maintain flow-specific context to ensure signaling correctness.
+Throughput advice is applied on a per–4-tuple basis. SCONE network elements
+ought to maintain flow-specific context to ensure signaling correctness.
 This enables applications to receive targeted throughput advice while
 preventing unintended impact on unrelated flows.
 
 ## QoS awareness
 Networks can enforce Quality of Service (QoS) using various techniques.
 In some cases, operators may wish to apply separate QoS policies to
-SCONE-enabled flows. The network element that inserts SCONE advice does
+SCONE-enabled flows. The SCONE network element that inserts SCONE advice does
 not need to interpret or enforce QoS policies directly—it only needs to
-provide the advice. However, the operator SHOULD be able to identify
+provide the advice. However, the operator should be able to identify
 SCONE-enabled flows and apply differentiated QoS treatment when desired.
 
 ## SCONE Hint to the Network
-SCONE-aware applications MUST provide hints to the network element,
+SCONE-aware applications ought to provide hints to the SCONE network element,
 enabling it to generate appropriate throughput advice for a given
 4-tuple. Such hints prevent unnecessary default rate-limiting, allow the
 network to signal the maximum allowable bit rate, and reduce CPU
@@ -226,7 +219,7 @@ overhead by eliminating additional classification steps.
 
 ## Retransmission of Advised Bit-Rate
 Packet loss or non-delivery of SCONE advice reduces effectiveness. Both
-network elements and applications **SHOULD** support retransmission or
+SCONE network elements and applications should support retransmission or
 periodic re-sending of SCONE packets to ensure reliable delivery.
 Conformance depends on both network and endpoint behavior.
 
@@ -234,14 +227,14 @@ Conformance depends on both network and endpoint behavior.
 The rate at which SCONE updates are issued depends on flow
 characteristics and available computational resources. Excessively
 frequent updates may increase CPU load, while infrequent updates may
-reduce advisory effectiveness. Network providers MAY define
+reduce advisory effectiveness. Network providers can define
 adjustable update intervals based on application requirements, network
 capacity, and operational constraints. The SCONE protocol specifies a
 minimum interval of 67 seconds between updates [Editor’s Note: insert
 reference]
 
 ## Dynamic Updates
-Networks may enforce dynamic rate limits during active sessions due to:
+Networks may enforce dynamic rate limits during active application sessions due to:
 
 - Changes in access network type (requiring updated throughput advice)  
 - Subscriber policy updates (e.g., exceeding usage thresholds)  
@@ -249,7 +242,7 @@ Networks may enforce dynamic rate limits during active sessions due to:
 - Periodic refreshes of throughput advice (e.g., timers for maximum
 update periodicity)
 
-In such cases, the network element SHOULD be able to initiate SCONE
+In such cases, the SCONE network element need to be able to initiate SCONE
 packets to provide updated advice, or applications should generate SCONE
 packets frequently enough to trigger network responses.
 
@@ -264,10 +257,12 @@ isolation. Metrics of interest include:
 endpoints
 
 ## Conformance Monitoring
-Network elements providing SCONE throughput advice MAY implement
+Networks providing SCONE throughput advice should be able to implement
 mechanisms to measure compliance, either per application flow or in
 aggregate. This allows operators to validate advisory effectiveness and
-adjust policies.
+adjust policies. Due the flow awareness such mechanism likely be 
+implemented in a SCONE network element but can be implemented by other 
+means in the network.
 
 ## Standards Compliance
 SCONE signaling is expected to traverse the existing data path. For
@@ -291,14 +286,14 @@ and interaction with the Session Management Function (SMF) and Policy
 Control Function (PCF).
 
 ## Applicability of SCONE in a 5G Network
-In 5G, the UPF is the on-path network element with access to subscriber
+In 5G, the UPF is the on-path SCONE network element with access to subscriber
 policy and user-plane connectivity between the User Equipment (UE or
 client application endpoint) and the Internet. The UPF is capable of
 generating SCONE throughput advice per application flow, enabling
 endpoints to adjust sending rates proactively. SCONE signaling occurs
 over the existing data path. The following diagram illustrates how
 throughput advice is conveyed within 5G, highlighting the role of
-user-plane network elements.
+user-plane SCONE network elements.
 
 ~~~~
 +---------+
@@ -364,13 +359,13 @@ PDU sessions:
 
 ### PDU Session Awareness
 SCONE signaling operates only over established PDU sessions. This
-enables network elements to unambiguously associate throughput advice
+enables SCONE network elements to unambiguously associate throughput advice
 with specific UEs and application flows. Each session is bound to a DNN
 (5G) or APN (4G) and an allocated IP address, ensuring SCONE packets are
 routed precisely without affecting unrelated traffic.
 
 ### Per-Flow Signaling
-Throughput advice is applied on a per–4-tuple basis. Network elements
+Throughput advice is applied on a per–4-tuple basis. SCONE network elements
 MUST maintain flow-specific context to ensure signaling correctness.
 This enables applications to receive targeted throughput advice while
 preventing unintended impact on unrelated flows.
@@ -472,7 +467,7 @@ throughput advice between endpoints and EPC gateways.
 # SCONE usage in a Wireline Network
 SCONE can be deployed in wireline broadband networks at key access
 aggregation points such as Broadband Network Gateways (BNGs) or
-equivalent subscriber access nodes. These network elements originate
+equivalent subscriber access nodes. These SCONE network elements originate
 throughput advice, signaling maximum sustainable data rates to
 application endpoints for each subscriber session, typically identified
 by DHCP, PPP, or IPoE session contexts.
@@ -538,14 +533,14 @@ This document has no IANA actions.
 
 # Appendix A. Additional Background details on role of UPF in 5G Mobile Packet Core
 
-## Detailed view of the User Plane Network Element in Mobile Packet Core
+## Detailed view of the User Plane SCONE network element in Mobile Packet Core
 This section describes 5G mobile packet core to explain the role of user-plane
-network element in mobile packet core and reasons why the 5G User Plane
-Function (UPF) and 4G P-GW as network elements can be considered candidates for
+SCONE network element in mobile packet core and reasons why the 5G User Plane
+Function (UPF) and 4G P-GW as SCONE network elements can be considered candidates for
 signaling the "throughput advice" to client-application-endpoint.  However, the
 applicability extends to network architectures beyond 4G/5G networks.
 
-The user plane network element in the 5G packet core, termed as the UPF, as shown in
+The user plane SCONE network element in the 5G packet core, termed as the UPF, as shown in
 Figure 1. 
 
 ~~~~
