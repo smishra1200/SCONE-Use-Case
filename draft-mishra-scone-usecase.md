@@ -90,7 +90,7 @@ to insert throughput advice into those packets.
 
 In this document, on-path SCONE Network Elements are generally considered within the *access* portion of the telecommunications 
 provider’s network. However, multiple SCONE Network Elements may exist along a path between the communicating peers. Depending 
-on their configuration and role they likely geneate different throughput advices for the SCONE enabled application traffic flows, specially when 
+on their configuration and roles they are likely to generate different throughput advices for the SCONE enabled application traffic flows, specially when 
 differnet *access* technologies are in use. SCONE protocol For example, a wireless access network element may operate 
 differently from one in a fixed broadband network. Wi-Fi networks provide another example, where enforcement is often 
 per user or per Service Set Identifier (SSID), but 
@@ -292,7 +292,7 @@ Protocol Data Unit (PDU) sessions established between the User Equipment
 ## Interworking with Other Congestion Management Mechanisms
 SCONE operates independently of transport-layer mechanisms such as
 Explicit Congestion Notification (ECN) or Low Latency, Low Loss, and
-Scalable throughput (L4S). Operators would benefit from harmoning multiple
+Scalable throughput (L4S). Operators would benefit from harmonizing multiple
 congestion signaling methods by policy or scope deployments to avoid
 conflicting feedback.
 
@@ -409,7 +409,7 @@ advice in response to network load variations.
 
 The UPF can be configured to enforce a Maximum Bitrate (MBR) of traffic 
 calculated across over an averaging window (default 2seconds). The 
-enforcement may be applied on different granularities, all traffic 
+enforcement may be applied on different granularity, all traffic 
 carried within a PDU session with default QoS, all traffic mapped to 
 a specific QoS flow within a PDU session, or just the traffic of a 
 specific application traffic flow mapped to a specific QoS flow. The 
@@ -418,7 +418,7 @@ default, the throughput advice reflects the MBR value the UPF is
 configured for a particular SCONE-capable traffic flow. 
 
 ### Dynamic Updates
-When prefered mobile networks can enforce dynamic rate limits during active sessions, 
+When preferred mobile networks can enforce dynamic rate limits during active sessions, 
 for example on a QoS Flow basis. In such cases, a SCONE Network element in 5G network 
 would like to sent dynamics updates to applications..
 
@@ -495,7 +495,7 @@ SCONE network elements originate throughput advice, signaling maximum sustainabl
 rates to application endpoints for each subscriber session, typically identified by 
 DHCP, PPP, or IPoE session contexts.Session granularity is typically based on subscriber 
 sessions using PPP, DHCP, or IPoE protocols. We need to consider if aggregation points have 
-flow level visibility or not, or whether there is a point to provide thoughput advice at 
+flow level visibility or not, or whether there is a point to provide throughput advice at 
 the aggregate level.
 
 
