@@ -486,30 +486,18 @@ throughput advice between endpoints and EPC gateways.
  TBD
 
 # SCONE usage in a Wireline Network
-SCONE can be deployed in wireline broadband networks at key access 
-aggregation points, such as Broadband Network Gateways (BNGs) or 
-equivalent subscriber access nodes. These SCONE Network Elements 
-originate throughput advice, signaling the maximum sustainable data 
-rates to application endpoints for each subscriber session. 
-Subscriber sessions are typically identified using DHCP, PPP, or IPoE contexts.
 
-Session granularity is generally based on subscriber sessions
-rather than individual flows, with SCONE operating over PPP, DHCP, 
-or IPoE sessions. This enables the network to provide throughput guidance 
-tailored to each subscriber while ensuring that unrelated traffic is unaffected.
+TBD
 
-The following diagram provides a high-level view of SCONE deployment within a 
-wireline broadband network:
+Editor's Note: SCONE can be deployed in wireline broadband networks at key access aggregation points 
+such as Broadband Network Gateways (BNGs) or equivalent subscriber access nodes. These 
+SCONE network elements originate throughput advice, signaling maximum sustainable data 
+rates to application endpoints for each subscriber session, typically identified by 
+DHCP, PPP, or IPoE session contexts.Session granularity is typically based on subscriber 
+sessions using PPP, DHCP, or IPoE protocols. We need to consider if aggregation points have 
+flow level visibility or not, or whether there is a point to provide thoughput advice at 
+the aggregate level.
 
-~~~~
-+----------------+        +--------------+        +---------------+
-|  Subscriber    |<------>|     BNG      |<------>|  Content /    |
-|  Session / UE  |  SCONE |              |  SCONE |  Endpoint     |
-+----------------+  Advice|              |  Advice|               |
-                          |              |        |               |
-                          +--------------+        +---------------+
-~~~~
-{: #Wireline-scone title="SCONE Integration within the Wireline Network"}
 
 ## Wireline specific considerations
 
