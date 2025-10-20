@@ -88,8 +88,8 @@ SCONE Network Elements in the rest of this document) are assumed to have the fol
 4-tuple flows, be aware of or configurable with rate-limiting policies, and identify flows that carry SCONE packets in order 
 to insert throughput advice into those packets.
 
-In this document, on-path SCONE network elements are generally considered within the *access* portion of the telecommunications 
-provider’s network. However, multiple SCONE Network Elements may exist along a path, and their behavior can differ across 
+Multiple SCONE Network Elements may exist along a path, and depending on their configuration and role assigned and their 
+behavior can differ across 
 *access* technologies. For example, a wireless access network element may operate differently from one in a fixed broadband 
 network. Wi-Fi networks provide another example, where enforcement is often per user or per Service Set Identifier (SSID), but 
 visibility into individual UDP 4-tuples may be limited. Among access networks, mobile networks offer the most fine-grained 
@@ -533,8 +533,7 @@ This document has no IANA actions.
 # References
 
 ## Normative
-{{RFC2119}}
-{{RFC8174}}
+
 {{I-D.ietf-scone-protocol}}
 
 ## Informative References
