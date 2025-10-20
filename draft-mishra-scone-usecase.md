@@ -1,15 +1,18 @@
 ---
 title: "Applicability & Manageability consideration for SCONE"
-submissionType: IETF
 abbrev: "SCONE Applicability & Manageability"
 docname: draft-mishra-scone-applicability-manageablity-03
 category: info
+submissionType: IETF
 
 ipr: trust200902
 area: Web and Internet Transport
 workgroup: SCONE
-keyword: Throttling
-keyword: Adaptive Bit-Rate Video, scone
+
+keyword: 
+  - Throttling
+  - Adaptive Bit-Rate Video
+  - SCONE
 
 stand_alone: yes
 smart_quotes: no
@@ -38,7 +41,6 @@ author:
     email: khurram.abbas@verizonwireless.com
 
 normative:
-
   I-D.ietf-scone-protocol:
     target: https://datatracker.ietf.org/doc/draft-ietf-scone-protocol/
     title: Standard Communication with Network Elements (SCONE) Protocol
@@ -49,19 +51,19 @@ normative:
       - name: M. Joras
       - name: M. Ihlar
     date: 2025-07
-    seriesinfo: Internet-Draft, draft-ietf-scone-protocol, Work in Progress
-      
+    seriesinfo: "Internet-Draft, draft-ietf-scone-protocol, Work in Progress"
+
 informative:
-    4G-Arch:
+  4G-Arch:
     target: https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=24300
-    title: System architecture for the Evolved Packet Core (EPC)
+    title: System Architecture for the Evolved Packet Core (EPC)
     author:
       - name: 3GPP
     date: 2020-06-01
 
   5G-Arch:
     target: https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=3144
-    title: System architecture for the 5G System (5GS)
+    title: System Architecture for the 5G System (5GS)
     author:
       - name: 3GPP
     date: 2025-01-07
@@ -671,8 +673,9 @@ non-ASCII symbols:
 # Acknowledgments
 {:numbered="false"}
 
-This document represents collaboration, comments, and inputs from others,
-including:
+The authors would like to acknowledge and thank the SCONE working grouup and also the
+following individuals for their valuable feedback, discussions, and contributions that helped improve
+this document:
 
 - Wesley Eddy
 - Renjie Tang
