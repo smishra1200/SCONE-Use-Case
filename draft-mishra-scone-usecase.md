@@ -38,19 +38,6 @@ author:
     email: khurram.abbas@verizonwireless.com
 
 normative:
-  RFC2119:
-    target: https://www.rfc-editor.org/rfc/rfc2119
-    title: Key words for use in RFCs to Indicate Requirement Levels
-    author:
-      - name: S. Bradner
-    date: 1997-03
-
-  RFC8174:
-    target: https://www.rfc-editor.org/rfc/rfc8174
-    title: Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words
-    author:
-      - name: S. Bradner
-    date: 2017-05
 
   I-D.ietf-scone-protocol:
     target: https://datatracker.ietf.org/doc/draft-ietf-scone-protocol/
@@ -550,12 +537,9 @@ This document has no IANA actions.
 
 # Appendix A. Additional Background details on role of UPF in 5G Mobile Packet Core
 
-## Detailed view of the User Plane SCONE network element in Mobile Packet Core
-This section describes 5G mobile packet core to explain the role of user-plane
-SCONE network element in mobile packet core and reasons why the 5G User Plane
-Function (UPF) and 4G P-GW as SCONE network elements can be considered candidates for
-signaling the "throughput advice" to client-application-endpoint.  However, the
-applicability extends to network architectures beyond 4G/5G networks.
+This section describes 5G mobile packet core in mobile packet core and reasons why the 5G User Plane
+Function (UPF) as SCONE network elements can be considered candidates for
+signaling the "throughput advice" to client-application-endpoint. 
 
 The user plane SCONE network element in the 5G packet core, termed as the UPF, as shown in
 Figure 1. 
@@ -578,28 +562,6 @@ Figure 1.
                             +-----+
 ~~~~
 {: #5g-diagram title="5G Mobile Network Architecture"}
-
-In the 4G packet core, the P-GW (as shown in Figure 2) performs the
-same role as the UPF does in the 5G mobile packet core.
-
-~~~~
-                    +-----+
-                    | HSS |
-                    +-----+
-                       |
-                    +-----+          +------+
-                    | MME |          | PCRF |
-                   /+-----+\         +------+
-                  /         \            |
-                 /           \           |        ___  __
-                /             \          |       /   )( \
-   +----+   +-----+        +------+  +------+   (        )   +----------+
-   | UE |---| eNB |--------| S-GW |--| P-GW |---( Internet)--| Content  |
-   +----+   +-----+   S1u  +------+  +------+ SGi(       _)  | Provider |
-                                                   (__(___)  +----------+
- 
-~~~~
-{: #4g-diagram title="4G Mobile Network Architecture"}
 
 ## 5G Mobile Network Architecture
 The UPF is a fundamental component of the 3GPP's 5G packet core network
