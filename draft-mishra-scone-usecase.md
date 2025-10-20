@@ -88,10 +88,12 @@ SCONE Network Elements in the rest of this document) are assumed to have the fol
 4-tuple flows, be aware of or configurable with rate-limiting policies, and identify flows that carry SCONE packets in order 
 to insert throughput advice into those packets.
 
-Multiple SCONE Network Elements may exist along a path, and depending on their configuration and role assigned and their 
-behavior can differ across 
-*access* technologies. For example, a wireless access network element may operate differently from one in a fixed broadband 
-network. Wi-Fi networks provide another example, where enforcement is often per user or per Service Set Identifier (SSID), but 
+In this document, on-path SCONE Network Elements are generally considered within the *access* portion of the telecommunications 
+provider’s network. However, multiple SCONE Network Elements may exist along a path between the communicating peers. Depending 
+on their configuration and role they likely geneate different throughput advices for the SCONE enabled application traffic flows, specially when 
+differnet *access* technologies are in use. SCONE protocol For example, a wireless access network element may operate 
+differently from one in a fixed broadband network. Wi-Fi networks provide another example, where enforcement is often 
+per user or per Service Set Identifier (SSID), but 
 visibility into individual UDP 4-tuples may be limited. Among access networks, mobile networks offer the most fine-grained 
 visibility into traffic flows and can act on individual flows. In mobile networks, the User Plane Function (UPF) in 5G and the 
 Packet Data Network Gateway (P-GW) in 4G can generate throughput advice to guide adaptive applications on a per-flow basis. 
