@@ -254,14 +254,6 @@ periodic re-sending of SCONE packets to ensure reliable delivery.
 Conformance depends on the behavior of both network and endpoint.
 
 ## Frequency of Updates
-The rate at which SCONE updates are issued depends on flow
-characteristics and available computational resources. Excessively
-frequent updates may increase CPU load, while infrequent updates may
-reduce advisory effectiveness. Network providers can define
-adjustable update intervals based on application requirements, network
-capacity, and operational constraints. The SCONE protocol specifies a
-minimum interval of 67 seconds between updates see 
-{{I-D.ietf-scone-protocol}}.
 
 The rate at which SCONE updates are issued depends on flow 
 characteristics and available computational resources. Excessively 
@@ -272,7 +264,7 @@ capacity, and operational constraints. The SCONE protocol specifies a
 minimum interval of 67 seconds between updates {{I-D.ietf-scone-protocol}}.
 
 ## Dynamic Updates
-Networks may enforce dynamic rate limits during active application sessions due to:
+Dynamic rate limits can be enforced by the network during active application sessions due to:
 
 - Changes in access network type (requiring updated throughput advice)  
 - Subscriber policy updates (e.g., exceeding usage thresholds)  
@@ -295,7 +287,7 @@ isolation. Metrics of interest include:
 endpoints
 
 ## Conformance Monitoring
-Networks providing SCONE throughput advice should  implement
+Networks providing SCONE throughput advice ought to implement
 mechanisms to measure compliance, either per application flow or in
 aggregate. This allows operators to validate advisory effectiveness and
 adjust policies. Due flow awareness, such mechanism are typically 
@@ -311,17 +303,11 @@ Protocol Data Unit (PDU) sessions established between the User Equipment
 ## Interworking with Other Congestion Management Mechanisms
 SCONE operates independently of transport-layer mechanisms such as
 Explicit Congestion Notification (ECN) or Low Latency, Low Loss, and
-Scalable throughput (L4S). Operators MAY harmonize multiple
+Scalable throughput (L4S). Operators would benefit from harmoning multiple
 congestion signaling methods by policy or scope deployments to avoid
 conflicting feedback.
 
 # SCONE Usage in a 5G Network
-5G systems are consists of a 5G Radio Acceess Network (RAT) and 5G 
-packet core. 5G packet core is built on a cloud-native 
-Service-Based Architecture (SBA), and has the concept of 
-Network Functions (NF) which provides flexibility for introducing 
-new functions required to deploy SCONE in the network. Appendix A 
-describes different network compontents of 5G network. 
 
 5G systems consist of a 5G Radio Access Network (RAN) and a 5G 
 Packet Core. The 5G Packet Core is built on a cloud-native 
@@ -344,7 +330,7 @@ any network component capable of meeting the applicability and
 manageability considerations may act as a SCONE Network Element.
 
 The following diagram illustrates how throughput 
-advice is conveyed within a 5G network, highlighting the role of 
+advice can be conveyed within a 5G network, highlighting the role of 
 user-plane SCONE Network Elements.
 
 ~~~~
@@ -409,14 +395,14 @@ PDU sessions:
 
 ### PDU Session Awareness
 SCONE signaling operates only over established PDU sessions. This 
-allows SCONE Network Elements to unambiguously associate throughput advice 
+allows SCONE Network Elements in 5G network to unambiguously associate throughput advice 
 with specific UEs and application flows. Each session is bound to a DNN and 
 an allocated IP address, ensuring SCONE packets are handled precisely 
 without affecting unrelated traffic.
 
 ### Per-Flow Signaling
-Throughput advice is applied on a per–4-tuple basis. 5G SCONE Network Elements 
-must maintain flow-specific context to ensure signaling correctness. 
+Throughput advice is applied on a per–4-tuple basis. SCONE Network Elements in 5G network 
+need to maintain flow-specific context to ensure signaling correctness. 
 This enables applications to receive targeted throughput advice while 
 preventing unintended impact on unrelated flows.
 
@@ -433,12 +419,12 @@ under high-load conditions. They can also dynamically update SCONE rate
 advice in response to network load variations.
 
 ### Dynamic Updates
-Mobile networks can enforce dynamic rate limits during active sessions, 
-for example on a QoS Flow basis. In such cases, 5G SCONE Network Elements 
-should be capable of sending dynamic updates to applications.
+When prefered mobile networks can enforce dynamic rate limits during active sessions, 
+for example on a QoS Flow basis. In such cases, a SCONE Network element in 5G network 
+would like to sent dynamics updates to applications..
 
 ### Operations Monitoring and Logging
-Mobile operators may integrate SCONE signaling into existing operational and management 
+When preferred mobile operators can integrate SCONE signaling into existing operational and management 
 frameworks to enable monitoring, troubleshooting, and fault isolation. 
 Metrics of interest include:
 
@@ -482,15 +468,18 @@ The following diagram illustrates SCONE integration within the P-GW:
                     +-------------+
                            |
                            v
-                    +-----------------+
-                    | Content Provider|
-                    +-----------------+
+                  +-----------------+
+                  | Content Provider|
+                  +-----------------+
 
 ~~~~
 {: #4g-scone title="SCONE Integration within the 4G Network"}
 
 ## Applicability of SCONE in a 4G/LTE Network
-- SCONE signaling maps to EPS bearers, enabling secure and targeted
+
+TBD
+
+Editor's NOTE: SCONE signaling maps to EPS bearers, enabling secure and targeted
 throughput advice between endpoints and EPC gateways.
 
 ## 4G specific considerations 
@@ -537,20 +526,6 @@ or it may be subject to handover or offloading, moving between a cellular networ
 a Wi-Fi network, and vice versa. In such scenarios, rate limiting is typically applied per user, device, 
 or Service Set Identifier (SSID). These cases should be considered when defining applicability and 
 manageability guidelines for SCONE deployments.
-
-## Other Miscellaneous topics
-  - SCONE signaling MUST NOT require changes to how a CSP determines video policy for a flow.
-  
-  - The SCONE signal MUST be extensible beyond 4G/5G.
-
-  - Receiver adaptation behavior requires further specification.
-  
-  - In multi-UPF deployments, only the UPF associated with a given PDU session will send throughput advice. Other UPFs
-may serve specialized roles but MUST NOT duplicate advisory functions.
-
-By addressing these above operational considerations, SCONE can be managed effectively in mobile networks to enable 
-adaptive bit-rate applications optimize their performance while allowing network operators to utilize network resources 
-efficiently.
 
 # Security Considerations
 Security considerations are included separately in the SCONE protocol documents.  
