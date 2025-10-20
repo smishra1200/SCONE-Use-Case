@@ -406,7 +406,7 @@ need to maintain flow-specific context to ensure signaling correctness.
 This enables applications to receive targeted throughput advice while 
 preventing unintended impact on unrelated flows.
 
-### QoS and Bearer Considerations
+### QoS Considerations
 In 5G, QoS is enforced at the granularity of QoS Flows. A single PDU session 
 can contain multiple QoS Flows. Operators may configure a distinct QoS Flow 
 for SCONE packets to ensure predictable handling or allow SCONE packets to 
