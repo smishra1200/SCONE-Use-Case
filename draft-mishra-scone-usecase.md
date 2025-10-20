@@ -115,11 +115,10 @@ Accordingly, applicability and manageability considerations must encompass a wid
 handles per-flow rate limiting differently. This document first presents generic considerations for the SCONE protocol and then 
 provides network-specific guidance where throughput advisory signaling can enhance both resource utilization and user experience.
 
-# Conventions and Definitions
+# Terms and Definitions
 
-{::boilerplate bcp14-tagged}
+This document uses terms and definitions described in {{I-D.ietf-scone-protocol}}, some more terms and definitions are described below in this section. 
 
-# Terminology
 - 4G - Fourth Generation mobile network technology, also known as Long-Term Evolution (LTE), defined by the 3rd Generation
 Partnership Project (3GPP).
 
