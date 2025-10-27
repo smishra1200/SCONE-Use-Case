@@ -406,9 +406,8 @@ attributes to SCONE flows so that the advised throughput is not degraded
 under high-load conditions. They can also dynamically update SCONE rate 
 advice in response to network load variations.
 
-The UPF can be configured to enforce a maximum available bitrate of traffic 
-calculated across over an averaging window. The 
-enforcement may be applied on different granularity, all traffic 
+The UPF can be configured to enforce a maximum available bitrate for traffic.
+The enforcement may be applied on different granularity, all traffic 
 carried within a PDU session with default QoS, all traffic mapped to 
 a specific QoS flow within a PDU session, or just the traffic of a 
 specific application traffic flow mapped to a specific QoS flow. The 
