@@ -406,15 +406,13 @@ attributes to SCONE flows so that the advised throughput is not degraded
 under high-load conditions. They can also dynamically update SCONE rate 
 advice in response to network load variations.
 
-The UPF can be configured to enforce a Maximum Bitrate (MBR) of traffic 
-calculated across over an averaging window (default 2 seconds). The 
+The UPF can be configured to enforce a maximum available bitrate of traffic 
+calculated across over an averaging window. The 
 enforcement may be applied on different granularity, all traffic 
 carried within a PDU session with default QoS, all traffic mapped to 
 a specific QoS flow within a PDU session, or just the traffic of a 
 specific application traffic flow mapped to a specific QoS flow. The 
-restriction can be separated for upstream and downstream directions. By 
-default, the throughput advice reflects the MBR value the UPF is 
-configured for a particular SCONE-capable traffic flow. 
+restriction are usually separated for upstream and downstream directions. 
 
 ### Dynamic Updates
 Mobile networks can enforce dynamic rate limits during active sessions, 
