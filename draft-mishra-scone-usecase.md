@@ -1,7 +1,7 @@
 ---
-title: "Applicability & Manageability consideration for SCONE"
+title: "Applicability & Manageability Considerations for SCONE"
 abbrev: "SCONE Applicability & Manageability"
-docname: draft-mishra-scone-applicability-manageablity-03
+docname: draft-mishra-scone-applicability-manageablity-04
 category: info
 submissionType: IETF
 
@@ -9,10 +9,7 @@ ipr: trust200902
 area: Web and Internet Transport
 workgroup: SCONE
 
-keyword: 
-  - Throttling
-  - Adaptive Bit-Rate Video
-  - SCONE
+keyword: [SCONE, access networks, throughput advice, manageability, applicability]
 
 stand_alone: yes
 smart_quotes: no
@@ -92,8 +89,8 @@ to insert throughput advice into those packets.
 
 In this document, on-path SCONE Network Elements are generally considered within the *access* portion of the telecommunications 
 provider’s network. However, multiple SCONE Network Elements may exist along a path between the communicating peers. Depending 
-on their configuration and roles they are likely to generate different throughput advices for the SCONE enabled application traffic flows, specially when 
-differnet *access* technologies are in use. SCONE protocol For example, a wireless access network element may operate 
+on their configuration and roles they are likely to generate different throughput advices for the SCONE enabled application traffic flows, especially when 
+different *access* technologies are in use. For example, the SCONE protocol in a wireless access network element may operate 
 differently from one in a fixed broadband network. Wi-Fi networks provide another example, where enforcement is often 
 per user or per Service Set Identifier (SSID), but 
 visibility into individual UDP 4-tuples may be limited. Among access networks, mobile networks offer the most fine-grained 
@@ -281,7 +278,7 @@ endpoints
 Networks providing SCONE throughput advice ought to implement
 mechanisms to measure compliance, either per application flow or in
 aggregate. This allows operators to validate advisory effectiveness and
-adjust policies. Due flow awareness, such mechanism are typically 
+adjust policies. Due to flow awareness, such mechanisms are typically 
 implemented in a SCONE Network Element but may also be implemented 
 elsewhere in the network.
 
@@ -409,23 +406,21 @@ attributes to SCONE flows so that the advised throughput is not degraded
 under high-load conditions. They can also dynamically update SCONE rate 
 advice in response to network load variations.
 
-The UPF can be configured to enforce a Maximum Bitrate (MBR) of traffic 
-calculated across over an averaging window (default 2seconds). The 
+The UPF can be configured to enforce a maximum available bitrate of traffic 
+calculated across over an averaging window. The 
 enforcement may be applied on different granularity, all traffic 
 carried within a PDU session with default QoS, all traffic mapped to 
 a specific QoS flow within a PDU session, or just the traffic of a 
 specific application traffic flow mapped to a specific QoS flow. The 
-restriction can be separated for upstream and downstream directions. By 
-default, the throughput advice reflects the MBR value the UPF is 
-configured for a particular SCONE-capable traffic flow. 
+restriction are usually separated for upstream and downstream directions. 
 
 ### Dynamic Updates
-When preferred mobile networks can enforce dynamic rate limits during active sessions, 
+Mobile networks can enforce dynamic rate limits during active sessions, 
 for example on a QoS Flow basis. In such cases, a SCONE Network element in 5G network 
-would like to sent dynamics updates to applications..
+would like to send dynamics updates to applications..
 
 ### Operations Monitoring and Logging
-When preferred mobile operators can integrate SCONE signaling into existing operational and management 
+Mobile operators can integrate SCONE signaling into existing operational and management 
 frameworks to enable monitoring, troubleshooting, and fault isolation. 
 Metrics of interest include:
 
@@ -438,7 +433,7 @@ be used to assess SCONE effectiveness.
 
 # SCONE Usage in a 4G/LTE Network
 In LTE/Evolved Packet Core (EPC) systems as defined by 3GPP {{4G-Arch}}, SCONE can be 
-integrated at the PDN Gateway (P-GW) or the Serving Gateway (S-GW). Unlike 5G, traffic 
+integrated at the Packet Data Network Gateway (P-GW) or the Serving Gateway (S-GW). Unlike 5G, traffic 
 granularity is bearer-based rather than per-flow.
 
 The following diagram illustrates SCONE integration within the P-GW:
@@ -480,7 +475,7 @@ The following diagram illustrates SCONE integration within the P-GW:
 
 TBD
 
-Editor's NOTE: SCONE signaling maps to EPS bearers, enabling secure and targeted
+Editor's Note: SCONE signaling maps to EPS bearers, enabling secure and targeted
 throughput advice between endpoints and EPC gateways.
 
 ## 4G specific considerations 
@@ -495,7 +490,7 @@ Editor's Note: SCONE can be deployed in wireline broadband networks at key acces
 such as Broadband Network Gateways (BNGs) or equivalent subscriber access nodes. These 
 SCONE network elements originate throughput advice, signaling maximum sustainable data 
 rates to application endpoints for each subscriber session, typically identified by 
-DHCP, PPP, or IPoE session contexts.Session granularity is typically based on subscriber 
+DHCP, PPP, or IPoE session contexts. Session granularity is typically based on subscriber 
 sessions using PPP, DHCP, or IPoE protocols. We need to consider if aggregation points have 
 flow level visibility or not, or whether there is a point to provide throughput advice at 
 the aggregate level.
@@ -505,7 +500,7 @@ the aggregate level.
 
 TBD
 
-# SCONE usage in a Wifi Networks
+# SCONE usage in a Wi-Fi Networks
 
 TBD
 
@@ -523,15 +518,7 @@ Security considerations are included separately in the SCONE protocol documents.
 This document has no IANA actions.
 
 # References
-
-## Normative
-
-{{I-D.ietf-scone-protocol}}
-
-## Informative References
-
-{{4G-Arch}}
-{{5G-Arch}}
+{:numbered="false"}
 
 --- back
 
@@ -539,7 +526,7 @@ This document has no IANA actions.
 # Appendix A. Additional Background details on role of UPF in 5G Mobile Packet Core
 
 This section describes 5G mobile packet core in mobile packet core and reasons why the 5G User Plane
-Function (UPF) as SCONE network elements can be considered candidates for
+Function (UPF) as SCONE Network Element can be considered a candidate for
 signaling the "throughput advice" to client-application-endpoint. 
 
 The user plane SCONE network element in the 5G packet core, termed as the UPF, as shown in
@@ -581,7 +568,7 @@ functions such as:
 Note: This is not an exhaustive list of UPF functions.  For details refer to
 {{5G-Arch}}.
 
-To accomplish above mentioned functions, the UPF has four distinct reference
+To accomplish the above mentioned functions, the UPF has four distinct reference
 points (interfaces)  as defined by the 3GPP and as shown in the figure 1 above:
 
 1. The N3 interface is between the UPF and the 5G Base station.
@@ -593,7 +580,7 @@ points (interfaces)  as defined by the 3GPP and as shown in the figure 1 above:
 4. The N9 interface is between instances of UPFs.
 
 ## N3 Interface
-The N3 interfaces transfers user plane traffic, that is, user data packets
+The N3 interface transfers user plane traffic, that is, user data packets
 between the gNodeB and the UPF.  It uses GPRS Tunneling Protocol - User Plane
 or GTP-U.  It replaces the S1-U interfaces from the 4G mobile packet core.
 
@@ -615,7 +602,7 @@ interface between the P-GW and the external Data Network for access to services
 and applications.  The interface supports various transport protocols over IP.
 
 ## N9 Interface
-This interface interconnects two or more UPFs when used in a data path.  The interface uses GTP-U protocol for user 
+This interface interconnects two or more UPFs used in a data path.  The interface uses the GTP-U protocol for user 
 traffic tunneling including roaming.
 
 Note: In the scenario of 2 or more UPFs in the data path, only one UPF that has access to subscriber policy would send "throughput 
@@ -650,7 +637,7 @@ Below is an example of data flow to/from a UE to the UPF.
       packets to the app hosted on the UE.
 
 In summary, the UPF is responsible for packet routing and forwarding, packet
-inspection and filtering, participating in subscriber and flow policy enforcement, inline services (NAT, firewall, DNS etc) and QoS handling.
+inspection and filtering, participating in subscriber and flow policy enforcement, inline services (NAT, firewall, DNS, etc) and QoS handling.
 
 # Appendix B. Non-ASCII Characters
 
@@ -673,14 +660,7 @@ non-ASCII symbols:
 # Acknowledgments
 {:numbered="false"}
 
-The authors would like to acknowledge and thank the SCONE working grouup and also the
-following individuals for their valuable feedback, discussions, and contributions that helped improve
-this document:
-
-- Wesley Eddy
-- Renjie Tang
-- Kevin Smith
-- Tina Tsou
-- Tianji Jiang
-- Lucas Pardue
-- Martin Thomson
+The authors thank Wesley Eddy, Renjie Tang, Kevin Smith, Tina Tsou, Tianji Jiang, Lucas Pardue,
+and Martin Thomson for their helpful comments and contributions to this document. The authors also
+thank members of the SCONE Working Group for their review and
+support throughout the development of this document.
