@@ -222,11 +222,14 @@ This enables applications to receive targeted throughput advice while
 preventing unintended impact on unrelated flows.
 
 ## QoS awareness
-Networks can enforce Quality of Service (QoS) using various techniques. 
-In some cases, operators may wish to apply separate QoS policies to 
-SCONE-enabled flows. The SCONE Network Element that inserts SCONE advice does 
-not need to interpret or enforce QoS policies directly; it only provides the advice. 
-Operators should be able to identify SCONE-enabled flows and apply differentiated QoS treatment when desired.
+Quality of Service (QoS) may be enforced by networks through a variety of 
+mechanisms. In certain deployments, operators may choose to apply distinct 
+QoS policies to flows SCONE-enabled flows. The SCONE Network Element 
+responsible for inserting SCONE advice is not required to interpret or 
+enforce QoS policies; its role is limited to the signaling of the advisory 
+throughput information. It is expected that operators shall be able to identify 
+SCONE-enabled flows and, where appropriate, apply differentiated QoS 
+treatment in accordance with their policy objectives..
 
 ## SCONE Hint to the Network
 SCONE-aware applications ought to provide hints to the SCONE Network Elements,
