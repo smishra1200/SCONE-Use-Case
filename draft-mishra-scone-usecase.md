@@ -130,7 +130,7 @@ It is functionally equivalent to the Data Network Name (DNN) used in 5G systems.
 A media delivery technique that dynamically adjusts the quality of content (e.g., video) in real-time based on the
 available network bandwidth.
 
-- Application End-point
+- Application endpoint
 Application hosted on client device, which receives bit-rate advice from Network Element via SCONE protocol.
 
 - BNG - Broadband Network Gateway
@@ -331,12 +331,10 @@ This functionality enables SCONE-aware endpoints to proactively adjust their sen
 Crucially, SCONE signaling is implemented to occur over the existing data path.
 
 For a 5G network, the User Plane Function (UPF) serves as the natural anchor
-point for SCONE signaling. However, due to the high flexibility of the 5G's
-SBA, any network component capable of meeting the defined Applicability and
-Manageability considerations may act as a SCONE-capable Network Element.
+point for SCONE signaling.
 
-The following diagram illustrates how throughput
-advice can be conveyed within a 5G network, highlighting the role of
+The following diagram illustrates how throughput advice can be conveyed within a 5G
+network, highlighting the role of
 user-plane SCONE Network Elements.
 
 ~~~~
