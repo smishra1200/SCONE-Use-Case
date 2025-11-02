@@ -241,11 +241,14 @@ This enables applications to receive targeted throughput advice while
 preventing unintended impact on unrelated flows.
 
 ## QoS awareness
-Quality of Service (QoS) may be enforced by networks through a variety of
-mechanisms. In certain deployments, network operators may choose to apply distinct
-QoS policies to SCONE-enabled flows. However, SCONE enabled flows are typically
-used for adaptive bit-rate applications and are expected to be treated as
-default QoS flow for the corresponding PDU session.
+Quality of Service (QoS) may be enforced by networks through a variety of 
+mechanisms. In certain deployments, network operators may choose to apply distinct 
+QoS policies to SCONE-enabled flows. The SCONE Network Element 
+responsible for inserting SCONE advice is not required to interpret or 
+enforce QoS policies; its role is limited to the signaling of the advisory 
+throughput information. It is expected that network operators shall be able to identify 
+SCONE-enabled flows and, where appropriate, provide throughput advice in accordance 
+to their policy objectives.
 
 ## SCONE Hint to the Network
 SCONE-aware applications ought to provide hints to the SCONE Network Elements,
@@ -298,15 +301,7 @@ elsewhere in the network.
 
 ## Standards Compliance
 SCONE signaling is expected to traverse the existing data path associated
-with the IP flow for which the Network Element intends to send the advisory bit-rate.
-
-For example, in 4G mobile networks SCONE packets are sent by the Network Element
-(i.e., the P-GW) over the corresponding EPS bearer session (S5U Interface + S1-U Interface + Air Interface)
-that is carrying the IP flow which the Network Element intends to send the advisory bit-rate.
-
-Similarly, in 5G mobile SCONE packets are sent by the Network Element (i.e., the UPF) over the
-corresponding PDU session (N3 Interface + Air Interface) that is carrying the IP flow for which
-the Network element intends to send the bit-rate.
+with the UDP 4-tuple flow for which the Network Element intends to send the advisory bit-rate.
 
 ## Interworking with Other Congestion Management Mechanisms
 SCONE operates independently of transport-layer mechanisms such as
@@ -421,9 +416,9 @@ typically used for adaptive bit-rate applications and are expected to be treated
 as the default best effort QoS flow for the corresponding PDU Session.
 
 The User Plane Function (UPF) can be configured to enforce a maximum allowable bitrate
-(i.e., the advisory bit-rate) for SCONE-enabled flows. Mobile Operators can utilize the
+(i.e., the throughput advice ) for SCONE-enabled flows. Mobile Operators can utilize the
 Policy Control Function (PCF) and Session Management Function (SMF) to configure this
-advisory bit-rate in the UPF based on their preferred policy.
+throughput advice in the UPF based on their preferred policy.
 
 ### Dynamic Updates
 Mobile networks can enforce dynamic rate limits (e.g., on a QoS Flow basis) during active sessions.
@@ -450,6 +445,11 @@ Key Metrics and Analytics:
 Integration with established analytics frameworks (e.g., the Network Data Analytics
 Function (NWDAF) in 5G) can also be utilized to continuously assess SCONE effectiveness
 and optimize policy decisions.
+
+### Standards Compliance
+In 5G mobile network, SCONE packets are sent by the Network Element (i.e., the UPF) over the
+corresponding PDU session (N3 Interface + Air Interface) that is carrying the UDP 4-tuple 
+flow for which the Network element intends to send the bit-rate.
 
 # SCONE Usage in a 4G/LTE Network
 In LTE/Evolved Packet Core (EPC) systems, as defined by 3GPP standards {{4G-Arch}},
