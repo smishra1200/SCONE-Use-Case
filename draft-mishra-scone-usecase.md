@@ -68,8 +68,8 @@ informative:
 --- abstract
 
 This document describes the Applicability and Manageability considerations for providing throughput guidance to
-application endpoints in telecommunications service provider networks supporting the Standard Communication
-with Network Elements (SCONE) protocol.
+application endpoints. This guidance is specifically addressed within the context of telecommunications service
+provider networks utilizing the Standard Communication with Network Elements (SCONE) protocol.
 
 --- middle
 
@@ -91,21 +91,20 @@ to insert throughput advice into those packets.
 In this document, on-path SCONE Network Elements are generally considered within the *access* portion of the
 Telecommunications provider’s network. However, multiple SCONE Network Elements may exist along a path
 between the communicating peers. Depending on their configuration and roles they are likely to generate
-different throughput advices for the SCONE enabled application traffic flows, specially when different
+different throughput advices for the SCONE enabled application traffic flows, especially when different
 *access* technologies are in use. For example, the SCONE protocol in a wireless access network element
 may operate differently from one in a fixed broadband network. Wi-Fi networks provide another example,
 where enforcement is often per user or per Service Set Identifier (SSID), but visibility into individual
 UDP 4-tuples may be limited. Among access networks, mobile networks offer the most fine-grained
-visibility into traffic flows and can act on individual flows. In mobile networks, the User Plane
+visibility into traffic flows and can act on individual flows. For example, in mobile networks, the User Plane
 Function (UPF) in 5G {{5G-Arch}} and the Packet Data Network Gateway (P-GW) in 4G {{4G-Arch}} can generate throughput advice
 to guide adaptive bit-rates applications on a per-flow basis. In contrast, wireline broadband networks typically
 apply rate limiting at a centralized Broadband Network Gateway (BNG) or at aggregation points serving
 multiple Customer Premises Equipment (CPE) devices.
 
 Accordingly, Applicability and Manageability considerations must encompass a wide range of access-network
-scenarios, each of which handles per-flow rate limiting differently. This document first presents generic
-considerations for the SCONE protocol and then provides network-specific guidance where throughput
-advisory signaling can enhance both resource utilization and user experience.
+scenarios, each of which handles per-flow rate limiting differently. The scope of this document is limited
+to presenting the generic Applicability and Manageability considerations for the SCONE protocol.
 
 # Terms and Definitions
 
