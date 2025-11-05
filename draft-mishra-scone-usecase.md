@@ -89,7 +89,7 @@ configurable with rate-limiting policies, and identify flows that carry SCONE pa
 to insert throughput advice into those packets.
 
 In this document, on-path SCONE Network Elements are generally considered within the *access* portion of the
-Telecommunications provider’s network. However, multiple SCONE Network Elements may exist along a path
+Telecommunications provider's network. However, multiple SCONE Network Elements may exist along a path
 between the communicating peers. Depending on their configuration and roles they are likely to generate
 different throughput advices for the SCONE enabled application traffic flows, especially when different
 *access* technologies are in use. For example, the SCONE protocol in a wireless access network element
