@@ -1,7 +1,7 @@
 ---
 title: "Applicability & Manageability Considerations for SCONE"
 abbrev: "SCONE Applicability & Manageability"
-docname: draft-ietf-scone-applicability-manageablity-00
+docname: draft-ietf-scone-applicability-manageability-00
 category: info
 submissionType: IETF
 
@@ -103,8 +103,8 @@ apply rate limiting at a centralized Broadband Network Gateway (BNG) or at aggre
 multiple Customer Premises Equipment (CPE) devices.
 
 Accordingly, Applicability and Manageability considerations must encompass a wide range of access-network
-scenarios, each of which handles per-flow rate limiting differently. The scope of this document is limited
-to presenting the generic Applicability and Manageability considerations for the SCONE protocol.
+scenarios, each of which handles per-flow rate limiting differently. However, the scope of this document is limited
+to discussing the core Applicability and Manageability considerations for the SCONE protocol.
 
 # Terms and Definitions
 
@@ -119,7 +119,7 @@ application flows. Each session is bound to an IP address and port,
 ensuring SCONE packets are routed precisely without affecting unrelated traffic.
 
 ## Per-Flow Signaling
-Throughput advice is applied on a UDP–4-tuple basis. SCONE Network Elements
+Throughput advice is applied on a UDP 4-tuple basis. SCONE Network Elements
 ought to maintain flow-specific context to ensure signaling correctness.
 This enables applications to receive targeted throughput advice while
 preventing unintended impact on unrelated flows.
